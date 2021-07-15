@@ -12,6 +12,7 @@ app.use(express.json())
 app.use(cors());
 
 // Define Routes
+app.use('/api/admin', require('./routes/api/admin'));
 app.use('/api/slides', require('./routes/api/slides'));
 app.use('/api/lessons', require('./routes/api/lessons'));
 app.use('/api/auth', require('./routes/api/auth'));
