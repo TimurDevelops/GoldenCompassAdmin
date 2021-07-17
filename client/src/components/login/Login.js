@@ -53,7 +53,9 @@ const Login = ({setUser, setAuth, setAlert}) => {
           <form className='form' onSubmit={(e) => handleSubmit(e)}>
             <div className="login-header">
               <p>Добро пожаловать в <br/>
-                <span className='golden-compass'><span className='g-letter'>G</span>olden Compass</span></p>
+                <span className='golden-compass'><span className='g-letter'>G</span>olden Compass</span>
+                <span className='golden-compass'>Панель управления администратора</span>
+              </p>
             </div>
             <div className={'inputs-wrapper'}>
               <div className="form-group field">

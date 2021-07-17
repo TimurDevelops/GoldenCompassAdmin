@@ -1,17 +1,26 @@
 import React from 'react';
 
-const ClassRoom = () => {
+import AddLesson from "./addLesson/AddLesson";
+
+const MainView = () => {
+
+  const createLesson = (lesson) => {
+    console.log(lesson);
+  }
+
   return (
     <div>
       Добро пожаловать, Админ
+      <AddLesson createLesson={createLesson}/>
+
     </div>
   )
 }
 
-// ClassRoom.propTypes = {
+// MainView.propTypes = {
 //   user: PropTypes.object.isRequired,
 //   logout: PropTypes.func.isRequired,
 //   setAlert: PropTypes.func.isRequired
 // };
 
-export default ClassRoom;
+export default MainView;
