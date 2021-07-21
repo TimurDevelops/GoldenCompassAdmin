@@ -56,5 +56,40 @@ router.post(
   }
 );
 
+// @route    POST api/slides
+// @desc     Get slides by Lesson
+// @access   Public
+router.post(
+  '/',
+  check('lessonId', 'Выберите id урока').notEmpty(),
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({errors: errors.array()});
+    }
+
+    const {lessonId} = req.body;
+
+    try {
+      let lesson = await Lesson.findOne({_id: lessonId});
+
+      if (!lesson) {
+        return res
+          .status(400)
+          .json({errors: [{msg: 'Данного урока не существует'}]});
+      }
+      const ObjectId = require('mongoose').Types.ObjectId;
+
+      const slides_ids = lesson.slides.map(function(id) { return ObjectId(id); });
+      const slides = await Slide.find({_id: {$in: slides_ids}});
+
+      return res.json({slides});
+
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server error');
+    }
+  }
+);
 
 module.exports = router;

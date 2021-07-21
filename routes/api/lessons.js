@@ -33,7 +33,7 @@ router.post(
 
       await lesson.save();
 
-      res.json({msg: 'Урок создан'});
+      return res.json({lesson});
     } catch (err) {
       console.error(err.message);
       res.status(500).send('Server error');
@@ -41,5 +41,41 @@ router.post(
   }
 );
 
+// @route    POST api/lesson
+// @desc     Add lesson
+// @access   Public
+router.get(
+  '/get-lessons',
+  async (req, res) => {
+    try {
+      let lessons = await Lessons.find();
+      return res.json({lessons});
+
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server error');
+    }
+  }
+);
+
+// @route    POST api/lesson
+// @desc     Delete lesson
+// @access   Public
+router.delete(
+  '/',
+  check('id', 'Введите id Удаляемого Урока').notEmpty(),
+  async (req, res) => {
+    const {id} = req.body;
+
+    try {
+      let lessons = await Lessons.deleteOne({_id: id});
+      return res.json({lessons});
+
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server error');
+    }
+  }
+);
 
 module.exports = router;

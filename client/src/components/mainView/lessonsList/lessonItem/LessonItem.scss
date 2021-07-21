@@ -1,0 +1,16 @@
+.lesson-wrapper{
+  background: #ccc;
+  padding: 20px;
+  margin: 10px;
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+
+  .lesson-title{
+
+  }
+
+  .delete-btn{
+    color: red;
+  }
+}

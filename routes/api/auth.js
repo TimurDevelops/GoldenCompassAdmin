@@ -38,7 +38,7 @@ router.post(
     const { login, password } = req.body;
 
     try {
-      let user = await Student.findOne({ login });
+      let user = await Admin.findOne({ login });
 
       if (!user) {
         return res

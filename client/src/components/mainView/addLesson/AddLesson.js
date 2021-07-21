@@ -12,17 +12,17 @@ const AddLesson = ({createLesson}) => {
   }
 
   return (
-    <div>
+    <div className={'add-lesson-form'}>
       <form className='form' onSubmit={(e) => handleSubmit(e)}>
         <div className={'inputs-wrapper'}>
           <div className="form-group field">
             <input type="input" className="form-field" placeholder="Название урока" name="login" id='login'
                    onChange={e => setLessonTitle(e.target.value)} required/>
-            <label htmlFor="login" className="form-label">Логин</label>
+            <label htmlFor="login" className="form-label">Название Урока</label>
           </div>
 
           <div className='submit-btn-wrapper'>
-            <button type="submit" className='btn' id='loginBtn'>
+            <button type="submit" className='btn' id='addLesson'>
               <span>Создать</span>
             </button>
           </div>
