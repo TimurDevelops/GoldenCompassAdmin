@@ -9,6 +9,7 @@ import MainView from "./components/mainView/MainView";
 
 import PrivateRoute from "./components/ui/PrivateRoute";
 import {v4 as uuidv4} from 'uuid';
+import LessonsView from "./components/lessonView/LessonView";
 
 const App = () => {
   const {user, setUser, unsetUser} = useUser()
@@ -45,6 +46,14 @@ const App = () => {
           <PrivateRoute exact path="/main-view"
                         setAlert={setAlert}
                         component={MainView}
+                        auth={auth}
+                        user={user}
+                        logout={logout}/>
+
+          {/* Canvas will determine content by type and room */}
+          <PrivateRoute exact path="/lesson/:lessonId"
+                        setAlert={setAlert}
+                        component={LessonsView}
                         auth={auth}
                         user={user}
                         logout={logout}/>

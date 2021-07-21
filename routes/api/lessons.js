@@ -4,8 +4,8 @@ const {check, validationResult} = require('express-validator');
 
 const Lessons = require('../../models/Lesson');
 
-// @route    POST api/lesson
-// @desc     Add lesson
+// @route    POST api/lessonView
+// @desc     Add lessonView
 // @access   Public
 router.post(
   '/',
@@ -41,8 +41,8 @@ router.post(
   }
 );
 
-// @route    POST api/lesson
-// @desc     Add lesson
+// @route    POST api/lessonView
+// @desc     Add lessonView
 // @access   Public
 router.get(
   '/get-lessons',
@@ -58,8 +58,8 @@ router.get(
   }
 );
 
-// @route    POST api/lesson
-// @desc     Delete lesson
+// @route    POST api/lessonView
+// @desc     Delete lessonView
 // @access   Public
 router.delete(
   '/',

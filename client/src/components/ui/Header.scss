@@ -1,0 +1,15 @@
+$main: #ddd;
+$compass-primary: #fa752a;
+$compass-secondary: #ee8d5c;
+
+header {
+  width: 100%;
+  height: 70px;
+  background: $main;
+  display: flex;
+  justify-content: space-between;
+
+  #logoutBtn {
+
+  }
+}
