@@ -41,6 +41,7 @@ const Login = ({setUser, setAuth, setAlert}) => {
 
     } catch (errors) {
       setAuth({isLoading: false, isAuthenticated: false});
+      console.log(errors)
       outputErrors(errors);
     }
   }

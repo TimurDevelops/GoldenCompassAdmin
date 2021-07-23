@@ -31,6 +31,7 @@ const App = () => {
     unsetUser();
     setAuth({isAuthenticated: false, isLoading: false});
   };
+  // TODO create views folder
   return (
     <section className="container">
       <Alert alerts={alerts}/>
@@ -46,14 +47,6 @@ const App = () => {
           <PrivateRoute exact path="/main-view"
                         setAlert={setAlert}
                         component={MainView}
-                        auth={auth}
-                        user={user}
-                        logout={logout}/>
-
-          {/* Canvas will determine content by type and room */}
-          <PrivateRoute exact path="/lesson/:lessonId"
-                        setAlert={setAlert}
-                        component={LessonsView}
                         auth={auth}
                         user={user}
                         logout={logout}/>
