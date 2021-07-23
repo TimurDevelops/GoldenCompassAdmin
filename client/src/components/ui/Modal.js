@@ -6,6 +6,12 @@ import './Modal.scss';
 
 const Modal = ({title = 'Модальное окно', open, closeModal, content}) => {
 
+  const close = () => {
+    if(content.closeModal && content.closeModal()){
+      closeModal()
+    }
+  }
+
   return (
     <div className={`modal-bg ${open ? 'open' : ''}`}>
       <div className={'modal-wrapper'}>
@@ -13,7 +19,7 @@ const Modal = ({title = 'Модальное окно', open, closeModal, content
           <div className={'title'}>{title}</div>
 
           <div className={'close-btn-wrapper'}>
-            <div className={'close-btn'} onClick={closeModal}><FaTimes/></div>
+            <div className={'close-btn'} onClick={close}><FaTimes/></div>
           </div>
         </div>
 

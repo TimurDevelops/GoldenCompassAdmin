@@ -9,19 +9,12 @@ import './LessonView.scss';
 
 
 const LessonsView = ({lessonToEdit: {slides, lessonTitle}, setAlert}) => {
-  const history = useHistory();
   const [newLessonTitle, setNewLessonTitle] = useState(lessonTitle);
 
   const [newSlides, setNewSlides] = useState(slides);
 
-  console.log({slides, lessonTitle})
-
-  const goBack = () => {
-    if (slides !== newSlides || lessonTitle !== newLessonTitle && window.confirm('Выйти не сохранив изменения?')) {
-      history.push("/main-view");
-    } else {
-      history.push("/main-view");
-    }
+  this.prototype.onClose = () => {
+    return (slides !== newSlides || lessonTitle !== newLessonTitle) && window.confirm('Закрыть не сохранив изменения?')
   }
 
   const handleSubmit = (e) => {
@@ -50,12 +43,6 @@ const LessonsView = ({lessonToEdit: {slides, lessonTitle}, setAlert}) => {
 
   return (
     <div>
-      <header className={'lesson-view-header'}>
-        <div className={"menu-item underline"} onClick={() => goBack()}>
-          <a>Вернуться</a>
-        </div>
-      </header>
-
       <section className={'form-wrapper'}>
         <form className='form' onSubmit={(e) => handleSubmit(e)}>
 

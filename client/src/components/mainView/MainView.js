@@ -26,6 +26,7 @@ const MainView = ({logout, setAlert}) => {
   const closeModal = () => {
     setModalOpen(false);
   }
+  
   const openModal = (id) => {
     setModalOpen(false);
     const lesson = lessons.filter(i => i._id === id)[0];
