@@ -28,7 +28,7 @@ const MainView = ({logout, setAlert}) => {
   }
   
   const openModal = (id) => {
-    setModalOpen(false);
+    setModalOpen(true);
     const lesson = lessons.filter(i => i._id === id)[0];
 
     if (!lesson) return setAlert('Ошибка при открытии урока', 'danger')

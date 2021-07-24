@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import PropTypes from "prop-types";
-import {useHistory} from "react-router-dom";
 
 import LessonTitleEditor from "./lessonTitleEditor/LessonTitleEditor";
 import SlidesEditor from "./slidesEditor/SlidesEditor";
@@ -12,10 +11,6 @@ const LessonsView = ({lessonToEdit: {slides, lessonTitle}, setAlert}) => {
   const [newLessonTitle, setNewLessonTitle] = useState(lessonTitle);
 
   const [newSlides, setNewSlides] = useState(slides);
-
-  this.prototype.onClose = () => {
-    return (slides !== newSlides || lessonTitle !== newLessonTitle) && window.confirm('Закрыть не сохранив изменения?')
-  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -40,8 +35,8 @@ const LessonsView = ({lessonToEdit: {slides, lessonTitle}, setAlert}) => {
 
   }
 
-
   return (
+
     <div>
       <section className={'form-wrapper'}>
         <form className='form' onSubmit={(e) => handleSubmit(e)}>
@@ -68,6 +63,7 @@ const LessonsView = ({lessonToEdit: {slides, lessonTitle}, setAlert}) => {
 
 
     </div>
+
   )
 }
 
