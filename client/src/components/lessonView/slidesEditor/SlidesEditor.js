@@ -6,6 +6,8 @@ import AddSlide from "./addSlide/AddSlide";
 import Modal from "../../ui/Modal";
 import SlideView from "./slideView/SlideView";
 
+import './SlideEditor.scss'
+
 const SlidesEditor = ({slides, createSlide, deleteSlide, editSlide, setAlert}) => {
   const [addingSlide, setAddingSlide] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
@@ -27,7 +29,7 @@ const SlidesEditor = ({slides, createSlide, deleteSlide, editSlide, setAlert}) =
   return (
     <div className={'slides-wrapper'}>
 
-      <button style={{'margin': '20px'}}
+      <button className={'add-slide-btn'}
               onClick={() => setAddingSlide(!addingSlide)}>{addingSlide ? 'Закрыть' : 'Добавить слайд'}</button>
       {addingSlide && <AddSlide createSlide={createSlide}/>}
 
@@ -51,7 +53,7 @@ const SlidesEditor = ({slides, createSlide, deleteSlide, editSlide, setAlert}) =
 }
 
 SlidesEditor.propTypes = {
-  slides: PropTypes.object.isRequired,
+  slides: PropTypes.array.isRequired,
   createSlide: PropTypes.func.isRequired,
   deleteSlide: PropTypes.func.isRequired,
   editSlide: PropTypes.func.isRequired,

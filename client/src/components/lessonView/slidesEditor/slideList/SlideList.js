@@ -10,7 +10,6 @@ const SlideList = ({slides}) => {
   return (
     <div>
       {slides.map(slide => <SlideItem key={slide._id} slide={slide}/>)}
-      SlideItem
     </div>
   )
 }

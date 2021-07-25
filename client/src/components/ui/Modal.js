@@ -28,8 +28,9 @@ const Modal = ({title = 'Модальное окно', open, closeModal, content
               <div className={'close-btn'} onClick={close}><FaTimes/></div>
             </div>
           </div>
-
-          {content}
+          <div className={'content'}>
+            {content}
+          </div>
         </div>
       </div>
     </div>

@@ -42,12 +42,24 @@
       }
 
       .close-btn-wrapper {
-        color: red;
+        cursor: pointer;
 
         .close-btn {
+          cursor: pointer;
+          padding-left: 15px;
+          color: red;
+          width: 20px;
+          height: 20px;
 
+          svg {
+            width: 100%;
+            height: 100%;
+          }
         }
       }
+    }
+    .content{
+      padding: 0 2em;
     }
   }
 }

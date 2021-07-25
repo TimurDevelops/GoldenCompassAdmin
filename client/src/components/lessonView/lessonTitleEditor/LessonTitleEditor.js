@@ -6,31 +6,40 @@ import './LessonEditor.scss';
 
 const LessonTitleEditor = ({lessonTitle, newLessonTitle, setNewLessonTitle}) => {
   const [editingTitle, setEditingTitle] = useState(false);
-
-  let savedTitle = lessonTitle;
+  const [savedTitle, setSavedTitle] = useState(newLessonTitle);
 
   return (
     <div className={'title-wrapper'}>
       {editingTitle
         ?
-        <div>
-          <div className={'icon-btn'}
+        <div className={'editing-wrapper'}>
+          <div className={'close-btn'}
                onClick={() => {
                  setEditingTitle(false)
                  setNewLessonTitle(savedTitle)
                }}>
             <FaTimes/>
           </div>
-          <div className={'edit-btn'} onClick={() => setEditingTitle(false)}>
+          <div className={'confirm-btn'}
+               onClick={(e) => {
+                 setEditingTitle(false)
+                 setSavedTitle(newLessonTitle)
+               }}>
             <FaCheck/>
           </div>
         </div>
         :
-        <div className={'icon-btn'} onClick={() => {
-          setEditingTitle(true)
-          savedTitle = newLessonTitle
-        }}>
-          <FaEdit/>
+        <div className={'non-editing-wrapper'}>
+          <div className={'title-label'}>Название урока: </div>
+          <div className={'title-placeholder'}>
+            {newLessonTitle}
+          </div>
+          <div className={'edit-btn'} onClick={() => {
+            setEditingTitle(true)
+            setSavedTitle(newLessonTitle)
+          }}>
+            <FaEdit/>
+          </div>
         </div>
       }
 

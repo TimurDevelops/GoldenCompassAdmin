@@ -7,13 +7,12 @@ import SlidesEditor from "./slidesEditor/SlidesEditor";
 import './LessonView.scss';
 
 
-const LessonsView = ({lessonToEdit: {slides, lessonTitle}, setAlert}) => {
+const LessonsView = ({lessonToEdit: {slides, name: lessonTitle}, setAlert}) => {
   const [newLessonTitle, setNewLessonTitle] = useState(lessonTitle);
 
   const [newSlides, setNewSlides] = useState(slides);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = () => {
     console.log(
       {
         LessonTitle: newLessonTitle,
@@ -39,7 +38,6 @@ const LessonsView = ({lessonToEdit: {slides, lessonTitle}, setAlert}) => {
 
     <div>
       <section className={'form-wrapper'}>
-        <form className='form' onSubmit={(e) => handleSubmit(e)}>
 
           <div className={'inputs-wrapper'}>
             <LessonTitleEditor
@@ -57,8 +55,9 @@ const LessonsView = ({lessonToEdit: {slides, lessonTitle}, setAlert}) => {
             />
 
           </div>
-        </form>
-
+          <div>
+            <button className={'btn'} onClick={()=>handleSubmit()}>Закончить редактирование</button>
+          </div>
       </section>
 
 
