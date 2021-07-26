@@ -1,8 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap');
-$primary: #bbbbbb;
+
+$primary: #fa752a;
 $secondary: #ee8d5c;
 $white: #fff;
 $gray: #9b9b9b;
+
 .login-wrapper {
   min-height: 100vh;
   font-size: 1.5rem;
@@ -11,7 +13,8 @@ $gray: #9b9b9b;
   font-family: 'Roboto', sans-serif;
 
 }
-.background-holder{
+
+.background-holder {
   height: 100vh;
   display: flex;
   align-items: center;
@@ -27,22 +30,26 @@ $gray: #9b9b9b;
   overflow: hidden;
   box-shadow: 3px 6px 20px 10px #565656;
 }
-.form{
+
+.form {
   width: 50%;
   padding: 30px 20px;
   box-sizing: border-box;
 }
-.login-image{
+
+.login-image {
   background: url("../../img/compass.jpg");
   background-size: cover;
   width: 50%;
 }
-.login-header{
-  .golden-compass{
+
+.login-header {
+  .golden-compass {
     display: block;
     font-weight: bold;
     font-family: 'Quicksand', sans-serif;
-    .g-letter{
+
+    .g-letter {
       color: $secondary;
     }
   }
@@ -56,6 +63,7 @@ $gray: #9b9b9b;
   justify-content: flex-start;
   align-items: flex-start;
 }
+
 .form-group {
   position: relative;
   padding: 15px 0 0;
@@ -114,26 +122,28 @@ $gray: #9b9b9b;
     box-shadow: none;
   }
 }
-.submit-btn-wrapper{
+
+.submit-btn-wrapper {
   display: flex;
   width: 100%;
   align-content: center;
   justify-content: center;
 }
-#loginBtn{
+
+#loginBtn {
   background: linear-gradient(to right, $primary, $secondary);
   border: none;
   border-radius: 25px;
   padding: 10px 40px;
   transition: transform .2s ease-in;
 
-  &:hover{
+  &:hover {
     transform: scale(1.07);
   }
 }
 
 // BUTTON
-.btn{
+.btn {
   display: block;
   margin: 15px 0;
   padding: 5px 40px;
@@ -174,3 +184,4 @@ $gray: #9b9b9b;
     z-index: 100;
   }
 }
+

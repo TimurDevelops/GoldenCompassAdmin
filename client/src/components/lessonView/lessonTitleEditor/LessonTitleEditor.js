@@ -2,14 +2,14 @@ import React, {useState} from 'react';
 import PropTypes from "prop-types";
 import {FaEdit, FaTimes, FaCheck} from "react-icons/fa";
 
-import './LessonEditor.scss';
+import './LessonTitleEditor.scss';
 
 const LessonTitleEditor = ({lessonTitle, newLessonTitle, setNewLessonTitle}) => {
   const [editingTitle, setEditingTitle] = useState(false);
   const [savedTitle, setSavedTitle] = useState(newLessonTitle);
 
   return (
-    <div className={'title-wrapper'}>
+    <div className={'title-wrapper'} id={'title-wrapper'}>
       {editingTitle
         ?
         <div className={'editing-wrapper'}>
