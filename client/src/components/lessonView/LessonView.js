@@ -7,7 +7,7 @@ import SlidesEditor from "./slidesEditor/SlidesEditor";
 import './LessonView.scss';
 
 
-const LessonsView = ({lessonToEdit: {slides, name: lessonTitle}, setAlert}) => {
+const LessonsView = ({lessonToEdit: {slides, name: lessonTitle}}) => {
   const [newLessonTitle, setNewLessonTitle] = useState(lessonTitle);
 
   const [newSlides, setNewSlides] = useState(slides);
@@ -21,43 +21,24 @@ const LessonsView = ({lessonToEdit: {slides, name: lessonTitle}, setAlert}) => {
     )
   }
 
-
-  const createSlide = async () => {
-
-  }
-
-  const deleteSlide = async () => {
-
-  }
-
-  const editSlide = async () => {
-
-  }
-
   return (
 
     <div>
       <section className={'form-wrapper'}>
 
-          <div className={'inputs-wrapper'}>
-            <LessonTitleEditor
-              lessonTitle={lessonTitle}
-              newLessonTitle={newLessonTitle}
-              setNewLessonTitle={setNewLessonTitle}
-            />
+        <div className={'inputs-wrapper'}>
+          <LessonTitleEditor
+            lessonTitle={lessonTitle}
+            newLessonTitle={newLessonTitle}
+            setNewLessonTitle={setNewLessonTitle}
+          />
 
-            <SlidesEditor
-              slides={newSlides}
-              createSlide={createSlide}
-              deleteSlide={deleteSlide}
-              editSlide={editSlide}
-              setAlert={setAlert}
-            />
+          <SlidesEditor slides={newSlides} setSlides={setNewSlides}/>
 
-          </div>
-          <div>
-            <button className={'btn'} onClick={()=>handleSubmit()}>Закончить редактирование</button>
-          </div>
+        </div>
+        <div>
+          <button className={'btn'} onClick={() => handleSubmit()}>Закончить редактирование</button>
+        </div>
       </section>
 
 
@@ -68,7 +49,6 @@ const LessonsView = ({lessonToEdit: {slides, name: lessonTitle}, setAlert}) => {
 
 LessonsView.propTypes = {
   lessonToEdit: PropTypes.object.isRequired,
-  setAlert: PropTypes.func.isRequired
 };
 
 export default LessonsView;

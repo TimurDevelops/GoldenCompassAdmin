@@ -69,7 +69,7 @@ const MainView = ({logout, setAlert}) => {
         open={modalOpen}
         closeModal={closeModal}
         content={
-          modalOpen && <LessonsView lessonToEdit={lessonToEdit} editLesson={editLesson} setAlert={setAlert}/>
+          modalOpen && <LessonsView lessonToEdit={lessonToEdit} editLesson={editLesson}/>
         }
        />
     </div>

@@ -73,7 +73,7 @@ const MyDropzone = ({filePicked}) => {
       preview: URL.createObjectURL(file)
     })));
     filePicked(acceptedFiles)
-  }, [])
+  }, [filePicked])
 
   const {
     getRootProps,

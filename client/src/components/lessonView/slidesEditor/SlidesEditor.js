@@ -7,12 +7,12 @@ import Modal from "../../ui/Modal";
 import SlideView from "./slideView/SlideView";
 
 import './SlideEditor.scss'
+import {v4 as uuidv4} from "uuid";
 
-const SlidesEditor = ({slides, createSlide, deleteSlide, editSlide, setAlert}) => {
+const SlidesEditor = ({slides, setSlides, setAlert}) => {
   const [addingSlide, setAddingSlide] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [slideToEdit, setSlideToEdit] = useState({});
-
 
   const closeModal = () => {
     setModalOpen(false);
@@ -26,15 +26,38 @@ const SlidesEditor = ({slides, createSlide, deleteSlide, editSlide, setAlert}) =
     setSlideToEdit(slide)
   }
 
+  const createSlide = async ({tip, file}) => {
+    setSlides([...slides, {tip, img: file.preview, _id: uuidv4()}]);
+  }
+
+  const deleteSlide = async () => {
+
+  }
+
+  const editSlide = async () => {
+
+  }
+
+  const setSlidesOrder = (slides) => {
+    setSlides(slides);
+  }
+
   return (
     <div className={'slides-wrapper'}>
 
       <button className={'add-slide-btn'}
               onClick={() => setAddingSlide(!addingSlide)}>{addingSlide ? 'Закрыть' : 'Добавить слайд'}</button>
-      {addingSlide && <AddSlide createSlide={createSlide}/>}
+      {addingSlide && <AddSlide createSlide={(slide) => createSlide(slide)}/>}
 
 
-      <SlideList slides={slides} deleteSlide={deleteSlide} openSlide={openModal}/>
+      {slides.length ?
+        <SlideList
+          slides={slides}
+          openSlide={openModal}
+          setSlidesOrder={setSlidesOrder}
+          deleteSlide={deleteSlide}
+        />
+        : ''}
 
       <Modal
         title={`Редактирование слайда \n ${slideToEdit.name}`}
@@ -54,9 +77,7 @@ const SlidesEditor = ({slides, createSlide, deleteSlide, editSlide, setAlert}) =
 
 SlidesEditor.propTypes = {
   slides: PropTypes.array.isRequired,
-  createSlide: PropTypes.func.isRequired,
-  deleteSlide: PropTypes.func.isRequired,
-  editSlide: PropTypes.func.isRequired,
+  setSlides: PropTypes.func.isRequired,
 };
 
 export default SlidesEditor;
