@@ -16,6 +16,8 @@ app.use('/api/admin', require('./routes/api/admin'));
 app.use('/api/slides', require('./routes/api/slides'));
 app.use('/api/lessons', require('./routes/api/lessons'));
 app.use('/api/auth', require('./routes/api/auth'));
+app.use('/api/files', require('./routes/api/files'));
+app.use('/uploads', express.static('./uploads'));
 
 app.get('/ping', (req, res) => {
   res.send(`Pong`);

@@ -17,8 +17,9 @@ const SlidesEditor = ({slides, setSlides, setAlert}) => {
   const closeModal = () => {
     setModalOpen(false);
   }
+
   const openModal = (id) => {
-    setModalOpen(false);
+    setModalOpen(true);
     const slide = slides.filter(i => i._id === id)[0];
 
     if (!slide) return setAlert('Ошибка при открытии слайда', 'danger')
@@ -27,15 +28,19 @@ const SlidesEditor = ({slides, setSlides, setAlert}) => {
   }
 
   const createSlide = async ({tip, file}) => {
-    setSlides([...slides, {tip, img: file.preview, _id: uuidv4()}]);
+    setSlides([...slides, {tip, img: file, _id: uuidv4()}]);
   }
 
-  const deleteSlide = async () => {
-
+  const deleteSlide = async (id) => {
+    setSlides(slides.filter(slide => slide._id !== id));
   }
 
-  const editSlide = async () => {
+  const editSlide = async ({id, tip, file}) => {
 
+    setSlides(slides.map(slide => {
+      if(slide._id === id) return {_id: id, tip, img: file}
+      else return slide
+    }));
   }
 
   const setSlidesOrder = (slides) => {
@@ -53,20 +58,21 @@ const SlidesEditor = ({slides, setSlides, setAlert}) => {
       {slides.length ?
         <SlideList
           slides={slides}
-          openSlide={openModal}
           setSlidesOrder={setSlidesOrder}
+          openSlide={openModal}
           deleteSlide={deleteSlide}
         />
         : ''}
 
       <Modal
-        title={`Редактирование слайда \n ${slideToEdit.name}`}
+        title={'Редактирование слайда'}
         open={modalOpen}
         closeModal={closeModal}
         content={
-          <SlideView
+          modalOpen && <SlideView
             slide={slideToEdit}
             editSlide={editSlide}
+            closeForm={closeModal}
           />
         }
       />

@@ -7,7 +7,7 @@ import SlidesEditor from "./slidesEditor/SlidesEditor";
 import './LessonView.scss';
 
 
-const LessonsView = ({lessonToEdit: {slides, name: lessonTitle}}) => {
+const LessonsView = ({lessonToEdit: {slides, name: lessonTitle}, setAlert}) => {
   const [newLessonTitle, setNewLessonTitle] = useState(lessonTitle);
 
   const [newSlides, setNewSlides] = useState(slides);
@@ -33,14 +33,13 @@ const LessonsView = ({lessonToEdit: {slides, name: lessonTitle}}) => {
             setNewLessonTitle={setNewLessonTitle}
           />
 
-          <SlidesEditor slides={newSlides} setSlides={setNewSlides}/>
+          <SlidesEditor slides={newSlides} setSlides={setNewSlides} setAlert={setAlert}/>
 
         </div>
         <div>
           <button className={'btn'} onClick={() => handleSubmit()}>Закончить редактирование</button>
         </div>
       </section>
-
 
     </div>
 
@@ -49,6 +48,7 @@ const LessonsView = ({lessonToEdit: {slides, name: lessonTitle}}) => {
 
 LessonsView.propTypes = {
   lessonToEdit: PropTypes.object.isRequired,
+  setAlert: PropTypes.func.isRequired,
 };
 
 export default LessonsView;

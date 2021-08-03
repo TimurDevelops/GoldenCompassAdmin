@@ -1,6 +1,7 @@
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 import {useDropzone} from 'react-dropzone'
 import PropTypes from "prop-types";
+import api from "../../utils/api";
 
 const container = {
   width: '100%'
@@ -65,14 +66,24 @@ const rejectStyle = {
 };
 
 
-const MyDropzone = ({filePicked}) => {
+const MyDropzone = ({filePicked, showPreview = true}) => {
   const [files, setFiles] = useState([]);
 
-  const onDrop = useCallback(acceptedFiles => {
-    setFiles(acceptedFiles.map(file => Object.assign(file, {
-      preview: URL.createObjectURL(file)
-    })));
-    filePicked(acceptedFiles)
+  const onDrop = useCallback(async acceptedFiles => {
+    let urls = [];
+    for (const file of acceptedFiles) {
+      const formData = new FormData();
+      formData.append('file', file);
+
+      const res = await api.post('/files/', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+      urls.push('http://localhost:5000/' + res.data);
+    }
+    setFiles(urls);
+    filePicked(urls)
   }, [filePicked])
 
   const {
@@ -95,10 +106,10 @@ const MyDropzone = ({filePicked}) => {
   ]);
 
   const thumbs = files.map(file => (
-    <div style={thumb} key={file.name}>
+    <div style={thumb} key={file}>
       <div style={thumbInner}>
         <img
-          src={file.preview}
+          src={file}
           style={img}
           alt={'Загружаемое изображение'}
         />
@@ -106,18 +117,13 @@ const MyDropzone = ({filePicked}) => {
     </div>
   ));
 
-  useEffect(() => () => {
-    // Make sure to revoke the data uris to avoid memory leaks
-    files.forEach(file => URL.revokeObjectURL(file.preview));
-  }, [files]);
-
   return (
     <div className="container" style={container}>
       <div {...getRootProps({style})}>
         <input {...getInputProps()} />
         <p>Drag 'n' drop some files here, or click to select files</p>
       </div>
-      {files.length > 0 && <aside style={thumbsContainer}>
+      {files.length > 0 && showPreview && <aside style={thumbsContainer}>
         <h3>Загружаемые файлы...</h3>
         {thumbs}
       </aside>}
@@ -127,6 +133,7 @@ const MyDropzone = ({filePicked}) => {
 
 MyDropzone.props = {
   filePicked: PropTypes.func.isRequired,
+  showPreview: PropTypes.bool,
 }
 
 export default MyDropzone;

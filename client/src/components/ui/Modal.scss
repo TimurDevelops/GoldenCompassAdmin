@@ -28,7 +28,8 @@
   .modal {
     width: 90vw;
     min-height: 60vh;
-    max-height: 100vh;
+    max-height: 90vh;
+    overflow-y: scroll;
     background: white;
     border-radius: 5px;
 

@@ -2,58 +2,8 @@
 import React from 'react';
 import PropTypes from "prop-types";
 import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd';
-// import {ListManager} from "react-beautiful-dnd-grid";
 
 import SlideItem from "./slideItem/SlideItem";
-
-// const SlideList = ({slides}) => {
-//
-//   const sortList = () => {
-//     const list = sortedList.slice().sort((first, second) => first.order - second.order);
-//
-//     setSortedList(list)
-//   }
-//
-//   const [sortedList, setSortedList] = useState(slides.map((slide, index) => {
-//     return {order: index,  id: slide._id, tip: slide.tip, img: 'slide.img'}
-//   }));
-//
-//   const reorderList = (sourceIndex, destinationIndex) => {
-//     if (destinationIndex === sourceIndex) {
-//       return;
-//     }
-//     const list = sortedList;
-//     if (destinationIndex === 0) {
-//       list[sourceIndex].order = list[0].order - 1;
-//       sortList();
-//       return;
-//     }
-//     if (destinationIndex === list.length - 1) {
-//       list[sourceIndex].order = list[list.length - 1].order + 1;
-//       sortList();
-//       return;
-//     }
-//     if (destinationIndex < sourceIndex) {
-//       list[sourceIndex].order = (list[destinationIndex].order + list[destinationIndex - 1].order) / 2;
-//       sortList();
-//       return;
-//     }
-//     list[sourceIndex].order = (list[destinationIndex].order + list[destinationIndex + 1].order) / 2;
-//     sortList();
-//   }
-//
-//
-//   return (
-//     <ListManager
-//       items={sortedList}
-//       direction="horizontal"
-//       maxItems={3}
-//       render={slide => <SlideItem slide={slide}/>}
-//       onDragEnd={() => reorderList()}
-//     />
-//
-//   )
-// }
 
 const grid = 8;
 
@@ -73,7 +23,7 @@ const getListStyle = isDraggingOver => ({
   height: '30vh',
 });
 
-const SlideList = ({slides, setSlidesOrder}) => {
+const SlideList = ({slides, setSlidesOrder, deleteSlide, openSlide}) => {
 
   const reorder = (list, startIndex, endIndex) => {
     const result = Array.from(list);
@@ -115,7 +65,9 @@ const SlideList = ({slides, setSlidesOrder}) => {
                         provided.draggableProps.style
                       )}
                     >
-                      <SlideItem slide={slide}/>
+                      <SlideItem slide={slide}
+                                 deleteSlide={() => deleteSlide(slide._id)}
+                                 openSlide={() => openSlide(slide._id)}/>
                     </div>
                   )}
                 </Draggable>
@@ -131,7 +83,10 @@ const SlideList = ({slides, setSlidesOrder}) => {
 
 SlideList.propTypes = {
   slides: PropTypes.array.isRequired,
-  setSlidesOrder: PropTypes.func.isRequired
+  setSlidesOrder: PropTypes.func.isRequired,
+  deleteSlide: PropTypes.func.isRequired,
+  openSlide: PropTypes.func.isRequired
+
 };
 
 export default SlideList;

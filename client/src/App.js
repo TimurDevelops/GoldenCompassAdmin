@@ -9,7 +9,6 @@ import MainView from "./components/mainView/MainView";
 
 import PrivateRoute from "./components/ui/PrivateRoute";
 import {v4 as uuidv4} from 'uuid';
-import LessonsView from "./components/lessonView/LessonView";
 
 const App = () => {
   const {user, setUser, unsetUser} = useUser()

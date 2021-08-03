@@ -1,0 +1,25 @@
+.slide-editor.add-slide-wrapper {
+  border: none;
+
+  .preview {
+    display: inline-flex;
+    border-radius: 2px;
+    border: 1px solid #eaeaea;
+    margin-top: 8px;
+    height: 500px;
+    padding: 4px;
+    box-sizing: border-box;
+
+    .preview-inner {
+      display: flex;
+      min-width: 0;
+
+      img{
+        display: flex;
+        max-width: 100%;
+        overflow: hidden;
+      }
+
+    }
+  }
+}
