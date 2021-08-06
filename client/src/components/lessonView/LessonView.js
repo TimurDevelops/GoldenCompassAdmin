@@ -7,18 +7,20 @@ import SlidesEditor from "./slidesEditor/SlidesEditor";
 import './LessonView.scss';
 
 
-const LessonsView = ({lessonToEdit: {slides, name: lessonTitle}, setAlert}) => {
+const LessonsView = ({lessonToEdit: {_id: id, slides, name: lessonTitle}, setAlert, editLesson}) => {
   const [newLessonTitle, setNewLessonTitle] = useState(lessonTitle);
 
   const [newSlides, setNewSlides] = useState(slides);
 
   const handleSubmit = () => {
-    console.log(
+    editLesson(
       {
-        LessonTitle: newLessonTitle,
-        Slides: newSlides
+        id,
+        title: newLessonTitle,
+        slides: newSlides
       }
     )
+    setNewSlides([])
   }
 
   return (
@@ -49,6 +51,7 @@ const LessonsView = ({lessonToEdit: {slides, name: lessonTitle}, setAlert}) => {
 LessonsView.propTypes = {
   lessonToEdit: PropTypes.object.isRequired,
   setAlert: PropTypes.func.isRequired,
+  editLesson: PropTypes.func.isRequired,
 };
 
 export default LessonsView;

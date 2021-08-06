@@ -26,7 +26,7 @@ const MainView = ({logout, setAlert}) => {
   const closeModal = () => {
     setModalOpen(false);
   }
-  
+
   const openModal = (id) => {
     setModalOpen(true);
     const lesson = lessons.filter(i => i._id === id)[0];
@@ -47,9 +47,15 @@ const MainView = ({logout, setAlert}) => {
   }
 
   const editLesson = async (newLesson) => {
-    const createdLesson = await api.put('/lessons', {lesson: newLesson});
-
-
+    let createdLesson;
+    try {
+      createdLesson = await api.put('/lessons', newLesson);
+    } catch (e) {
+      e.response.data.errors.forEach(err => {
+        setAlert(err.msg, 'danger')
+      })
+    }
+    closeModal()
     setLessons(lessons.map((lesson) => {
       if (lesson._id === newLesson._id) return createdLesson;
       else return lesson;
@@ -71,7 +77,7 @@ const MainView = ({logout, setAlert}) => {
         content={
           modalOpen && <LessonsView lessonToEdit={lessonToEdit} editLesson={editLesson} setAlert={setAlert}/>
         }
-       />
+      />
     </div>
   )
 }
