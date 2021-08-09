@@ -39,8 +39,8 @@ const MainView = ({logout, setAlert}) => {
   const createLesson = async ({lessonTitle}) => {
     const newLesson = await api.post('/lessons', {name: lessonTitle});
     setLessons([...lessons, newLesson])
-
   }
+
   const deleteLesson = async (id) => {
     await api.delete('/lessons', {id});
     setLessons(lessons.filter(lesson => lesson._id !== id))
