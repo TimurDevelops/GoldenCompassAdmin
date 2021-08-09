@@ -3,13 +3,12 @@ import PropTypes from "prop-types";
 
 import AddLesson from "./addLesson/AddLesson";
 import LessonsList from "./lessonsList/LessonsList";
-import Header from "../ui/Header";
+import LessonView from "./lessonView/LessonView";
 
+import Header from "../ui/Header";
 import Modal from "../ui/Modal";
-import LessonsView from "./lessonView/LessonView";
 
 const LessonsView = ({logout, setAlert, lessons, createLesson, deleteLesson, editLesson}) => {
-  const [, ] = useState([]);
   const [addLessonVisible, setAddLessonVisible] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [lessonToEdit, setLessonToEdit] = useState({});
@@ -46,7 +45,7 @@ const LessonsView = ({logout, setAlert, lessons, createLesson, deleteLesson, edi
         open={modalOpen}
         closeModal={closeModal}
         content={
-          modalOpen && <LessonsView lessonToEdit={lessonToEdit} editLesson={handleEditLesson} setAlert={setAlert}/>
+          modalOpen && <LessonView lessonToEdit={lessonToEdit} editLesson={handleEditLesson} setAlert={setAlert}/>
         }
       />
     </div>

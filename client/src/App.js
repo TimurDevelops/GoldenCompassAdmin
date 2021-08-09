@@ -8,6 +8,7 @@ import Login from "./components/login/Login";
 import StudentsView from "./components/studentsView/StudentsView";
 import TeachersView from "./components/teachersView/TeachersView";
 import LessonsView from "./components/lessonsView/LessonsView";
+import LevelsView from "./components/levelsView/LevelsView";
 
 import PrivateRoute from "./components/ui/PrivateRoute";
 import {v4 as uuidv4} from 'uuid';
@@ -45,7 +46,7 @@ const App = () => {
   useEffect(() => {
     const getLessons = async () => {
       const res = await api.post('/lessons/get-lessons');
-      setLessons(res.data.students);
+      setLessons(res.data.lessons);
     }
     getLessons().catch((err)=> console.error(err))
 
@@ -54,11 +55,12 @@ const App = () => {
   useEffect(() => {
     const getLevels = async () => {
       const res = await api.post('/levels/get-levels');
-      setLevels(res.data.students);
+      setLevels(res.data.levels);
     }
     getLevels().catch((err)=> console.error(err))
 
   }, [user]);
+
 
 
   const createTeacher = async (teacher) => {
@@ -76,6 +78,10 @@ const App = () => {
     setLessons([...lessons, newLesson])
   }
 
+  const createLevel = async ({levelTitle}) => {
+    const newLevel = await api.post('/levels', {name: levelTitle});
+    setLevels([...levels, newLevel])
+  }
 
 
   const deleteTeacher = async (teacher) => {
@@ -91,6 +97,11 @@ const App = () => {
   const deleteLesson = async (id) => {
     await api.delete('/lessons', {id});
     setLessons(lessons.filter(lesson => lesson._id !== id))
+  }
+
+  const deleteLevel = async (id) => {
+    await api.delete('/levels', {id});
+    setLevels(levels.filter(level => level._id !== id))
   }
 
 
@@ -110,6 +121,21 @@ const App = () => {
     setLessons(lessons.map((lesson) => {
       if (lesson._id === newLesson._id) return createdLesson;
       else return lesson;
+    }))
+  }
+
+  const editLevel = async (newLevel) => {
+    let createdLevel;
+    try {
+      createdLevel = await api.put('/levels', newLevel);
+    } catch (e) {
+      e.response.data.errors.forEach(err => {
+        setAlert(err.msg, 'danger')
+      })
+    }
+    setLevels(levels.map((level) => {
+      if (level._id === newLevel._id) return createdLevel;
+      else return level;
     }))
   }
 
@@ -141,17 +167,6 @@ const App = () => {
                    <Login {...props} setAuth={setAuth} setAlert={setAlert} setUser={setUser} auth={auth}/>
                  }/>
 
-          <PrivateRoute exact path="/lessons-view"
-                        setAlert={setAlert}
-                        component={LessonsView}
-                        auth={auth}
-                        user={user}
-                        createLesson={createLesson}
-                        deleteLesson={deleteLesson}
-                        editLesson={editLesson}
-                        lessons={lessons}
-                        logout={logout}/>
-
           <PrivateRoute exact path="/teachers-view"
                         setAlert={setAlert}
                         component={TeachersView}
@@ -172,6 +187,29 @@ const App = () => {
                         createStudent={createStudent}
                         deleteStudent={deleteStudent}
                         students={students}
+                        logout={logout}/>
+
+          <PrivateRoute exact path="/lessons-view"
+                        setAlert={setAlert}
+                        component={LessonsView}
+                        auth={auth}
+                        user={user}
+                        createLesson={createLesson}
+                        deleteLesson={deleteLesson}
+                        editLesson={editLesson}
+                        lessons={lessons}
+                        logout={logout}/>
+
+          <PrivateRoute exact path="/levels-view"
+                        setAlert={setAlert}
+                        component={LevelsView}
+                        auth={auth}
+                        user={user}
+                        createLesson={createLevel}
+                        deleteLesson={deleteLevel}
+                        editLesson={editLevel}
+                        lessons={lessons}
+                        levels={levels}
                         logout={logout}/>
 
           {/* 404 Page */}

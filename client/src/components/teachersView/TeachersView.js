@@ -29,12 +29,12 @@ const TeachersView = ({logout, setAlert, teachers, students, createTeacher, dele
       <TeachersList teachers={teachers} deleteTeacher={deleteTeacher} openTeacher={openTeacher}/>
 
       <button style={{'margin': '20px'}}
-              onClick={() => setAddTeacherVisible(!addTeacherVisible)}>{addTeacherVisible ? 'Закрыть' : 'Добавить урок'}</button>
+              onClick={() => setAddTeacherVisible(!addTeacherVisible)}>{addTeacherVisible ? 'Закрыть' : 'Добавить учителя'}</button>
       {addTeacherVisible && <AddTeacher addTeacher={createTeacher}/>}
 
 
       <Modal
-        title={`Редактирование урока: \n ${teacherToEdit.name}`}
+        title={`Редактирование учителя: \n ${teacherToEdit.name}`}
         open={modalOpen}
         closeModal={closeModal}
         content={

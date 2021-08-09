@@ -15,7 +15,7 @@ const StudentsView = ({logout, students, createStudent, deleteStudent}) => {
       <StudentsList students={students} deleteStudent={deleteStudent}/>
 
       <button style={{'margin': '20px'}}
-              onClick={() => setAddStudentVisible(!addStudentVisible)}>{addStudentVisible ? 'Закрыть' : 'Добавить урок'}</button>
+              onClick={() => setAddStudentVisible(!addStudentVisible)}>{addStudentVisible ? 'Закрыть' : 'Добавить ученика'}</button>
       {addStudentVisible && <AddStudent createLesson={createStudent} addStudent={createStudent}/>}
 
     </div>

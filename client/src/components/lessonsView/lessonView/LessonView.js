@@ -7,7 +7,7 @@ import SlidesEditor from "./slidesEditor/SlidesEditor";
 import './LessonView.scss';
 
 
-const LessonsView = ({lessonToEdit: {_id: id, slides, name: lessonTitle}, setAlert, editLesson}) => {
+const LessonView = ({lessonToEdit: {_id: id, slides, name: lessonTitle}, setAlert, editLesson}) => {
   const [newLessonTitle, setNewLessonTitle] = useState(lessonTitle);
 
   const [newSlides, setNewSlides] = useState(slides);
@@ -47,10 +47,10 @@ const LessonsView = ({lessonToEdit: {_id: id, slides, name: lessonTitle}, setAle
   )
 }
 
-LessonsView.propTypes = {
+LessonView.propTypes = {
   lessonToEdit: PropTypes.object.isRequired,
   setAlert: PropTypes.func.isRequired,
   editLesson: PropTypes.func.isRequired,
 };
 
-export default LessonsView;
+export default LessonView;

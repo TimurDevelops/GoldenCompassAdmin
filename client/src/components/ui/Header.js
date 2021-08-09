@@ -8,9 +8,10 @@ const Header = ({logout}) => {
 
   return (
     <header className='header'>
-      <MenuItem link={'/lessons-view'} label={'Управление уроками'}/>
-      <MenuItem link={'/teachers-view'} label={'Управление учителями'}/>
-      <MenuItem link={'/students-view'} label={'Управление учениками'}/>
+      <MenuItem link={'/teachers-view'} label={'Учителя'}/>
+      <MenuItem link={'/students-view'} label={'Ученики'}/>
+      <MenuItem link={'/lessons-view'} label={'Уроками'}/>
+      <MenuItem link={'/levels-view'} label={'Уровни'}/>
 
       <button id='logoutBtn' onClick={logout}>Выйти</button>
     </header>
