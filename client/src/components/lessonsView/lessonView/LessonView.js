@@ -30,7 +30,6 @@ const LessonsView = ({lessonToEdit: {_id: id, slides, name: lessonTitle}, setAle
 
         <div className={'inputs-wrapper'}>
           <LessonTitleEditor
-            lessonTitle={lessonTitle}
             newLessonTitle={newLessonTitle}
             setNewLessonTitle={setNewLessonTitle}
           />

@@ -6,8 +6,8 @@ const {rename, mkdirSync, existsSync} = require('fs');
 const Lessons = require('../../models/Lesson');
 const Slide = require('../../models/Slide');
 
-// @route    POST api/lessonView
-// @desc     Add lessonView
+// @route    POST api/lessonsView
+// @desc     Add lessonsView
 // @access   Public
 router.post(
   '/',
@@ -43,7 +43,7 @@ router.post(
   }
 );
 
-// @route    POST api/lessonView
+// @route    POST api/lessonsView
 // @desc     Add lesson
 // @access   Public
 router.get(
@@ -61,7 +61,7 @@ router.get(
   }
 );
 
-// @route    POST api/lessonView
+// @route    POST api/lessonsView
 // @desc     Delete lesson
 // @access   Public
 router.delete(
@@ -81,7 +81,7 @@ router.delete(
   }
 );
 
-// @route    POST api/lessonView
+// @route    POST api/lessonsView
 // @desc     Edit lesson
 // @access   Public
 router.put(

@@ -9,7 +9,7 @@ import TeacherView from "../teachersView/teacherView/TeacherView";
 import Modal from "../ui/Modal";
 
 
-const TeachersView = ({logout, teachers, students, createTeacher, deleteTeacher, editTeacher, setAlert}) => {
+const TeachersView = ({logout, setAlert, teachers, students, createTeacher, deleteTeacher, editTeacher}) => {
   const [addTeacherVisible, setAddTeacherVisible] = useState(false);
   const [teacherToEdit, setTeacherToEdit] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);

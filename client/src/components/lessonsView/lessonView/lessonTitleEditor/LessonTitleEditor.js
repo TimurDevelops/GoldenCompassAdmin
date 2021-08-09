@@ -4,7 +4,7 @@ import {FaEdit, FaTimes, FaCheck} from "react-icons/fa";
 
 import './LessonTitleEditor.scss';
 
-const LessonTitleEditor = ({lessonTitle, newLessonTitle, setNewLessonTitle}) => {
+const LessonTitleEditor = ({newLessonTitle, setNewLessonTitle}) => {
   const [editingTitle, setEditingTitle] = useState(false);
   const [savedTitle, setSavedTitle] = useState(newLessonTitle);
 
@@ -21,7 +21,7 @@ const LessonTitleEditor = ({lessonTitle, newLessonTitle, setNewLessonTitle}) => 
             <FaTimes/>
           </div>
           <div className={'confirm-btn'}
-               onClick={(e) => {
+               onClick={() => {
                  setEditingTitle(false)
                  setSavedTitle(newLessonTitle)
                }}>
@@ -56,7 +56,6 @@ const LessonTitleEditor = ({lessonTitle, newLessonTitle, setNewLessonTitle}) => 
 }
 
 LessonTitleEditor.propTypes = {
-  lessonTitle: PropTypes.string.isRequired,
   newLessonTitle: PropTypes.string.isRequired,
   setNewLessonTitle: PropTypes.func.isRequired,
 };

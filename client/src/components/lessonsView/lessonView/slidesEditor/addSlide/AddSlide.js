@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import PropTypes from "prop-types";
 
-import MyDropzone from "../../../ui/MyDropzone";
+import MyDropzone from "../../../../ui/MyDropzone";
 
 import './AddSlide.scss';
 

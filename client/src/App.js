@@ -7,7 +7,7 @@ import Alert from "./components/ui/Alert";
 import Login from "./components/login/Login";
 import StudentsView from "./components/studentsView/StudentsView";
 import TeachersView from "./components/teachersView/TeachersView";
-import MainView from "./components/mainView/MainView";
+import LessonsView from "./components/lessonsView/LessonsView";
 
 import PrivateRoute from "./components/ui/PrivateRoute";
 import {v4 as uuidv4} from 'uuid';
@@ -20,7 +20,8 @@ const App = () => {
 
   const [teachers, setTeachers] = useState([]);
   const [students, setStudents] = useState([]);
-
+  const [lessons, setLessons] = useState([]);
+  const [levels, setLevels] = useState([]);
 
   useEffect(() => {
     const getTeachers = async () => {
@@ -41,6 +42,25 @@ const App = () => {
 
   }, [user]);
 
+  useEffect(() => {
+    const getLessons = async () => {
+      const res = await api.post('/lessons/get-lessons');
+      setLessons(res.data.students);
+    }
+    getLessons().catch((err)=> console.error(err))
+
+  }, [user]);
+
+  useEffect(() => {
+    const getLevels = async () => {
+      const res = await api.post('/levels/get-levels');
+      setLevels(res.data.students);
+    }
+    getLevels().catch((err)=> console.error(err))
+
+  }, [user]);
+
+
   const createTeacher = async (teacher) => {
     const newTeacher = await api.post('/teachers', {...teacher});
     setTeachers([...teachers, newTeacher])
@@ -51,6 +71,13 @@ const App = () => {
     setStudents([...students, newStudent])
   }
 
+  const createLesson = async ({lessonTitle}) => {
+    const newLesson = await api.post('/lessons', {name: lessonTitle});
+    setLessons([...lessons, newLesson])
+  }
+
+
+
   const deleteTeacher = async (teacher) => {
     await api.delete('/teachers', teacher._id);
     setTeachers(teachers.filter(i=>i._id !== teacher._id))
@@ -59,6 +86,31 @@ const App = () => {
   const deleteStudent = async (student) => {
     await api.delete('/students', student._id);
     setStudents(students.filter(i=>i._id !== student._id))
+  }
+
+  const deleteLesson = async (id) => {
+    await api.delete('/lessons', {id});
+    setLessons(lessons.filter(lesson => lesson._id !== id))
+  }
+
+
+  const editTeacher = () => {
+    console.log('editTeacher')
+  }
+
+  const editLesson = async (newLesson) => {
+    let createdLesson;
+    try {
+      createdLesson = await api.put('/lessons', newLesson);
+    } catch (e) {
+      e.response.data.errors.forEach(err => {
+        setAlert(err.msg, 'danger')
+      })
+    }
+    setLessons(lessons.map((lesson) => {
+      if (lesson._id === newLesson._id) return createdLesson;
+      else return lesson;
+    }))
   }
 
 
@@ -91,9 +143,13 @@ const App = () => {
 
           <PrivateRoute exact path="/lessons-view"
                         setAlert={setAlert}
-                        component={MainView}
+                        component={LessonsView}
                         auth={auth}
                         user={user}
+                        createLesson={createLesson}
+                        deleteLesson={deleteLesson}
+                        editLesson={editLesson}
+                        lessons={lessons}
                         logout={logout}/>
 
           <PrivateRoute exact path="/teachers-view"
@@ -103,6 +159,7 @@ const App = () => {
                         user={user}
                         createTeacher={createTeacher}
                         deleteTeacher={deleteTeacher}
+                        editTeacher={editTeacher}
                         teachers={teachers}
                         students={students}
                         logout={logout}/>

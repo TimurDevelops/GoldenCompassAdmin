@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 import SlideList from "./slideList/SlideList";
 import AddSlide from "./addSlide/AddSlide";
-import Modal from "../../ui/Modal";
+import Modal from "../../../ui/Modal";
 import SlideView from "./slideView/SlideView";
 
 import './SlideEditor.scss'

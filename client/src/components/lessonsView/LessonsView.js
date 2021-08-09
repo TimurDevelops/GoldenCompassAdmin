@@ -1,27 +1,18 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import PropTypes from "prop-types";
 
 import AddLesson from "./addLesson/AddLesson";
 import LessonsList from "./lessonsList/LessonsList";
 import Header from "../ui/Header";
 
-import api from "../../utils/api";
 import Modal from "../ui/Modal";
-import LessonsView from "../lessonView/LessonView";
+import LessonsView from "./lessonView/LessonView";
 
-const MainView = ({logout, setAlert}) => {
-  const [lessons, setLessons] = useState([]);
+const LessonsView = ({logout, setAlert, lessons, createLesson, deleteLesson, editLesson}) => {
+  const [, ] = useState([]);
   const [addLessonVisible, setAddLessonVisible] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [lessonToEdit, setLessonToEdit] = useState({});
-
-  useEffect(() => {
-    const getLessons = async () => {
-      const res = await api.get('/lessons/get-lessons');
-      setLessons(res.data.lessons);
-    }
-    getLessons().catch((err) => console.error(err))
-  }, []);
 
   const closeModal = () => {
     setModalOpen(false);
@@ -36,30 +27,10 @@ const MainView = ({logout, setAlert}) => {
     setLessonToEdit(lesson)
   }
 
-  const createLesson = async ({lessonTitle}) => {
-    const newLesson = await api.post('/lessons', {name: lessonTitle});
-    setLessons([...lessons, newLesson])
-  }
-
-  const deleteLesson = async (id) => {
-    await api.delete('/lessons', {id});
-    setLessons(lessons.filter(lesson => lesson._id !== id))
-  }
-
-  const editLesson = async (newLesson) => {
-    let createdLesson;
-    try {
-      createdLesson = await api.put('/lessons', newLesson);
-    } catch (e) {
-      e.response.data.errors.forEach(err => {
-        setAlert(err.msg, 'danger')
-      })
-    }
+  const handleEditLesson = (lesson) => {
+    editLesson(lesson)
     closeModal()
-    setLessons(lessons.map((lesson) => {
-      if (lesson._id === newLesson._id) return createdLesson;
-      else return lesson;
-    }))
+
   }
 
   return (
@@ -75,16 +46,20 @@ const MainView = ({logout, setAlert}) => {
         open={modalOpen}
         closeModal={closeModal}
         content={
-          modalOpen && <LessonsView lessonToEdit={lessonToEdit} editLesson={editLesson} setAlert={setAlert}/>
+          modalOpen && <LessonsView lessonToEdit={lessonToEdit} editLesson={handleEditLesson} setAlert={setAlert}/>
         }
       />
     </div>
   )
 }
 
-MainView.propTypes = {
+LessonsView.propTypes = {
+  lessons: PropTypes.array.isRequired,
+  createLesson: PropTypes.func.isRequired,
+  deleteLesson: PropTypes.func.isRequired,
+  editLesson: PropTypes.func.isRequired,
   logout: PropTypes.func.isRequired,
   setAlert: PropTypes.func.isRequired,
 };
 
-export default MainView;
+export default LessonsView;

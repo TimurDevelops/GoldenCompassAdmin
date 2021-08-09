@@ -23,10 +23,10 @@ const StudentsView = ({logout, students, createStudent, deleteStudent}) => {
 }
 
 StudentsView.propTypes = {
-  logout: PropTypes.func.isRequired,
-  setAlert: PropTypes.func.isRequired,
   createStudent: PropTypes.func.isRequired,
   deleteStudent: PropTypes.func.isRequired,
+  logout: PropTypes.func.isRequired,
+  setAlert: PropTypes.func.isRequired,
   students: PropTypes.array.isRequired,
 };
 

@@ -3,8 +3,8 @@ const router = express.Router();
 const multer  = require('multer')
 const upload = multer({ dest: 'uploads/' })
 
-// @route    POST api/lessonView
-// @desc     Delete lessonView
+// @route    POST api/lessonsView
+// @desc     Delete lessonsView
 // @access   Public
 router.post(
   '/', upload.single('file'),
