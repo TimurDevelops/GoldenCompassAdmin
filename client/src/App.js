@@ -5,6 +5,8 @@ import useUser from "./utils/useUser";
 import Alert from "./components/ui/Alert";
 
 import Login from "./components/login/Login";
+import StudentsView from "./components/studentsView/StudentsView";
+import TeachersView from "./components/teachersView/TeachersView";
 import MainView from "./components/mainView/MainView";
 
 import PrivateRoute from "./components/ui/PrivateRoute";
@@ -30,7 +32,7 @@ const App = () => {
     unsetUser();
     setAuth({isAuthenticated: false, isLoading: false});
   };
-  // TODO create views folder
+
   return (
     <section className="container">
       <Alert alerts={alerts}/>
@@ -42,10 +44,23 @@ const App = () => {
                    <Login {...props} setAuth={setAuth} setAlert={setAlert} setUser={setUser} auth={auth}/>
                  }/>
 
-          {/* Canvas will determine content by type and room */}
-          <PrivateRoute exact path="/main-view"
+          <PrivateRoute exact path="/lessons-view"
                         setAlert={setAlert}
                         component={MainView}
+                        auth={auth}
+                        user={user}
+                        logout={logout}/>
+
+          <PrivateRoute exact path="/teachers-view"
+                        setAlert={setAlert}
+                        component={TeachersView}
+                        auth={auth}
+                        user={user}
+                        logout={logout}/>
+
+          <PrivateRoute exact path="/students-view"
+                        setAlert={setAlert}
+                        component={StudentsView}
                         auth={auth}
                         user={user}
                         logout={logout}/>
@@ -54,7 +69,7 @@ const App = () => {
           <Route path="*" render={
             () => {
               if (auth.isAuthenticated) {
-                return <Redirect to="/main-view"/>
+                return <Redirect to="/lessons-view"/>
               } else {
                 return <Redirect to="/login"/>
               }

@@ -37,7 +37,7 @@ const Login = ({setUser, setAuth, setAlert}) => {
       });
       setUser(user)
       setAuth({isLoading: false, isAuthenticated: true});
-      history.push("/main-view");
+      history.push("/lessons-view");
 
     } catch (errors) {
       setAuth({isLoading: false, isAuthenticated: false});
