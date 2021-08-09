@@ -8,6 +8,7 @@ import './AddSlide.scss';
 const AddSlide = ({createSlide}) => {
   const [tip, setTip] = useState();
   const [file, setFile] = useState();
+  const [newHasAbacus, setNewHasAbacus] = useState();
 
   const filePicked = (files) => {
     setFile(files[0])
@@ -27,6 +28,13 @@ const AddSlide = ({createSlide}) => {
             <input type="input" className="form-field" placeholder="Логин" name="login" id='login'
                    onChange={e => setTip(e.target.value)} required/>
             <label htmlFor="login" className="form-label">Подсказка для учителя</label>
+          </div>
+
+          <div className="form-group field">
+            <input type="checkbox" className="form-field" placeholder="" name="hasAbacus" id='hasAbacus'
+                   value={newHasAbacus}
+                   onChange={e => setNewHasAbacus(e.target.value)}/>
+            <label htmlFor="hasAbacus" className="form-label">Абакус: </label>
           </div>
 
           <MyDropzone filePicked={filePicked}/>

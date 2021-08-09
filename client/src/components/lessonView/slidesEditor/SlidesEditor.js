@@ -27,18 +27,18 @@ const SlidesEditor = ({slides, setSlides, setAlert}) => {
     setSlideToEdit(slide)
   }
 
-  const createSlide = async ({tip, file}) => {
-    setSlides([...slides, {tip, img: file, _id: uuidv4()}]);
+  const createSlide = async ({tip, file, hasAbacus}) => {
+    setSlides([...slides, {tip, img: file, hasAbacus, _id: uuidv4()}]);
   }
 
   const deleteSlide = async (id) => {
     setSlides(slides.filter(slide => slide._id !== id));
   }
 
-  const editSlide = async ({id, tip, file}) => {
+  const editSlide = async ({id, tip, file, hasAbacus}) => {
 
     setSlides(slides.map(slide => {
-      if(slide._id === id) return {_id: id, tip, img: file}
+      if (slide._id === id) return {_id: id, tip, img: file, hasAbacus}
       else return slide
     }));
   }

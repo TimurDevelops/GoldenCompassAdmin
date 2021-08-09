@@ -17,7 +17,7 @@ const LessonsView = ({lessonToEdit: {_id: id, slides, name: lessonTitle}, setAle
       {
         id,
         title: newLessonTitle,
-        slides: newSlides
+        slides: newSlides,
       }
     )
     setNewSlides([])

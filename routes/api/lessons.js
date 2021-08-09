@@ -109,10 +109,10 @@ router.put(
           if (err) throw err;
         });
 
-
         const slide = new Slide({
           img: i.img,
           tip: i.tip,
+          hasAbacus: i.hasAbacus,
         })
         slidesIds.push(slide._id)
         await slide.save()

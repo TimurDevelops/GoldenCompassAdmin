@@ -4,9 +4,10 @@ import MyDropzone from "../../../ui/MyDropzone";
 
 import './SlideView.scss';
 
-const SlideView = ({slide: {_id, tip, img}, editSlide, closeForm}) => {
+const SlideView = ({slide: {_id, tip, img, hasAbacus}, editSlide, closeForm}) => {
   const [newTip, setNewTip] = useState(tip);
   const [newFile, setNewFile] = useState(img);
+  const [newHasAbacus, setNewHasAbacus] = useState(hasAbacus);
 
   const filePicked = (files) => {
     setNewFile(files[0])
@@ -14,7 +15,7 @@ const SlideView = ({slide: {_id, tip, img}, editSlide, closeForm}) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    editSlide({id: _id, tip: newTip, file: newFile})
+    editSlide({id: _id, tip: newTip, file: newFile, hasAbacus: newHasAbacus})
     closeForm();
   }
   return (
@@ -30,6 +31,12 @@ const SlideView = ({slide: {_id, tip, img}, editSlide, closeForm}) => {
             <label htmlFor="login" className="form-label">Подсказка для учителя</label>
           </div>
 
+          <div className="form-group field">
+            <input type="checkbox" className="form-field" placeholder="" name="hasAbacus" id='hasAbacus'
+                   value={newHasAbacus}
+                   onChange={e => setNewHasAbacus(e.target.value)}/>
+            <label htmlFor="hasAbacus" className="form-label">Абакус: </label>
+          </div>
 
           <MyDropzone showPreview={false} filePicked={filePicked}/>
 
