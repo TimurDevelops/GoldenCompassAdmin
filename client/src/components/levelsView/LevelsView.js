@@ -34,9 +34,11 @@ const LevelsView = ({createLevel, deleteLevel, editLevel, logout, setAlert, less
   return (
     <div>
       <Header logout={logout} style={{'margin': '20px'}}/>
+
       <button style={{'margin': '20px'}}
               onClick={() => setAddLevelVisible(!addLevelVisible)}>{addLevelVisible ? 'Закрыть' : 'Добавить уровень'}</button>
       {addLevelVisible && <AddLevel createLevel={createLevel}/>}
+
       <LevelsList levels={levels} deleteLevel={deleteLevel} openLevel={openModal}/>
 
       <Modal

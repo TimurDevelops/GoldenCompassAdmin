@@ -26,12 +26,12 @@ const TeachersView = ({logout, setAlert, teachers, students, createTeacher, dele
   return (
     <div>
       <Header logout={logout} style={{'margin': '20px'}}/>
-      <TeachersList teachers={teachers} deleteTeacher={deleteTeacher} openTeacher={openTeacher}/>
 
       <button style={{'margin': '20px'}}
               onClick={() => setAddTeacherVisible(!addTeacherVisible)}>{addTeacherVisible ? 'Закрыть' : 'Добавить учителя'}</button>
       {addTeacherVisible && <AddTeacher addTeacher={createTeacher}/>}
 
+      <TeachersList teachers={teachers} deleteTeacher={deleteTeacher} openTeacher={openTeacher}/>
 
       <Modal
         title={`Редактирование учителя: \n ${teacherToEdit.name}`}

@@ -5,7 +5,7 @@ import TeacherItem from "./teacherItem/TeacherItem";
 const TeachersList = ({teachers, deleteTeacher, openTeacher}) => {
 
   return (
-    <div>
+    <div className={'teachers-list-wrapper'}>
       {
         teachers.map(teacher => <TeacherItem key={teacher._id} teacher={teacher}
                                              deleteTeacher={() => deleteTeacher(teacher._id)}

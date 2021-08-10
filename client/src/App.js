@@ -1,5 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {BrowserRouter as Router, Redirect, Route, Switch} from 'react-router-dom';
+
+import api from "./utils/api";
+
 import useUser from "./utils/useUser";
 
 import Alert from "./components/ui/Alert";
@@ -12,7 +15,8 @@ import LevelsView from "./components/levelsView/LevelsView";
 
 import PrivateRoute from "./components/ui/PrivateRoute";
 import {v4 as uuidv4} from 'uuid';
-import api from "./utils/api";
+
+import './Common.scss';
 
 const App = () => {
   const {user, setUser, unsetUser} = useUser()

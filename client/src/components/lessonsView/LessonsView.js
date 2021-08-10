@@ -35,9 +35,12 @@ const LessonsView = ({logout, setAlert, lessons, createLesson, deleteLesson, edi
   return (
     <div>
       <Header logout={logout} style={{'margin': '20px'}}/>
+
       <button style={{'margin': '20px'}}
               onClick={() => setAddLessonVisible(!addLessonVisible)}>{addLessonVisible ? 'Закрыть' : 'Добавить урок'}</button>
+
       {addLessonVisible && <AddLesson createLesson={createLesson}/>}
+
       <LessonsList lessons={lessons} deleteLesson={deleteLesson} openLesson={openModal}/>
 
       <Modal

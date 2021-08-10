@@ -2,11 +2,9 @@ import React from 'react';
 import PropTypes from "prop-types";
 import {FaTimes, FaEdit} from 'react-icons/fa';
 
-import './LevelItem.scss';
-
 const LevelItem = ({level, deleteLevel, openLevel}) => {
   return (
-    <div className={'level-wrapper'}>
+    <div className={'level-wrapper item-wrapper'}>
       <h4 className={'level-title'}>{level.name}</h4>
       <div className={'btn-wrapper'}>
         <div className={'delete-btn'} onClick={() => deleteLevel()}>

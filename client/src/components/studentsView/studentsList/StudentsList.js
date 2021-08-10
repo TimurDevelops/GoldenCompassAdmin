@@ -5,7 +5,7 @@ import StudentItem from "./studentItem/StudentItem";
 const StudentsList = ({students, deleteStudent}) => {
 
   return (
-    <div>
+    <div className={'students-list-wrapper'}>
       {
         students.map(student => <StudentItem key={student._id} student={student}
                                              deleteStudent={() => deleteStudent(student._id)}/>)
