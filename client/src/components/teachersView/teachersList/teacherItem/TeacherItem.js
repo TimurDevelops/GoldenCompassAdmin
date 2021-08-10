@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from "prop-types";
-import {FaTimes, FaEdit} from 'react-icons/fa';
+import {FaTimes, FaEdit, FaSyncAlt} from 'react-icons/fa';
 
-const TeacherItem = ({teacher, deleteTeacher, openTeacher}) => {
+const TeacherItem = ({teacher, deleteTeacher, openTeacher, resetPassword}) => {
 
   return (
     <div className={'teacher-wrapper item-wrapper'}>
@@ -17,6 +17,9 @@ const TeacherItem = ({teacher, deleteTeacher, openTeacher}) => {
         <div className={'edit-btn'} onClick={() => openTeacher()}>
           <FaEdit/>
         </div>
+        <div className={'reset-btn'} onClick={() => resetPassword()} title="Сменить пароль">
+          <FaSyncAlt/>
+        </div>
       </div>
     </div>
   )
@@ -26,6 +29,7 @@ TeacherItem.propTypes = {
   teacher: PropTypes.object.isRequired,
   deleteTeacher: PropTypes.func.isRequired,
   openTeacher: PropTypes.func.isRequired,
+  resetPassword: PropTypes.func.isRequired,
 };
 
 export default TeacherItem;

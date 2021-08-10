@@ -5,6 +5,7 @@ const {check, validationResult} = require('express-validator');
 
 const Student = require('../../models/Student');
 const Teacher = require('../../models/Teacher');
+const generator = require("generate-password");
 
 // @route    POST api/student
 // @desc     Register student
@@ -142,6 +143,41 @@ router.post(
   }
 );
 
+// @route    POST api/student
+// @desc     Reset password for student
+// @access   Public
+router.post(
+  '/reset-password',
+  check('id', 'Введите ID ученика').notEmpty(),
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({errors: errors.array()});
+    }
+
+    const {id} = req.body;
+
+    try {
+      let student = await Student.findById(id);
+
+      const password = generator.generate({
+        length: 10,
+        numbers: true
+      });
+
+      const salt = await bcrypt.genSalt(10);
+
+      student.password = await bcrypt.hash(password, salt);
+
+      await student.save();
+
+      res.status(200).json({p: password});
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server error');
+    }
+  }
+);
 
 module.exports = router;
 

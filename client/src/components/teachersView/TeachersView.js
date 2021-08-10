@@ -88,6 +88,18 @@ const TeachersView = ({logout, setAlert}) => {
     }))
   }
 
+  const resetPassword = async (teacherId, teacherName) => {
+    try {
+      const res = await api.post('/teachers/reset-password', {id: teacherId});
+      alert(`Новый пароль для пользователя ${teacherName}: ${res.data.p}`)
+    } catch (e) {
+      console.log(e)
+      e.response.data.errors.forEach(err => {
+        setAlert(err.msg, 'danger')
+      })
+    }
+  }
+
 
   return (
     <div>
@@ -100,7 +112,7 @@ const TeachersView = ({logout, setAlert}) => {
                   onClick={() => setAddTeacherVisible(!addTeacherVisible)}>{addTeacherVisible ? 'Закрыть' : 'Добавить учителя'}</button>
           {addTeacherVisible && <AddTeacher addTeacher={createTeacher}/>}
 
-          <TeachersList teachers={teachers} deleteTeacher={deleteTeacher} openTeacher={openTeacher}/>
+          <TeachersList teachers={teachers} deleteTeacher={deleteTeacher} openTeacher={openTeacher} resetPassword={resetPassword}/>
 
           <Modal
             title={`Редактирование учителя: \n ${teacherToEdit.name}`}

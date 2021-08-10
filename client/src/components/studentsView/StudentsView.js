@@ -50,6 +50,18 @@ const StudentsView = ({logout, setAlert}) => {
     }
     setStudents(students.filter(i => i._id !== studentId))
   }
+
+  const resetPassword = async (studentId, studentName) => {
+    try {
+      const res = await api.post('/students/reset-password', {id: studentId});
+      alert(`Новый пароль для пользователя ${studentName}: ${res.data.p}`)
+    } catch (e) {
+      console.log(e)
+      e.response.data.errors.forEach(err => {
+        setAlert(err.msg, 'danger')
+      })
+    }
+  }
   return (
     <div>
       <Header logout={logout}/>
@@ -60,7 +72,7 @@ const StudentsView = ({logout, setAlert}) => {
                   onClick={() => setAddStudentVisible(!addStudentVisible)}>{addStudentVisible ? 'Закрыть' : 'Добавить ученика'}</button>
           {addStudentVisible && <AddStudent createLesson={createStudent} addStudent={createStudent}/>}
 
-          <StudentsList students={students} deleteStudent={deleteStudent}/>
+          <StudentsList students={students} deleteStudent={deleteStudent} resetPassword={resetPassword}/>
         </div>
       </div>
 

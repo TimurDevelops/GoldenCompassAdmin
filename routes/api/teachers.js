@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const {check, validationResult} = require('express-validator');
+const generator = require('generate-password');
 
 const Teacher = require('../../models/Teacher');
 const Student = require('../../models/Student');
@@ -134,6 +135,42 @@ router.put(
       resTeacher.students = await Student.find({_id: {$in: students_ids}});
 
       res.status(200).json({teacher: resTeacher});
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server error');
+    }
+  }
+);
+
+// @route    POST api/teacher
+// @desc     Reset password for teacher
+// @access   Public
+router.post(
+  '/reset-password',
+  check('id', 'Введите ID учителя').notEmpty(),
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({errors: errors.array()});
+    }
+
+    const {id} = req.body;
+
+    try {
+      let teacher = await Teacher.findById(id);
+
+      const password = generator.generate({
+        length: 10,
+        numbers: true
+      });
+
+      const salt = await bcrypt.genSalt(10);
+
+      teacher.password = await bcrypt.hash(password, salt);
+
+      await teacher.save();
+
+      res.status(200).json({p: password});
     } catch (err) {
       console.error(err.message);
       res.status(500).send('Server error');
