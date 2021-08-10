@@ -6,6 +6,7 @@ const generator = require('generate-password');
 
 const Teacher = require('../../models/Teacher');
 const Student = require('../../models/Student');
+const Level = require('../../models/Level');
 
 // @route    POST api/users
 // @desc     Register teacher
@@ -92,6 +93,10 @@ router.post(
       for (let i = 0; i < teachers.length; i++) {
         const students_ids = teachers[i].students.map((id) => ObjectId(id));
         teachers[i].students = await Student.find({_id: {$in: students_ids}});
+
+        const levels_ids = teachers[i].levels.map((id) => ObjectId(id));
+        teachers[i].levels = await Level.find({_id: {$in: levels_ids}});
+
       }
 
       return res.json({teachers});
@@ -116,7 +121,7 @@ router.put(
       return res.status(400).json({errors: errors.array()});
     }
 
-    const {id, name, login, students} = req.body;
+    const {id, name, login, students, levels} = req.body;
 
     try {
 
@@ -125,6 +130,7 @@ router.put(
       teacher.name = name;
       teacher.login = login;
       teacher.students = students;
+      teacher.levels = levels;
 
       await teacher.save();
 
@@ -133,6 +139,9 @@ router.put(
       const ObjectId = require('mongoose').Types.ObjectId;
       const students_ids = resTeacher.students.map((id) => ObjectId(id));
       resTeacher.students = await Student.find({_id: {$in: students_ids}});
+
+      const levels_ids = resTeacher.levels.map((id) => ObjectId(id));
+      resTeacher.levels = await Level.find({_id: {$in: levels_ids}});
 
       res.status(200).json({teacher: resTeacher});
     } catch (err) {

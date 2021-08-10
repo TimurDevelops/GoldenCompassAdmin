@@ -67,12 +67,13 @@ const TeachersView = ({logout, setAlert}) => {
     }
   }
 
-  const editTeacher = async ({id, name, login, students}) => {
+  const editTeacher = async ({id, name, login, students, levels}) => {
     const newStudents = students.map(student => student._id)
+    const newLevels = levels.map(level => level._id)
 
     let createdTeacher;
     try {
-      let res = await api.put('/teachers', {id, name, login, students: newStudents});
+      let res = await api.put('/teachers', {id, name, login, students: newStudents, levels: newLevels});
       createdTeacher = res.data.teacher;
     } catch (e) {
       console.log(e)

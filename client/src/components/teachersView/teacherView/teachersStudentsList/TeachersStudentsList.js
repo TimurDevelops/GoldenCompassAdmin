@@ -44,6 +44,7 @@ const TeachersStudentsList = ({students, setStudents}) => {
 
 TeachersStudentsList.propTypes = {
   students: PropTypes.array.isRequired,
+  setStudents: PropTypes.func.isRequired,
 };
 
 export default TeachersStudentsList;
