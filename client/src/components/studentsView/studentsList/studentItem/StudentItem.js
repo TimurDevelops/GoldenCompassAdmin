@@ -5,7 +5,10 @@ import {FaTimes} from 'react-icons/fa';
 const StudentItem = ({student, deleteStudent}) => {
   return (
     <div className={'student-wrapper item-wrapper'}>
-      <h4 className={'student-title'}>{student.name}</h4>
+      <h4 className={'teacher-title'}>
+        ФИО: {student.name}<br/>
+        Логин: {student.login}
+      </h4>
       <div className={'btn-wrapper'}>
         <div className={'delete-btn'} onClick={() => deleteStudent()}>
           <FaTimes/>

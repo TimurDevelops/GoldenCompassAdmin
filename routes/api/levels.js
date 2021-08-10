@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const {check, validationResult} = require('express-validator');
-const Lessons = require('../../models/Lesson');
 const Level = require('../../models/Level');
+const Lesson = require("../../models/Lesson");
 
 // @route    POST api/levels
 // @desc     Add level
@@ -27,7 +27,7 @@ router.post(
           .json({errors: [{msg: 'Уровень с таким названием уже существует'}]});
       }
 
-      level = new Lessons({
+      level = new Level({
         name
       });
 
@@ -47,8 +47,19 @@ router.post(
 router.post(
   '/get-levels',
   async (req, res) => {
+    const ObjectId = require('mongoose').Types.ObjectId;
     try {
-      let levels = await Level.find();
+      let levels = await Level.find().lean();
+
+      for (let i = 0; i < levels.length; i++) {
+        const lessons_ids = levels[i].lessons.map((id) => ObjectId(id));
+
+        levels[i].lessons = await Lesson.find({_id: {$in: lessons_ids}});
+      }
+
+      res.status(200).json({levels});
+
+
 
       return res.json({levels});
 
@@ -66,10 +77,10 @@ router.delete(
   '/',
   check('id', 'Введите id Удаляемого Уровня').notEmpty(),
   async (req, res) => {
-    const {id} = req.body;
+    const {levelId} = req.body;
 
     try {
-      let levels = await Level.deleteOne({_id: id});
+      let levels = await Level.deleteOne({_id: levelId});
       return res.json({levels});
 
     } catch (err) {
@@ -85,25 +96,31 @@ router.delete(
 router.put(
   '/',
   check('id', 'Введите ID уровня').notEmpty(),
-  check('title', 'Введите название уровня').notEmpty(),
-  check('lessons', 'Укажите уроки').notEmpty(),
+  check('name', 'Введите название уровня').notEmpty(),
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({errors: errors.array()});
     }
+    const ObjectId = require('mongoose').Types.ObjectId;
 
-    const {id, title, lessons} = req.body;
+    const {id, name, lessons} = req.body;
     try {
 
-      let level = await Lessons.findOneAndUpdate({_id: id}, {
-        title: title,
-        lessons: lessons,
-      });
+      let level = await Level.findById(id)
+
+      level.name = name;
+      level.lessons = lessons;
 
       await level.save();
 
-      res.status(200).json({level});
+      let resLevel = await Level.findById(id).lean();
+
+      const lessons_ids = resLevel.lessons.map((id) => ObjectId(id));
+      resLevel.lessons = await Lesson.find({_id: {$in: lessons_ids}});
+
+      res.status(200).json({level: resLevel});
+
     } catch (err) {
       console.error(err.message);
       res.status(500).send('Server error');

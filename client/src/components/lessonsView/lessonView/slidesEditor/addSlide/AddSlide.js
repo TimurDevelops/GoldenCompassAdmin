@@ -8,7 +8,7 @@ import './AddSlide.scss';
 const AddSlide = ({createSlide}) => {
   const [tip, setTip] = useState();
   const [file, setFile] = useState();
-  const [newHasAbacus, setNewHasAbacus] = useState();
+  const [newHasAbacus, setNewHasAbacus] = useState(false);
 
   const filePicked = (files) => {
     setFile(files[0])
@@ -16,7 +16,7 @@ const AddSlide = ({createSlide}) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    createSlide({tip, file})
+    createSlide({tip, file, hasAbacus: newHasAbacus})
   }
 
   return (
@@ -30,11 +30,11 @@ const AddSlide = ({createSlide}) => {
             <label htmlFor="tip" className="form-label">Подсказка для учителя</label>
           </div>
 
-          <div className="form-group field">
-            <input type="checkbox" className="form-field" placeholder="Абакус" name="hasAbacus" id='hasAbacus'
-                   value={newHasAbacus}
-                   onChange={e => setNewHasAbacus(e.target.value)}/>
-            <label htmlFor="hasAbacus" className="form-label">Абакус: </label>
+          <div className="form-group field abacus">
+            <label htmlFor="hasAbacus" >Абакус: </label>
+            <input type="checkbox" placeholder="Абакус" name="hasAbacus" id='hasAbacus'
+                   checked={newHasAbacus}
+                   onChange={e => setNewHasAbacus(e.target.checked)}/>
           </div>
 
           <MyDropzone filePicked={filePicked}/>

@@ -3,11 +3,11 @@ const router = express.Router();
 const {check, validationResult} = require('express-validator');
 const {rename, mkdirSync, existsSync} = require('fs');
 
-const Lessons = require('../../models/Lesson');
+const Lesson = require('../../models/Lesson');
 const Slide = require('../../models/Slide');
 
 // @route    POST api/lessonsView
-// @desc     Add lessonsView
+// @desc     Add lessons
 // @access   Public
 router.post(
   '/',
@@ -21,7 +21,7 @@ router.post(
     const {name} = req.body;
 
     try {
-      let lesson = await Lessons.findOne({name});
+      let lesson = await Lesson.findOne({name});
 
       if (lesson) {
         return res
@@ -29,7 +29,7 @@ router.post(
           .json({errors: [{msg: 'Урок с таким названием уже существует'}]});
       }
 
-      lesson = new Lessons({
+      lesson = new Lesson({
         name
       });
 
@@ -51,10 +51,10 @@ router.post(
   async (req, res) => {
     const ObjectId = require('mongoose').Types.ObjectId;
     try {
-      let lessons = await Lessons.find();
+      let lessons = await Lesson.find().lean();
 
-      for (let i = 0; i < lessons.length; i++){
-        const slides_ids = lessons[i].slides.map(function(id) { return ObjectId(id); });
+      for (let i = 0; i < lessons.length; i++) {
+        const slides_ids = lessons[i].slides.map((id) => ObjectId(id));
         lessons[i].slides = await Slide.find({_id: {$in: slides_ids}});
       }
 
@@ -74,11 +74,11 @@ router.delete(
   '/',
   check('id', 'Введите id Удаляемого Урока').notEmpty(),
   async (req, res) => {
-    const {id} = req.body;
+    const {lessonId: id} = req.body;
 
     try {
-      let lessons = await Lessons.deleteOne({_id: id});
-      return res.json({lessons});
+      let lesson = await Lesson.deleteOne({_id: id});
+      return res.json({lesson});
 
     } catch (err) {
       console.error(err.message);
@@ -87,6 +87,44 @@ router.delete(
   }
 );
 
+const checkImage = (filePath) => {
+  let fileName = filePath.split('/').slice(-1)[0]
+
+  if (existsSync('./uploads/' + fileName)) {
+    rename('./uploads/' + fileName, './slides/' + fileName, function (err) {
+      if (err) throw err;
+    });
+    return filePath.replace('uploads', 'slides');
+
+  } else if (existsSync('./slides/' + fileName)) {
+    return filePath;
+  } else {
+    return {errors: [{msg: 'Файл не найден'}]}
+  }
+}
+
+const createSlide = async ({img, tip, hasAbacus}) => {
+  const slide = new Slide({
+    img: checkImage(img),
+    tip: tip,
+    hasAbacus: hasAbacus,
+  });
+  await slide.save()
+  return slide;
+}
+
+const editSlide = async ({_id: id, img, tip, hasAbacus}) => {
+  let slide = await Slide.findById(id);
+
+  slide.img = checkImage(img)
+  slide.tip = tip
+  slide.hasAbacus = hasAbacus
+
+  slide.save();
+
+  return slide;
+}
+
 // @route    POST api/lessonsView
 // @desc     Edit lesson
 // @access   Public
@@ -94,8 +132,8 @@ router.put(
   '/',
   check('id', 'Введите ID урока').notEmpty(),
   check('title', 'Введите название урока').notEmpty(),
-  check('slides', 'Укажите слайды').notEmpty(),
   async (req, res) => {
+    const ObjectId = require('mongoose').Types.ObjectId;
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({errors: errors.array()});
@@ -104,34 +142,36 @@ router.put(
     const {id, title, slides} = req.body;
     let slidesIds = []
     try {
-      if (!existsSync('./slides')){
+      if (!existsSync('./slides')) {
         mkdirSync('./slides');
       }
 
       for (const i of slides) {
-        let fileName = i.img.split('/').slice(-1)[0]
+        const editing = ObjectId.isValid(i._id);
+        let newSlide;
 
-        rename('./uploads/' + fileName, './slides/' + fileName, function(err) {
-          if (err) throw err;
-        });
+        if (editing) {
+          newSlide = await editSlide(i)
+        } else {
+          newSlide = await createSlide(i)
+        }
 
-        const slide = new Slide({
-          img: i.img,
-          tip: i.tip,
-          hasAbacus: i.hasAbacus,
-        })
-        slidesIds.push(slide._id)
-        await slide.save()
+        slidesIds.push(newSlide._id)
       }
 
-      let lesson = await Lessons.findOneAndUpdate({_id: id}, {
-        title: title,
-        slides: slidesIds,
-      });
+      let lesson = await Lesson.findById(id)
+
+      lesson.name = title;
+      lesson.slides = slidesIds;
 
       await lesson.save();
 
-      res.status(200).json({lesson});
+      let resLesson = await Lesson.findById(id).lean();
+
+      const slides_ids = lesson.slides.map((id) => ObjectId(id));
+      resLesson.slides = await Slide.find({_id: {$in: slides_ids}});
+
+      res.status(200).json({lesson: resLesson});
     } catch (err) {
       console.error(err.message);
       res.status(500).send('Server error');

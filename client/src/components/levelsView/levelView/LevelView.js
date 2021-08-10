@@ -2,23 +2,22 @@ import React, {useState} from 'react';
 import PropTypes from "prop-types";
 
 import LevelTitleEditor from "./levelTitleEditor/LevelTitleEditor";
+import LevelsLessonsList from "./levelsLessonsList/LevelsLessonsList";
 
 import './LevelView.scss';
 
-const LevelView = ({levelToEdit: {_id: id, slides, name: levelTitle}, lessons, editLevel}) => {
-  const [newLevelTitle, setNewLevelTitle] = useState(levelTitle);
-
-  const [newSlides, setNewSlides] = useState(slides);
+const LevelView = ({editLevel, levelToEdit: {_id: id, name: oldLeveTitle, lessons: oldLessons}}) => {
+  const [levelTitle, setLevelTitle] = useState(oldLeveTitle);
+  const [lessons, setLessons] = useState(oldLessons);
 
   const handleSubmit = () => {
     editLevel(
       {
         id,
-        title: newLevelTitle,
-        slides: newSlides,
+        name: levelTitle,
+        lessons: lessons,
       }
     )
-    setNewSlides([])
   }
 
   return (
@@ -28,10 +27,11 @@ const LevelView = ({levelToEdit: {_id: id, slides, name: levelTitle}, lessons, e
 
         <div className={'inputs-wrapper'}>
           <LevelTitleEditor
-            newLevelTitle={newLevelTitle}
-            setNewLevelTitle={setNewLevelTitle}
+            newLevelTitle={levelTitle}
+            setNewLevelTitle={setLevelTitle}
           />
 
+          <LevelsLessonsList lessons={lessons} setLessons={setLessons}/>
 
         </div>
         <div>
@@ -46,7 +46,6 @@ const LevelView = ({levelToEdit: {_id: id, slides, name: levelTitle}, lessons, e
 
 LevelView.propTypes = {
   levelToEdit: PropTypes.object.isRequired,
-  lessons: PropTypes.array.isRequired,
   setAlert: PropTypes.func.isRequired,
   editLevel: PropTypes.func.isRequired,
 };

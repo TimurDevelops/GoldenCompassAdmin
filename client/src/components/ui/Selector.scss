@@ -1,0 +1,40 @@
+.selector-wrapper {
+  margin: 2em 0;
+  min-width: 20em;
+
+  .items-wrapper {
+    border: 1px solid #ccc;
+    padding: 5px;
+    position: relative;
+
+    .placeholder {
+      cursor: pointer;
+    }
+
+    .selector-bg {
+      z-index: 100;
+      height: 100vh;
+      width: 100vw;
+      position: fixed;
+      top: 0;
+      left: 0;
+    }
+
+    .items {
+      z-index: 200;
+      position: absolute;
+      background: white;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      box-sizing: border-box;
+
+      .s-item-wrapper {
+        border: 1px solid #ccc;
+        padding: 5px;
+        cursor: pointer;
+
+      }
+    }
+  }
+}

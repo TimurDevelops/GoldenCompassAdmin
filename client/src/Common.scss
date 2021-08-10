@@ -6,6 +6,9 @@ $gray: #9b9b9b;
 $bg-gray-one: #888;
 $bg-gray-two: #f1f1f1;
 
+$inline-item-bg: #eec2c2;
+$inline-item-cross-bg: #b9a8a8;
+
 .item-wrapper {
   background: #ccc;
   padding: 20px;
@@ -48,7 +51,7 @@ $bg-gray-two: #f1f1f1;
   // 70px высота header
   min-height: calc(100vh - 70px);
 
-  .view-content-inner{
+  .view-content-inner {
     padding: 1em;
     background: $bg-gray-two;
     min-height: calc(100vh - 70px);
@@ -209,4 +212,54 @@ $form-secondary: #629a52;
     }
   }
 }
+
+// GROUPS
+.inline-list {
+  padding: 2em 0;
+
+  .list-wrapper {
+    display: flex;
+    padding: .2em 0;
+
+    .group-title {
+      font-size: 1.3em;
+      line-height: 1.3em;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .inline-item {
+      background: $inline-item-bg;
+      padding: .5em;
+      margin-left: .5em;
+      border-radius: .2em;
+      display: flex;
+
+      .label {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .delete-btn {
+        background: $inline-item-cross-bg;
+        text-decoration: line-through;
+        padding: .2em;
+        margin-left: 1em;
+        border-radius: 50%;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .delete-btn:hover svg {
+        transform: scale(1.1);
+        text-decoration: line-through;
+      }
+    }
+
+  }
+}
+
+
 

@@ -1,18 +1,23 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import PropTypes from "prop-types";
+
+import Header from "../ui/Header";
 
 import AddLevel from "./addLevel/AddLevel";
 import LevelsList from "./levelsList/LevelsList";
 import LevelView from "./levelView/LevelView";
 
-import Header from "../ui/Header";
 import Modal from "../ui/Modal";
 
-const LevelsView = ({createLevel, deleteLevel, editLevel, logout, setAlert, lessons, levels}) => {
+import api from "../../utils/api";
+
+const LevelsView = ({logout, setAlert}) => {
   const [addLevelVisible, setAddLevelVisible] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [levelToEdit, setLevelToEdit] = useState({});
+  const [levels, setLevels] = useState([]);
 
+  console.log(levels)
   const closeModal = () => {
     setModalOpen(false);
   }
@@ -26,15 +31,64 @@ const LevelsView = ({createLevel, deleteLevel, editLevel, logout, setAlert, less
     setLevelToEdit(level)
   }
 
-  const handleEditLevel = (level) => {
-    editLevel(level)
+  useEffect(() => {
+    const getLevels = async () => {
+      const res = await api.post('/levels/get-levels');
+      setLevels(res.data.levels);
+    }
+    getLevels().catch((err) => console.error(err))
+
+  }, []);
+
+  const createLevel = async ({levelTitle}) => {
+    try {
+      const res = await api.post('/levels', {name: levelTitle});
+      const newLevel = res.data.level;
+      setLevels([...levels, newLevel])
+    } catch (e) {
+      e.response.data.errors.forEach(err => {
+        setAlert(err.msg, 'danger')
+      })
+    }
+  }
+
+  const deleteLevel = async (levelId) => {
+    try {
+      await api.delete('/levels', {
+        headers: {},
+        data: {
+          levelId
+        },
+      });
+      setLevels(levels.filter(level => level._id !== levelId))
+    } catch (e) {
+      e.response.data.errors.forEach(err => {
+        setAlert(err.msg, 'danger')
+      })
+    }
+  }
+
+  const editLevel = async ({id, name, lessons}) => {
+    const newLessons = lessons.map(lesson => lesson._id)
+    let createdLevel;
+    try {
+      const res = await api.put('/levels', {id, name, lessons: newLessons});
+      createdLevel = res.data.level;
+    } catch (e) {
+      e.response.data.errors.forEach(err => {
+        setAlert(err.msg, 'danger')
+      })
+    }
     closeModal()
+    setLevels(levels.map((level) => {
+      if (level._id === id) return createdLevel;
+      else return level;
+    }))
   }
 
   return (
     <div>
       <Header logout={logout}/>
-
 
       <div className={'view-content'}>
         <div className={'view-content-inner'}>
@@ -51,7 +105,7 @@ const LevelsView = ({createLevel, deleteLevel, editLevel, logout, setAlert, less
             closeModal={closeModal}
             content={
               modalOpen &&
-              <LevelView levelToEdit={levelToEdit} lessons={lessons} editLevel={handleEditLevel} setAlert={setAlert}/>
+              <LevelView levelToEdit={levelToEdit} editLevel={editLevel} setAlert={setAlert}/>
             }
           />
 
@@ -62,13 +116,8 @@ const LevelsView = ({createLevel, deleteLevel, editLevel, logout, setAlert, less
 }
 
 LevelsView.propTypes = {
-  createLevel: PropTypes.func.isRequired,
-  deleteLevel: PropTypes.func.isRequired,
-  editLevel: PropTypes.func.isRequired,
   logout: PropTypes.func.isRequired,
   setAlert: PropTypes.func.isRequired,
-  lessons: PropTypes.array.isRequired,
-  levels: PropTypes.array.isRequired,
 };
 
 export default LevelsView;

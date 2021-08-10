@@ -8,7 +8,7 @@ const SlideView = ({slide: {_id, tip, img, hasAbacus}, editSlide, closeForm}) =>
   const [newTip, setNewTip] = useState(tip);
   const [newFile, setNewFile] = useState(img);
   const [newHasAbacus, setNewHasAbacus] = useState(hasAbacus);
-
+  console.log(newHasAbacus)
   const filePicked = (files) => {
     setNewFile(files[0])
   }
@@ -31,11 +31,11 @@ const SlideView = ({slide: {_id, tip, img, hasAbacus}, editSlide, closeForm}) =>
             <label htmlFor="tip" className="form-label">Подсказка для учителя</label>
           </div>
 
-          <div className="form-group field">
-            <input type="checkbox" className="form-field" placeholder="Абакус" name="hasAbacus" id='hasAbacus'
-                   value={newHasAbacus}
-                   onChange={e => setNewHasAbacus(e.target.value)}/>
-            <label htmlFor="hasAbacus" className="form-label">Абакус: </label>
+          <div className="form-group field abacus">
+            <label htmlFor="hasAbacusEdit" >Абакус: </label>
+            <input type="checkbox" placeholder="Абакус" name="hasAbacusEdit" id='hasAbacusEdit'
+                   checked={newHasAbacus}
+                   onChange={e => setNewHasAbacus(e.target.checked)}/>
           </div>
 
           <MyDropzone showPreview={false} filePicked={filePicked}/>

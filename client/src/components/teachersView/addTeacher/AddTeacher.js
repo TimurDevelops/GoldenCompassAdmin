@@ -6,8 +6,9 @@ const AddTeacher = ({addTeacher}) => {
   const [password, setPassword] = useState();
   const [name, setName] = useState();
 
-  const handleSubmit = () => {
-    addTeacher({name, login, password})
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    addTeacher({name, login, password});
   }
 
   return (

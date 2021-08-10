@@ -24,6 +24,7 @@ app.use('/api/lessons', require('./routes/api/lessons'));
 app.use('/api/levels', require('./routes/api/levels'));
 
 app.use('/uploads', express.static('./uploads'));
+app.use('/slides', express.static('./slides'));
 
 app.get('/ping', (req, res) => {
   res.send(`Pong`);

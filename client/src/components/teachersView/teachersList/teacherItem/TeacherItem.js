@@ -3,9 +3,13 @@ import PropTypes from "prop-types";
 import {FaTimes, FaEdit} from 'react-icons/fa';
 
 const TeacherItem = ({teacher, deleteTeacher, openTeacher}) => {
+
   return (
     <div className={'teacher-wrapper item-wrapper'}>
-      <h4 className={'teacher-title'}>{teacher.name}</h4>
+      <h4 className={'teacher-title'}>
+        ФИО: {teacher.name}<br/>
+        Логин: {teacher.login}
+      </h4>
       <div className={'btn-wrapper'}>
         <div className={'delete-btn'} onClick={() => deleteTeacher()}>
           <FaTimes/>

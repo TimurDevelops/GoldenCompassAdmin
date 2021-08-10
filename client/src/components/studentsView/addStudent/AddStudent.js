@@ -6,8 +6,9 @@ const AddStudent = ({addStudent}) => {
   const [password, setPassword] = useState();
   const [name, setName] = useState();
 
-  const handleSubmit = () => {
-    addStudent({name, login, password})
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    addStudent({name, login, password});
   }
 
   return (
@@ -17,13 +18,13 @@ const AddStudent = ({addStudent}) => {
           <div className={'inputs-wrapper'}>
             <div className="form-group field">
               <input autoComplete='off' type="input" className="form-field" placeholder="ФИО" name="name" id='name'
-                     onChange={e => setLogin(e.target.value)} required/>
+                     onChange={e => setName(e.target.value)} required/>
               <label htmlFor="name" className="form-label">ФИО</label>
             </div>
 
             <div className="form-group field">
               <input autoComplete='off' type="input" className="form-field" placeholder="Логин" name="login" id='login'
-                     onChange={e => setName(e.target.value)} required/>
+                     onChange={e => setLogin(e.target.value)} required/>
               <label htmlFor="login" className="form-label">Логин</label>
             </div>
 

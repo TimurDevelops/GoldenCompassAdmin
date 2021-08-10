@@ -1,14 +1,55 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import PropTypes from "prop-types";
 
 import Header from "../ui/Header";
 
-import StudentsList from "./studentsList/StudentsList";
 import AddStudent from "./addStudent/AddStudent";
+import StudentsList from "./studentsList/StudentsList";
 
-const StudentsView = ({logout, students, createStudent, deleteStudent}) => {
+import api from "../../utils/api";
+
+const StudentsView = ({logout, setAlert}) => {
   const [addStudentVisible, setAddStudentVisible] = useState(false);
+  const [students, setStudents] = useState([]);
 
+  useEffect(() => {
+    const getStudents = async () => {
+      const res = await api.post('/students/get-students');
+      setStudents(res.data.students);
+    }
+    getStudents().catch((err) => console.error(err))
+
+  }, []);
+
+  const createStudent = async (student) => {
+    try {
+      const res = await api.post('/students', {...student});
+      const newStudent = res.data.user;
+      setStudents([...students, newStudent])
+    } catch (e) {
+      console.log(e)
+      e.response.data.errors.forEach(err => {
+        setAlert(err.msg, 'danger')
+      })
+    }
+  }
+
+  const deleteStudent = async (studentId) => {
+    try {
+      await api.delete('/students', {
+        headers: {},
+        data: {
+          studentId
+        },
+      });
+    } catch (e) {
+      console.log(e)
+      e.response.data.errors.forEach(err => {
+        setAlert(err.msg, 'danger')
+      })
+    }
+    setStudents(students.filter(i => i._id !== studentId))
+  }
   return (
     <div>
       <Header logout={logout}/>
@@ -28,11 +69,8 @@ const StudentsView = ({logout, students, createStudent, deleteStudent}) => {
 }
 
 StudentsView.propTypes = {
-  createStudent: PropTypes.func.isRequired,
-  deleteStudent: PropTypes.func.isRequired,
   logout: PropTypes.func.isRequired,
   setAlert: PropTypes.func.isRequired,
-  students: PropTypes.array.isRequired,
 };
 
 export default StudentsView;

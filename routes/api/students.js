@@ -7,7 +7,7 @@ const Student = require('../../models/Student');
 const Teacher = require('../../models/Teacher');
 
 // @route    POST api/student
-// @desc     Register user
+// @desc     Register student
 // @access   Public
 router.post(
   '/',
@@ -46,8 +46,30 @@ router.post(
 
       await user.save();
 
-      const payload = user;
-      res.json({payload});
+      res.json({user});
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server error');
+    }
+  }
+);
+
+// @route    POST api/levels
+// @desc     Delete student
+// @access   Public
+router.delete(
+  '/',
+  check('studentId', 'Введите id Удаляемого Учителя').notEmpty(),
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({errors: errors.array()});
+    }
+    const {studentId: id} = req.body;
+
+    try {
+      let student = await Student.deleteOne({_id: id});
+      return res.json({student});
 
     } catch (err) {
       console.error(err.message);
@@ -55,6 +77,7 @@ router.post(
     }
   }
 );
+
 
 // @route    POST api/users
 // @desc     Assign teacher to student

@@ -1,18 +1,22 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import PropTypes from "prop-types";
 
 import Header from "../ui/Header";
+
 import AddTeacher from "../teachersView/addTeacher/AddTeacher";
 import TeachersList from "./teachersList/TeachersList";
 import TeacherView from "../teachersView/teacherView/TeacherView";
 
 import Modal from "../ui/Modal";
+import api from "../../utils/api";
 
 
-const TeachersView = ({logout, setAlert, teachers, students, createTeacher, deleteTeacher, editTeacher}) => {
+const TeachersView = ({logout, setAlert}) => {
   const [addTeacherVisible, setAddTeacherVisible] = useState(false);
   const [teacherToEdit, setTeacherToEdit] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+
+  const [teachers, setTeachers] = useState([]);
 
   const closeModal = () => {
     setModalOpen(false)
@@ -22,6 +26,68 @@ const TeachersView = ({logout, setAlert, teachers, students, createTeacher, dele
     setTeacherToEdit(teacher)
     setModalOpen(true)
   }
+
+
+  useEffect(() => {
+    const getTeachers = async () => {
+      const res = await api.post('/teachers/get-teachers');
+      setTeachers(res.data.teachers);
+    }
+    getTeachers().catch((err) => console.error(err))
+
+  }, []);
+
+
+  const createTeacher = async (teacher) => {
+    try {
+      const res = await api.post('/teachers', {...teacher});
+      const newTeacher = res.data.user;
+      setTeachers([...teachers, newTeacher])
+    } catch (e) {
+      e.response.data.errors.forEach(err => {
+        setAlert(err.msg, 'danger')
+      })
+    }
+  }
+
+  const deleteTeacher = async (teacherId) => {
+    try {
+      await api.delete('/teachers', {
+        headers: {},
+        data: {
+          teacherId
+        },
+      });
+      setTeachers(teachers.filter(i => i._id !== teacherId))
+    } catch (e) {
+      console.log(e)
+      e.response.data.errors.forEach(err => {
+        setAlert(err.msg, 'danger')
+      })
+    }
+  }
+
+  const editTeacher = async ({id, name, login, students}) => {
+    const newStudents = students.map(student => student._id)
+
+    let createdTeacher;
+    try {
+      let res = await api.put('/teachers', {id, name, login, students: newStudents});
+      createdTeacher = res.data.teacher;
+    } catch (e) {
+      console.log(e)
+      e.response.data.errors.forEach(err => {
+        setAlert(err.msg, 'danger')
+      })
+    }
+    closeModal()
+
+    setTeachers(teachers.map((teacher) => {
+      if (teacher._id === id) return createdTeacher;
+      else return teacher;
+    }))
+  }
+
 
   return (
     <div>
@@ -41,8 +107,7 @@ const TeachersView = ({logout, setAlert, teachers, students, createTeacher, dele
             open={modalOpen}
             closeModal={closeModal}
             content={
-              modalOpen && <TeacherView teacherToEdit={teacherToEdit} editTeacher={editTeacher} setAlert={setAlert}
-                                        students={students}/>
+              modalOpen && <TeacherView teacherToEdit={teacherToEdit} editTeacher={editTeacher} setAlert={setAlert}/>
             }
           />
 
@@ -53,13 +118,8 @@ const TeachersView = ({logout, setAlert, teachers, students, createTeacher, dele
 }
 
 TeachersView.propTypes = {
-  createTeacher: PropTypes.func.isRequired,
-  deleteTeacher: PropTypes.func.isRequired,
-  editTeacher: PropTypes.func.isRequired,
   logout: PropTypes.func.isRequired,
   setAlert: PropTypes.func.isRequired,
-  teachers: PropTypes.array.isRequired,
-  students: PropTypes.array.isRequired,
 };
 
 export default TeachersView;
