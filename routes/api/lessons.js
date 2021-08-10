@@ -46,12 +46,18 @@ router.post(
 // @route    POST api/lessonsView
 // @desc     Add lesson
 // @access   Public
-router.get(
+router.post(
   '/get-lessons',
   async (req, res) => {
+    const ObjectId = require('mongoose').Types.ObjectId;
     try {
       let lessons = await Lessons.find();
-      // TODO get slides too
+
+      for (let i = 0; i < lessons.length; i++){
+        const slides_ids = lessons[i].slides.map(function(id) { return ObjectId(id); });
+        lessons[i].slides = await Slide.find({_id: {$in: slides_ids}});
+      }
+
       return res.json({lessons});
 
     } catch (err) {

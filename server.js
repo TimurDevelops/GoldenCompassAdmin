@@ -12,11 +12,17 @@ app.use(express.json())
 app.use(cors());
 
 // Define Routes
-app.use('/api/admin', require('./routes/api/admin'));
-app.use('/api/slides', require('./routes/api/slides'));
-app.use('/api/lessons', require('./routes/api/lessons'));
 app.use('/api/auth', require('./routes/api/auth'));
+app.use('/api/admin', require('./routes/api/admin'));
+
+app.use('/api/slides', require('./routes/api/slides'));
 app.use('/api/files', require('./routes/api/files'));
+
+app.use('/api/teachers', require('./routes/api/teachers'));
+app.use('/api/students', require('./routes/api/students'));
+app.use('/api/lessons', require('./routes/api/lessons'));
+app.use('/api/levels', require('./routes/api/levels'));
+
 app.use('/uploads', express.static('./uploads'));
 
 app.get('/ping', (req, res) => {

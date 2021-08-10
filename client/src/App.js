@@ -205,9 +205,9 @@ const App = () => {
                         component={LevelsView}
                         auth={auth}
                         user={user}
-                        createLesson={createLevel}
-                        deleteLesson={deleteLevel}
-                        editLesson={editLevel}
+                        createLevel={createLevel}
+                        deleteLevel={deleteLevel}
+                        editLevel={editLevel}
                         lessons={lessons}
                         levels={levels}
                         logout={logout}/>

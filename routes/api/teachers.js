@@ -3,7 +3,7 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const {check, validationResult} = require('express-validator');
 
-const Teacher = require('../../models/Teacher');
+const Teachers = require('../../models/Teacher');
 
 // @route    POST api/users
 // @desc     Register teacher
@@ -25,7 +25,7 @@ router.post(
     const {name, login, password} = req.body;
 
     try {
-      let user = await Teacher.findOne({login});
+      let user = await Teachers.findOne({login});
 
       if (user) {
         return res
@@ -33,7 +33,7 @@ router.post(
           .json({errors: [{msg: 'Пользователь с таким огином уже зарегистрирован'}]});
       }
 
-      user = new Teacher({
+      user = new Teachers({
         name,
         login,
         password
@@ -60,10 +60,10 @@ router.post(
 // @desc     Get all Students
 // @access   Public
 router.post(
-  '/get-students',
+  '/get-teachers',
   async (req, res) => {
     try {
-      let teachers = await Teacher.find();
+      let teachers = await Teachers.find();
 
       return res.json({teachers});
 

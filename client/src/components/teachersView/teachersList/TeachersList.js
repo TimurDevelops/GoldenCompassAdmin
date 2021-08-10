@@ -16,7 +16,7 @@ const TeachersList = ({teachers, deleteTeacher, openTeacher}) => {
 }
 
 TeachersList.propTypes = {
-  teachers: PropTypes.object.isRequired,
+  teachers: PropTypes.array.isRequired,
   deleteTeacher: PropTypes.func.isRequired,
   openTeacher: PropTypes.func.isRequired,
 };

@@ -105,13 +105,13 @@ router.post(
 // @desc     Get all Students
 // @access   Public
 router.post(
-  '/get-teachers',
+  '/get-students',
   async (req, res) => {
 
     try {
-      let teachers = await Student.find();
+      let students = await Student.find();
 
-      return res.json({teachers});
+      return res.json({students});
 
     } catch (err) {
       res.status(500).send('Server error');
