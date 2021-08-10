@@ -1,3 +1,11 @@
+$primary: fa752a;
+$secondary: #ee8d5c;
+$white: #fff;
+$gray: #9b9b9b;
+
+$bg-gray-one: #888;
+$bg-gray-two: #f1f1f1;
+
 .item-wrapper {
   background: #ccc;
   padding: 20px;
@@ -33,3 +41,172 @@
     }
   }
 }
+
+.view-content {
+  padding: 0 10em;
+  background: linear-gradient($bg-gray-one, $bg-gray-two);
+  // 70px высота header
+  min-height: calc(100vh - 70px);
+
+  .view-content-inner{
+    padding: 1em;
+    background: $bg-gray-two;
+    min-height: calc(100vh - 70px);
+    box-sizing: border-box;
+
+    & > .btn {
+      display: block;
+      margin: 15px 10px;
+      padding: 5px 40px;
+      font-size: 20px;
+      cursor: pointer;
+    }
+  }
+}
+
+
+// BUTTON
+.btn {
+  display: block;
+  margin: 15px 0;
+  padding: 5px 40px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.btn-transition {
+  position: relative;
+  display: block;
+  background: transparent;
+  color: $gray;
+  transition: height .5s ease-in;
+  border: 2px solid $gray;
+
+  &:hover {
+    color: #222;
+
+    &:after {
+      width: calc(100% + 4px);
+    }
+  }
+
+  &:after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    width: 0;
+    height: calc(100% + 4px);
+    background: linear-gradient(to right, $primary, $secondary);
+    transition: width .2s ease-in;
+  }
+
+  span {
+    position: relative;
+    z-index: 100;
+  }
+}
+
+
+// FORM
+.inputs-wrapper {
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.form-group {
+  position: relative;
+  padding: 15px 0 0;
+  margin-top: 10px;
+  width: 100%;
+}
+
+.form-field {
+  width: 100%;
+  border: 1px solid $gray;
+  outline: 0;
+  font-size: 1.3rem;
+  padding: 7px 15px;
+  margin: 7px 0;
+  box-sizing: border-box;
+  background: transparent;
+  transition: border-color 0.2s;
+
+  &::placeholder {
+    color: transparent;
+  }
+
+  &:placeholder-shown ~ .form-label {
+    font-size: 1rem;
+    cursor: text;
+    top: 33px;
+    left: 15px;
+  }
+}
+
+.form-label {
+  top: 0;
+  position: absolute;
+  display: block;
+  transition: 0.2s;
+  font-size: 1rem;
+  color: $gray;
+}
+
+.form-field:focus {
+  ~ .form-label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    transition: 0.2s;
+    color: $primary;
+  }
+
+  border-width: 1px;
+  border-image: linear-gradient(to right, $primary, $secondary) 1;
+}
+
+.form-field {
+  &:required, &:invalid {
+    box-shadow: none;
+  }
+}
+
+.submit-btn-wrapper {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+}
+
+// ADD FORM
+$form-primary: #64b653;
+$form-secondary: #629a52;
+.add-form {
+  .form {
+    width: 100%;
+    padding: 0 10px;
+  }
+
+  .form-field {
+    width: 30em;
+    max-width: 100%;
+  }
+
+  .submit-btn-wrapper .btn {
+    background: linear-gradient(to right, $form-primary, $form-secondary);
+    border: none;
+    border-radius: 25px;
+    padding: 10px 40px;
+    transition: transform .2s ease-in;
+
+    &:hover {
+      transform: scale(1.07);
+    }
+  }
+}
+

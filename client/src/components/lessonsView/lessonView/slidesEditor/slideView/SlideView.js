@@ -25,14 +25,14 @@ const SlideView = ({slide: {_id, tip, img, hasAbacus}, editSlide, closeForm}) =>
 
         <div className={'inputs-wrapper'}>
           <div className="form-group field">
-            <input type="input" className="form-field" placeholder="Логин" name="login" id='login'
+            <input autoComplete='off' type="input" className="form-field" placeholder="Подсказка для учителя" name="tip" id='tip'
                    value={newTip}
                    onChange={e => setNewTip(e.target.value)} required/>
-            <label htmlFor="login" className="form-label">Подсказка для учителя</label>
+            <label htmlFor="tip" className="form-label">Подсказка для учителя</label>
           </div>
 
           <div className="form-group field">
-            <input type="checkbox" className="form-field" placeholder="" name="hasAbacus" id='hasAbacus'
+            <input type="checkbox" className="form-field" placeholder="Абакус" name="hasAbacus" id='hasAbacus'
                    value={newHasAbacus}
                    onChange={e => setNewHasAbacus(e.target.value)}/>
             <label htmlFor="hasAbacus" className="form-label">Абакус: </label>

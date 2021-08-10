@@ -59,7 +59,7 @@ const Login = ({setUser, setAuth, setAlert}) => {
             </div>
             <div className={'inputs-wrapper'}>
               <div className="form-group field">
-                <input type="input" className="form-field" placeholder="Логин" name="login" id='login'
+                <input autoComplete='off' type="input" className="form-field" placeholder="Логин" name="login" id='login'
                        onChange={e => setLogin(e.target.value)} required/>
                 <label htmlFor="login" className="form-label">Логин</label>
               </div>

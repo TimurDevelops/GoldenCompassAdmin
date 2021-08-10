@@ -33,22 +33,30 @@ const LevelsView = ({createLevel, deleteLevel, editLevel, logout, setAlert, less
 
   return (
     <div>
-      <Header logout={logout} style={{'margin': '20px'}}/>
+      <Header logout={logout}/>
 
-      <button style={{'margin': '20px'}}
-              onClick={() => setAddLevelVisible(!addLevelVisible)}>{addLevelVisible ? 'Закрыть' : 'Добавить уровень'}</button>
-      {addLevelVisible && <AddLevel createLevel={createLevel}/>}
 
-      <LevelsList levels={levels} deleteLevel={deleteLevel} openLevel={openModal}/>
+      <div className={'view-content'}>
+        <div className={'view-content-inner'}>
 
-      <Modal
-        title={`Редактирование уровня: \n ${levelToEdit.name}`}
-        open={modalOpen}
-        closeModal={closeModal}
-        content={
-          modalOpen && <LevelView levelToEdit={levelToEdit} lessons={lessons} editLevel={handleEditLevel} setAlert={setAlert}/>
-        }
-      />
+          <button className={'btn'}
+                  onClick={() => setAddLevelVisible(!addLevelVisible)}>{addLevelVisible ? 'Закрыть' : 'Добавить уровень'}</button>
+          {addLevelVisible && <AddLevel createLevel={createLevel}/>}
+
+          <LevelsList levels={levels} deleteLevel={deleteLevel} openLevel={openModal}/>
+
+          <Modal
+            title={`Редактирование уровня: \n ${levelToEdit.name}`}
+            open={modalOpen}
+            closeModal={closeModal}
+            content={
+              modalOpen &&
+              <LevelView levelToEdit={levelToEdit} lessons={lessons} editLevel={handleEditLevel} setAlert={setAlert}/>
+            }
+          />
+
+        </div>
+      </div>
     </div>
   )
 }

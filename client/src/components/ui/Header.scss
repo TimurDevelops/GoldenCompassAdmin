@@ -7,9 +7,30 @@ header {
   height: 70px;
   background: $main;
   display: flex;
-  justify-content: space-between;
+  justify-content: stretch;
 
-  #logoutBtn {
+  .menu {
+    flex: 10;
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .logout {
+    flex: 1;
+
+    #logoutBtn {
+      color: red;
+
+      width: 100%;
+      height: 100%;
+
+      svg {
+
+
+        width: 3em;
+        height: 3em;
+      }
+    }
 
   }
 }

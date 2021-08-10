@@ -1,8 +1,6 @@
 import React, {useState} from 'react';
 import PropTypes from "prop-types";
 
-import './AddLesson.scss';
-
 const AddLesson = ({createLesson}) => {
   const [lessonTitle, setLessonTitle] = useState();
 
@@ -12,11 +10,11 @@ const AddLesson = ({createLesson}) => {
   }
 
   return (
-    <div className={'add-lesson-form'}>
+    <div className={'add-lesson-form add-form'}>
       <form className='form' onSubmit={(e) => handleSubmit(e)}>
         <div className={'inputs-wrapper'}>
           <div className="form-group field">
-            <input type="input" className="form-field" placeholder="Название урока" name="login" id='login'
+            <input autoComplete='off' type="input" className="form-field" placeholder="Название урока" name="login" id='login'
                    onChange={e => setLessonTitle(e.target.value)} required/>
             <label htmlFor="login" className="form-label">Название Урока</label>
           </div>

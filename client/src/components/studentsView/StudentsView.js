@@ -11,13 +11,17 @@ const StudentsView = ({logout, students, createStudent, deleteStudent}) => {
 
   return (
     <div>
-      <Header logout={logout} style={{'margin': '20px'}}/>
+      <Header logout={logout}/>
+      <div className={'view-content'}>
+        <div className={'view-content-inner'}>
 
-      <button style={{'margin': '20px'}}
-              onClick={() => setAddStudentVisible(!addStudentVisible)}>{addStudentVisible ? 'Закрыть' : 'Добавить ученика'}</button>
-      {addStudentVisible && <AddStudent createLesson={createStudent} addStudent={createStudent}/>}
+          <button className={'btn'}
+                  onClick={() => setAddStudentVisible(!addStudentVisible)}>{addStudentVisible ? 'Закрыть' : 'Добавить ученика'}</button>
+          {addStudentVisible && <AddStudent createLesson={createStudent} addStudent={createStudent}/>}
 
-      <StudentsList students={students} deleteStudent={deleteStudent}/>
+          <StudentsList students={students} deleteStudent={deleteStudent}/>
+        </div>
+      </div>
 
     </div>
   )

@@ -25,23 +25,29 @@ const TeachersView = ({logout, setAlert, teachers, students, createTeacher, dele
 
   return (
     <div>
-      <Header logout={logout} style={{'margin': '20px'}}/>
+      <Header logout={logout}/>
 
-      <button style={{'margin': '20px'}}
-              onClick={() => setAddTeacherVisible(!addTeacherVisible)}>{addTeacherVisible ? 'Закрыть' : 'Добавить учителя'}</button>
-      {addTeacherVisible && <AddTeacher addTeacher={createTeacher}/>}
+      <div className={'view-content'}>
+        <div className={'view-content-inner'}>
 
-      <TeachersList teachers={teachers} deleteTeacher={deleteTeacher} openTeacher={openTeacher}/>
+          <button className={'btn'}
+                  onClick={() => setAddTeacherVisible(!addTeacherVisible)}>{addTeacherVisible ? 'Закрыть' : 'Добавить учителя'}</button>
+          {addTeacherVisible && <AddTeacher addTeacher={createTeacher}/>}
 
-      <Modal
-        title={`Редактирование учителя: \n ${teacherToEdit.name}`}
-        open={modalOpen}
-        closeModal={closeModal}
-        content={
-          modalOpen && <TeacherView teacherToEdit={teacherToEdit} editTeacher={editTeacher} setAlert={setAlert} students={students}/>
-        }
-      />
+          <TeachersList teachers={teachers} deleteTeacher={deleteTeacher} openTeacher={openTeacher}/>
 
+          <Modal
+            title={`Редактирование учителя: \n ${teacherToEdit.name}`}
+            open={modalOpen}
+            closeModal={closeModal}
+            content={
+              modalOpen && <TeacherView teacherToEdit={teacherToEdit} editTeacher={editTeacher} setAlert={setAlert}
+                                        students={students}/>
+            }
+          />
+
+        </div>
+      </div>
     </div>
   )
 }

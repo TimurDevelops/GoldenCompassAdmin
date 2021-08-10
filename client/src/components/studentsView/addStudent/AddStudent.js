@@ -4,24 +4,31 @@ import PropTypes from "prop-types";
 const AddStudent = ({addStudent}) => {
   const [login, setLogin] = useState();
   const [password, setPassword] = useState();
+  const [name, setName] = useState();
 
   const handleSubmit = () => {
-    addStudent({login, password})
+    addStudent({name, login, password})
   }
 
   return (
     <div>
-      <div className={'add-student-form'}>
+      <div className={'add-student-form add-form'}>
         <form className='form' onSubmit={(e) => handleSubmit(e)}>
           <div className={'inputs-wrapper'}>
             <div className="form-group field">
-              <input type="input" className="form-field" placeholder="Название урока" name="login" id='login'
+              <input autoComplete='off' type="input" className="form-field" placeholder="ФИО" name="name" id='name'
                      onChange={e => setLogin(e.target.value)} required/>
+              <label htmlFor="name" className="form-label">ФИО</label>
+            </div>
+
+            <div className="form-group field">
+              <input autoComplete='off' type="input" className="form-field" placeholder="Логин" name="login" id='login'
+                     onChange={e => setName(e.target.value)} required/>
               <label htmlFor="login" className="form-label">Логин</label>
             </div>
 
             <div className="form-group field">
-              <input type="input" className="form-field" placeholder="Название урока" name="password" id='password'
+              <input type="password" className="form-field" placeholder="Пароль" name="password" id='password'
                      onChange={e => setPassword(e.target.value)} required/>
               <label htmlFor="password" className="form-label">Пароль</label>
             </div>

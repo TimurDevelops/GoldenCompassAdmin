@@ -1,8 +1,6 @@
 import React, {useState} from 'react';
 import PropTypes from "prop-types";
 
-import './AddLevel.scss';
-
 const AddLevel = ({createLevel}) => {
   const [levelTitle, setLevelTitle] = useState();
 
@@ -12,11 +10,11 @@ const AddLevel = ({createLevel}) => {
   }
 
   return (
-    <div className={'add-level-form'}>
+    <div className={'add-level-form add-form'}>
       <form className='form' onSubmit={(e) => handleSubmit(e)}>
         <div className={'inputs-wrapper'}>
           <div className="form-group field">
-            <input type="input" className="form-field" placeholder="Название уровня" name="levelName" id='levelName'
+            <input autoComplete='off' type="input" className="form-field" placeholder="Название уровня" name="levelName" id='levelName'
                    onChange={e => setLevelTitle(e.target.value)} required/>
             <label htmlFor="levelName" className="form-label">Название уровня</label>
           </div>

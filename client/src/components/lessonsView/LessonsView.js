@@ -34,23 +34,30 @@ const LessonsView = ({logout, setAlert, lessons, createLesson, deleteLesson, edi
 
   return (
     <div>
-      <Header logout={logout} style={{'margin': '20px'}}/>
+      <Header logout={logout}/>
 
-      <button style={{'margin': '20px'}}
-              onClick={() => setAddLessonVisible(!addLessonVisible)}>{addLessonVisible ? 'Закрыть' : 'Добавить урок'}</button>
+      <div className={'view-content'}>
+        <div className={'view-content-inner'}>
 
-      {addLessonVisible && <AddLesson createLesson={createLesson}/>}
+          <button className={'btn'}
+                  onClick={() => setAddLessonVisible(!addLessonVisible)}>{addLessonVisible ? 'Закрыть' : 'Добавить урок'}</button>
 
-      <LessonsList lessons={lessons} deleteLesson={deleteLesson} openLesson={openModal}/>
+          {addLessonVisible && <AddLesson createLesson={createLesson}/>}
 
-      <Modal
-        title={`Редактирование урока: \n ${lessonToEdit.name}`}
-        open={modalOpen}
-        closeModal={closeModal}
-        content={
-          modalOpen && <LessonView lessonToEdit={lessonToEdit} editLesson={handleEditLesson} setAlert={setAlert}/>
-        }
-      />
+          <LessonsList lessons={lessons} deleteLesson={deleteLesson} openLesson={openModal}/>
+
+          <Modal
+            title={`Редактирование урока: \n ${lessonToEdit.name}`}
+            open={modalOpen}
+            closeModal={closeModal}
+            content={
+              modalOpen && <LessonView lessonToEdit={lessonToEdit} editLesson={handleEditLesson} setAlert={setAlert}/>
+            }
+          />
+
+        </div>
+      </div>
+
     </div>
   )
 }

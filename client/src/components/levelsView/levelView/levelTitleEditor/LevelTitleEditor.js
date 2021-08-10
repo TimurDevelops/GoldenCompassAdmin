@@ -44,7 +44,7 @@ const LevelTitleEditor = ({newLevelTitle, setNewLevelTitle}) => {
       }
 
       {editingTitle && <div className="form-group field">
-        <input type="input" className="form-field" placeholder="Название уровня" name="levelTitle"
+        <input autoComplete='off' type="input" className="form-field" placeholder="Название уровня" name="levelTitle"
                id='levelTitle'
                value={newLevelTitle}
                onChange={e => setNewLevelTitle(e.target.value)} required/>

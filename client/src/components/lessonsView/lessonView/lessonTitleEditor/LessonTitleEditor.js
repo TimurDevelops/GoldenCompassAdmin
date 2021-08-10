@@ -44,7 +44,7 @@ const LessonTitleEditor = ({newLessonTitle, setNewLessonTitle}) => {
       }
 
       {editingTitle && <div className="form-group field">
-        <input type="input" className="form-field" placeholder="Название урока" name="lessonTitle"
+        <input autoComplete='off' type="input" className="form-field" placeholder="Название урока" name="lessonTitle"
                id='lessonTitle'
                value={newLessonTitle}
                onChange={e => setNewLessonTitle(e.target.value)} required/>
