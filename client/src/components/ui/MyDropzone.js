@@ -80,7 +80,7 @@ const MyDropzone = ({filePicked, showPreview = true}) => {
           'Content-Type': 'multipart/form-data'
         }
       });
-      urls.push('http://localhost:5000/' + res.data);
+      urls.push('http://161.35.232.115/:5000/' + res.data);
     }
     setFiles(urls);
     filePicked(urls)
