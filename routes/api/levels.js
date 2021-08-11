@@ -59,10 +59,6 @@ router.post(
 
       res.status(200).json({levels});
 
-
-
-      return res.json({levels});
-
     } catch (err) {
       console.error(err.message);
       res.status(500).send('Server error');

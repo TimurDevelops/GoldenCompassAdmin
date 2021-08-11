@@ -4,7 +4,8 @@ import PropTypes from "prop-types";
 import TeachersStudentsList from "./teachersStudentsList/TeachersStudentsList";
 import TeachersLevelsList from "./teachersLevelsList/TeachersLevelsList";
 
-const TeacherView = ({editTeacher,
+const TeacherView = ({
+                       editTeacher,
                        teacherToEdit: {
                          _id: id,
                          name: oldName,
@@ -24,37 +25,34 @@ const TeacherView = ({editTeacher,
   }
 
   return (
-    <div>
-      <div className={'add-teacher-form add-form'}>
-        <form className='form' onSubmit={(e) => handleSubmit(e)}>
-          <div className={'inputs-wrapper'}>
-            <div className="form-group field">
-              <input autoComplete='off' type="input" className="form-field" placeholder="ФИО" name="name" id='name'
-                     value={name}
-                     onChange={e => setName(e.target.value)} required/>
-              <label htmlFor="name" className="form-label">ФИО</label>
-            </div>
-
-            <div className="form-group field">
-              <input autoComplete='off' type="input" className="form-field" placeholder="Логин" name="login" id='login'
-                     value={login}
-                     onChange={e => setLogin(e.target.value)} required/>
-              <label htmlFor="login" className="form-label">Логин</label>
-            </div>
-
-            <TeachersStudentsList students={students} setStudents={setStudents}/>
-
-            <TeachersLevelsList levels={levels} setLevels={setLevels}/>
-
-            <div className='submit-btn-wrapper'>
-              <button type="submit" className='btn' id='addStudent'>
-                <span>Подтвердить</span>
-              </button>
-            </div>
+    <div className={'edit-teacher-form add-form'}>
+      <form className='form' onSubmit={(e) => handleSubmit(e)}>
+        <div className={'inputs-wrapper'}>
+          <div className="form-group field">
+            <input autoComplete='off' type="input" className="form-field" placeholder="ФИО" name="name" id='name'
+                   value={name}
+                   onChange={e => setName(e.target.value)} required/>
+            <label htmlFor="name" className="form-label">ФИО</label>
           </div>
-        </form>
-      </div>
 
+          <div className="form-group field">
+            <input autoComplete='off' type="input" className="form-field" placeholder="Логин" name="login" id='login'
+                   value={login}
+                   onChange={e => setLogin(e.target.value)} required/>
+            <label htmlFor="login" className="form-label">Логин</label>
+          </div>
+
+          <TeachersStudentsList students={students} setStudents={setStudents}/>
+
+          <TeachersLevelsList levels={levels} setLevels={setLevels}/>
+        </div>
+
+        <div className='submit-btn-wrapper'>
+          <button type="submit" className='btn'>
+            <span>Закончить редактирование</span>
+          </button>
+        </div>
+      </form>
     </div>
   )
 }

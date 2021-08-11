@@ -24,10 +24,9 @@ const LessonView = ({lessonToEdit: {_id: id, slides, name: lessonTitle}, setAler
   }
 
   return (
+    <div className={'edit-lesson-form add-form'}>
 
-    <div>
-      <section className={'form-wrapper'}>
-
+      <form id="form" onSubmit={(e) => handleSubmit(e)}>
         <div className={'inputs-wrapper'}>
           <LessonTitleEditor
             newLessonTitle={newLessonTitle}
@@ -37,13 +36,14 @@ const LessonView = ({lessonToEdit: {_id: id, slides, name: lessonTitle}, setAler
           <SlidesEditor slides={newSlides} setSlides={setNewSlides} setAlert={setAlert}/>
 
         </div>
-        <div>
-          <button className={'btn'} onClick={() => handleSubmit()}>Закончить редактирование</button>
+
+        <div className='submit-btn-wrapper'>
+          <button type="submit" className='btn'>
+            <span>Закончить редактирование</span>
+          </button>
         </div>
-      </section>
-
+      </form>
     </div>
-
   )
 }
 

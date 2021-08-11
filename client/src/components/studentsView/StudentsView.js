@@ -53,6 +53,7 @@ const StudentsView = ({logout, setAlert}) => {
 
   const resetPassword = async (studentId, studentName) => {
     try {
+      if(!window.confirm('Сбросить пароль данного пользователя?')) return
       const res = await api.post('/students/reset-password', {id: studentId});
       alert(`Новый пароль для пользователя ${studentName}: ${res.data.p}`)
     } catch (e) {

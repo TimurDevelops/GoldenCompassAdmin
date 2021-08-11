@@ -21,10 +21,8 @@ const LevelView = ({editLevel, levelToEdit: {_id: id, name: oldLeveTitle, lesson
   }
 
   return (
-
-    <div>
-      <section className={'form-wrapper'}>
-
+    <div className={'edit-level-form add-form'}>
+      <form className='form' onSubmit={(e) => handleSubmit(e)}>
         <div className={'inputs-wrapper'}>
           <LevelTitleEditor
             newLevelTitle={levelTitle}
@@ -34,13 +32,14 @@ const LevelView = ({editLevel, levelToEdit: {_id: id, name: oldLeveTitle, lesson
           <LevelsLessonsList lessons={lessons} setLessons={setLessons}/>
 
         </div>
-        <div>
-          <button className={'btn'} onClick={() => handleSubmit()}>Закончить редактирование</button>
+
+        <div className='submit-btn-wrapper'>
+          <button type="submit" className='btn'>
+            <span>Закончить редактирование</span>
+          </button>
         </div>
-      </section>
-
+      </form>
     </div>
-
   )
 }
 
