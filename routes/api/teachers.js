@@ -136,6 +136,16 @@ router.put(
 
       let resTeacher = await Teacher.findById(id).lean();
 
+      for (const studentId of students) {
+        let student = await Student.findById(studentId);
+
+        if (!student.teachers.includes(id)) {
+          student.teachers.unshift(id);
+          await student.save();
+        }
+
+      }
+
       const ObjectId = require('mongoose').Types.ObjectId;
       const students_ids = resTeacher.students.map((id) => ObjectId(id));
       resTeacher.students = await Student.find({_id: {$in: students_ids}});
