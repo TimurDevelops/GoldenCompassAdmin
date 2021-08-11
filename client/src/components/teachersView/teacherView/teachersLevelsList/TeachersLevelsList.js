@@ -44,7 +44,7 @@ const TeachersLevelsList = ({levels, setLevels}) => {
 
 TeachersLevelsList.propTypes = {
   levels: PropTypes.array.isRequired,
-  setLevels: PropTypes.array.isRequired,
+  setLevels: PropTypes.func.isRequired,
 };
 
 export default TeachersLevelsList;

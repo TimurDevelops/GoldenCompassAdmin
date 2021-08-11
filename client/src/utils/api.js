@@ -1,8 +1,9 @@
 import axios from 'axios';
 import useUser from "./useUser";
+import {serverUrl} from '../config.json';
 
 const api = axios.create({
-  baseURL: `http://161.35.232.115:5000/api`,
+  baseURL: `${serverUrl}/api`,
   headers: {
     'Content-Type': 'application/json'
   }

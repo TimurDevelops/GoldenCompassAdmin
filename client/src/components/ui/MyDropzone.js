@@ -2,6 +2,8 @@ import React, {useCallback, useMemo, useState} from 'react';
 import {useDropzone} from 'react-dropzone'
 import PropTypes from "prop-types";
 import api from "../../utils/api";
+import {serverUrl} from '../../config.json';
+
 
 const container = {
   width: '100%'
@@ -80,7 +82,7 @@ const MyDropzone = ({filePicked, showPreview = true}) => {
           'Content-Type': 'multipart/form-data'
         }
       });
-      urls.push('http://161.35.232.115:5000/' + res.data);
+      urls.push(`${serverUrl}/${res.data}`);
     }
     setFiles(urls);
     filePicked(urls)
