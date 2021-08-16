@@ -17,7 +17,6 @@ const LevelsView = ({logout, setAlert}) => {
   const [levelToEdit, setLevelToEdit] = useState({});
   const [levels, setLevels] = useState([]);
 
-  console.log(levels)
   const closeModal = () => {
     setModalOpen(false);
   }

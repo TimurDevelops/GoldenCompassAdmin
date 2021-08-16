@@ -73,7 +73,6 @@ const LessonsView = ({logout, setAlert}) => {
     let createdLesson;
     try {
       const res = await api.put('/lessons', newLesson);
-      console.log(res)
       createdLesson = res.data.lesson;
 
     } catch (e) {

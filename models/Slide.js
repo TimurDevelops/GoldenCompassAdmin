@@ -3,11 +3,11 @@ const mongoose = require('mongoose');
 const SlideSchema = new mongoose.Schema({
   img: {
     type: String,
-    required: true
+    required: false
   },
   tip: {
     type: String,
-    required: true
+    required: false
   },
   hasAbacus: {
     type: Boolean,

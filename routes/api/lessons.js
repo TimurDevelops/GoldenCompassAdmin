@@ -88,6 +88,7 @@ router.delete(
 );
 
 const checkImage = (filePath) => {
+  if (!filePath) return '';
   let fileName = filePath.split('/').slice(-1)[0]
 
   if (existsSync('./uploads/' + fileName)) {

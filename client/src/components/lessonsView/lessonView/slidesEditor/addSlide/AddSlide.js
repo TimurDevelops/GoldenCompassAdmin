@@ -21,31 +21,30 @@ const AddSlide = ({createSlide}) => {
 
   return (
     <div className={'add-slide-wrapper'}>
-      <form id="form" onSubmit={(e) => handleSubmit(e)}>
 
-        <div className={'inputs-wrapper'}>
-          <div className="form-group field">
-            <input autoComplete='off' type="input" className="form-field" placeholder="Подсказка для учителя" name="tip" id='tip'
-                   onChange={e => setTip(e.target.value)} required/>
-            <label htmlFor="tip" className="form-label">Подсказка для учителя</label>
-          </div>
-
-          <div className="form-group field abacus">
-            <label htmlFor="hasAbacus" >Абакус: </label>
-            <input type="checkbox" placeholder="Абакус" name="hasAbacus" id='hasAbacus'
-                   checked={newHasAbacus}
-                   onChange={e => setNewHasAbacus(e.target.checked)}/>
-          </div>
-
-          <MyDropzone filePicked={filePicked}/>
-
-          <div className='submit-btn-wrapper'>
-            <button type={'submit'} className={'btn'}>
-              <span>Создать</span>
-            </button>
-          </div>
+      <div className={'inputs-wrapper'}>
+        <div className="form-group field">
+          <input autoComplete='off' type="input" className="form-field" placeholder="Подсказка для учителя" name="tip"
+                 id='tip'
+                 onChange={e => setTip(e.target.value)}/>
+          <label htmlFor="tip" className="form-label">Подсказка для учителя</label>
         </div>
-      </form>
+
+        <div className="form-group field abacus">
+          <label htmlFor="hasAbacus">Абакус: </label>
+          <input type="checkbox" placeholder="Абакус" name="hasAbacus" id='hasAbacus'
+                 checked={newHasAbacus}
+                 onChange={e => setNewHasAbacus(e.target.checked)}/>
+        </div>
+
+        <MyDropzone filePicked={filePicked}/>
+
+        <div className='submit-btn-wrapper'>
+          <button type={'submit'} className={'btn'} onClick={(e) => handleSubmit(e)}>
+            <span>Создать</span>
+          </button>
+        </div>
+      </div>
     </div>
   )
 }

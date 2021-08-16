@@ -12,7 +12,8 @@ const LessonView = ({lessonToEdit: {_id: id, slides, name: lessonTitle}, setAler
 
   const [newSlides, setNewSlides] = useState(slides);
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     editLesson(
       {
         id,

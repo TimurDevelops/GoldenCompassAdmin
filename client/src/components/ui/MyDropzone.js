@@ -123,7 +123,7 @@ const MyDropzone = ({filePicked, showPreview = true}) => {
     <div className="container" style={container}>
       <div {...getRootProps({style})}>
         <input {...getInputProps()} />
-        <p>Drag 'n' drop some files here, or click to select files</p>
+        <p>Перетащите файл сюда, или нажмите чтобы выбрать файл...</p>
       </div>
       {files.length > 0 && showPreview && <aside style={thumbsContainer}>
         <h3>Загружаемые файлы...</h3>

@@ -28,7 +28,6 @@ const SlidesEditor = ({slides, setSlides, setAlert}) => {
   }
 
   const createSlide = async ({tip, file, hasAbacus}) => {
-    console.log(hasAbacus)
     setSlides([...slides, {tip, img: file, hasAbacus, _id: uuidv4()}]);
   }
 
@@ -51,8 +50,8 @@ const SlidesEditor = ({slides, setSlides, setAlert}) => {
   return (
     <div className={'slides-wrapper'}>
 
-      <button className={'add-slide-btn'}
-              onClick={() => setAddingSlide(!addingSlide)}>{addingSlide ? 'Закрыть' : 'Добавить слайд'}</button>
+      <div className={'add-slide-btn'}
+              onClick={() => setAddingSlide(!addingSlide)}>{addingSlide ? 'Закрыть' : 'Добавить слайд'}</div>
 
       {addingSlide && <AddSlide createSlide={(slide) => createSlide(slide)}/>}
 

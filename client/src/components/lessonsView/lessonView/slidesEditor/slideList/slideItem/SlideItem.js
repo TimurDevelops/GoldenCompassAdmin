@@ -14,10 +14,11 @@ const SlideItem = ({slide: {_id, tip, img}, deleteSlide, openSlide}) => {
       </div>
       <div className={'img-wrapper'}>
         <div className={'img'}>
-          <img
+          {img ? <img
             src={img}
             alt={'Загружаемое изображение'}
-          />
+          /> : <div className={'empty-slide'}>Картинка не выбрана</div>}
+
         </div>
       </div>
 
