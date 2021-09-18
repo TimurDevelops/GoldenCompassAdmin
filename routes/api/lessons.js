@@ -3,6 +3,7 @@ const router = express.Router();
 const {check, validationResult} = require('express-validator');
 const {rename, mkdirSync, existsSync} = require('fs');
 
+const Level = require('../../models/Level');
 const Lesson = require('../../models/Lesson');
 const Slide = require('../../models/Slide');
 
@@ -75,9 +76,13 @@ router.delete(
   check('id', 'Введите id Удаляемого Урока').notEmpty(),
   async (req, res) => {
     const {lessonId: id} = req.body;
+    const ObjectId = require('mongoose').Types.ObjectId;
 
     try {
-      let lesson = await Lesson.deleteOne({_id: id});
+      let lesson = await Lesson.findOne({_id: id});
+      await Level.updateMany({lessons: lesson._id}, { $pull: {lessons: ObjectId(lesson._id)}});
+      lesson = await Lesson.deleteOne({_id: id});
+
       return res.json({lesson});
 
     } catch (err) {

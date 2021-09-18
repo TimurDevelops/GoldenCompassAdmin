@@ -67,11 +67,14 @@ router.delete(
       return res.status(400).json({errors: errors.array()});
     }
     const {studentId: id} = req.body;
+    const ObjectId = require('mongoose').Types.ObjectId;
 
     try {
-      let student = await Student.deleteOne({_id: id});
-      return res.json({student});
+      let student = await Student.findOne({_id: id});
+      await Teacher.updateMany({students: student._id}, { $pull: {students: ObjectId(student._id)}});
+      student = await Student.deleteOne({_id: id});
 
+      return res.json({student});
     } catch (err) {
       console.error(err.message);
       res.status(500).send('Server error');

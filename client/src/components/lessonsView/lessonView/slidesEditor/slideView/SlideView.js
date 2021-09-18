@@ -4,10 +4,9 @@ import MyDropzone from "../../../../ui/MyDropzone";
 
 import './SlideView.scss';
 
-const SlideView = ({slide: {_id, tip, img, hasAbacus}, editSlide, closeForm}) => {
+const SlideView = ({slide: {_id, tip, img}, editSlide, closeForm}) => {
   const [newTip, setNewTip] = useState(tip);
   const [newFile, setNewFile] = useState(img);
-  const [newHasAbacus, setNewHasAbacus] = useState(hasAbacus);
 
   const filePicked = (files) => {
     setNewFile(files[0])
@@ -15,7 +14,7 @@ const SlideView = ({slide: {_id, tip, img, hasAbacus}, editSlide, closeForm}) =>
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    editSlide({id: _id, tip: newTip, file: newFile, hasAbacus: newHasAbacus})
+    editSlide({id: _id, tip: newTip, file: newFile, hasAbacus: false})
     closeForm();
   }
   return (
@@ -28,13 +27,6 @@ const SlideView = ({slide: {_id, tip, img, hasAbacus}, editSlide, closeForm}) =>
                  value={newTip}
                  onChange={e => setNewTip(e.target.value)} required/>
           <label htmlFor="tip" className="form-label">Подсказка для учителя</label>
-        </div>
-
-        <div className="form-group field abacus">
-          <label htmlFor="hasAbacusEdit">Абакус: </label>
-          <input type="checkbox" placeholder="Абакус" name="hasAbacusEdit" id='hasAbacusEdit'
-                 checked={newHasAbacus}
-                 onChange={e => setNewHasAbacus(e.target.checked)}/>
         </div>
 
         <MyDropzone showPreview={false} filePicked={filePicked}/>

@@ -1,8 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const {check, validationResult} = require('express-validator');
+
 const Level = require('../../models/Level');
 const Lesson = require("../../models/Lesson");
+const Teacher = require("../../models/Teacher");
 
 // @route    POST api/levels
 // @desc     Add level
@@ -74,10 +76,14 @@ router.delete(
   check('id', 'Введите id Удаляемого Уровня').notEmpty(),
   async (req, res) => {
     const {levelId} = req.body;
+    const ObjectId = require('mongoose').Types.ObjectId;
 
     try {
-      let levels = await Level.deleteOne({_id: levelId});
-      return res.json({levels});
+      let level = await Level.findOne({_id: levelId});
+      await Teacher.updateMany({levels: level._id}, { $pull: {levels: ObjectId(level._id)}});
+      level = await Level.deleteOne({_id: levelId});
+
+      return res.json({level});
 
     } catch (err) {
       console.error(err.message);

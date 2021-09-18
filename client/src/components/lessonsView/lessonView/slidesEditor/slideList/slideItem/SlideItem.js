@@ -4,11 +4,9 @@ import {FaEdit, FaTimes} from "react-icons/fa";
 
 import './SlideItem.scss';
 
-const SlideItem = ({slide: {_id, tip, img}, deleteSlide, openSlide}) => {
+const SlideItem = ({slide: {_id, tip, img, hasAbacus}, deleteSlide, openSlide}) => {
   return (
     <div className={'slide-item-wrapper'}>
-
-
       <div className={'tip'}>
         {tip}
       </div>
@@ -26,9 +24,9 @@ const SlideItem = ({slide: {_id, tip, img}, deleteSlide, openSlide}) => {
         <div className={'delete-btn'} onClick={() => deleteSlide()}>
           <FaTimes/>
         </div>
-        <div className={'edit-btn'} onClick={() => openSlide()}>
+        {!hasAbacus && <div className={'edit-btn'} onClick={() => openSlide()}>
           <FaEdit/>
-        </div>
+        </div>}
       </div>
     </div>
   )
