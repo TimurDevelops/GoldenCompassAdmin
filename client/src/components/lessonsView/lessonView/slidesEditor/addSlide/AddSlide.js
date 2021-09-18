@@ -17,7 +17,7 @@ const AddSlide = ({createSlide}) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (newHasAbacus){
-      createSlide({tip, file, hasAbacus: newHasAbacus})
+      createSlide({tip: '', file: 'http://localhost:5001/slides/abacusBg.jpeg', hasAbacus: newHasAbacus})
     } else {
       createSlide({tip, file, hasAbacus: newHasAbacus})
     }

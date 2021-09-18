@@ -111,7 +111,7 @@ const checkImage = (filePath) => {
 
 const createSlide = async ({img, tip, hasAbacus}) => {
   const slide = new Slide({
-    img: checkImage(img),
+    img: hasAbacus ? img : checkImage(img),
     tip: tip,
     hasAbacus: hasAbacus,
   });
