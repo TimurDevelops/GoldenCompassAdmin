@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import PropTypes from "prop-types";
 
 import MyDropzone from "../../../../ui/MyDropzone";
+import {serverUrl} from '../../config.json';
 
 import './AddSlide.scss';
 
@@ -17,7 +18,7 @@ const AddSlide = ({createSlide}) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (newHasAbacus){
-      createSlide({tip: '', file: 'http://localhost:5001/slides/abacusBg.jpeg', hasAbacus: newHasAbacus})
+      createSlide({tip: '', file: `${serverUrl}/slides/abacusBg.jpeg`, hasAbacus: newHasAbacus})
     } else {
       createSlide({tip, file, hasAbacus: newHasAbacus})
     }
