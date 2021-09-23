@@ -1,6 +1,21 @@
 const express = require('express');
 const cors = require('cors');
+const fs = require("fs");
+
 const connectDB = require("./config/db");
+
+const {env} = require('./config.json');
+const https = require("https");
+const http = require("http");
+const credentials = {};
+
+if (env === 'prod'){
+  const privateKey = fs.readFileSync('./sslcert/server.key', 'utf8');
+  const certificate = fs.readFileSync('./sslcert/server.crt', 'utf8');
+  credentials.key = privateKey;
+  credentials.cert = certificate;
+}
+
 const app = express();
 const PORT = process.env.PORT || 5001;
 
@@ -29,6 +44,8 @@ app.get('/ping', (req, res) => {
   res.send(`Pong`);
 });
 
-app.listen(PORT, () => {
+const listener = env === 'prod' ? https.createServer(credentials, app) : http.createServer(app)
+
+listener.listen(Number(PORT), () => {
   console.log(`Sever started on port ${PORT}`);
 });
