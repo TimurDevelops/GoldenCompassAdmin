@@ -18,7 +18,7 @@ const AddSlide = ({createSlide}) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (newHasAbacus){
-      createSlide({tip: '', file: `${serverUrl}/slides/abacusBg.jpeg`, hasAbacus: newHasAbacus})
+      createSlide({tip, file: `${serverUrl}/slides/abacusBg.jpeg`, hasAbacus: newHasAbacus})
     } else {
       createSlide({tip, file, hasAbacus: newHasAbacus})
     }
@@ -35,12 +35,12 @@ const AddSlide = ({createSlide}) => {
                  onChange={e => setNewHasAbacus(e.target.checked)}/>
         </div>
 
-        {!newHasAbacus && <div className="form-group field">
+        <div className="form-group field">
           <input autoComplete='off' type="input" className="form-field" placeholder="Подсказка для учителя" name="tip"
                  id='tip'
                  onChange={e => setTip(e.target.value)}/>
           <label htmlFor="tip" className="form-label">Подсказка для учителя</label>
-        </div>}
+        </div>
 
         {!newHasAbacus && <MyDropzone filePicked={filePicked}/>}
 
