@@ -229,6 +229,7 @@ $form-secondary: #629a52;
   .list-wrapper {
     display: flex;
     padding: .2em 0;
+    flex-wrap: wrap;
 
     .group-title {
       font-size: 1.3em;
@@ -241,7 +242,7 @@ $form-secondary: #629a52;
     .inline-item {
       background: $inline-item-bg;
       padding: .5em;
-      margin-left: .5em;
+      margin: .25em;
       border-radius: .2em;
       display: flex;
 

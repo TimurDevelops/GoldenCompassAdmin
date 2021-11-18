@@ -50,14 +50,9 @@ router.post(
 router.post(
   '/get-lessons',
   async (req, res) => {
-    const ObjectId = require('mongoose').Types.ObjectId;
     try {
-      let lessons = await Lesson.find().lean();
-
-      for (let i = 0; i < lessons.length; i++) {
-        const slides_ids = lessons[i].slides.map((id) => ObjectId(id));
-        lessons[i].slides = await Slide.find({_id: {$in: slides_ids}});
-      }
+      console.log("here")
+      let lessons = await Lesson.find().populate('Slide').lean();
 
       return res.json({lessons});
 
