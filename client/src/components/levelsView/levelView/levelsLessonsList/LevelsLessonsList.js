@@ -7,22 +7,22 @@ import LessonsSelector from "../LessonsSelector/LessonsSelector";
 
 const LevelsLessonsList = ({lessons = [], setLessons}) => {
   const [allLessons, setAllLessons] = useState([]);
+  const [lessonsIds, setLessonsIds] = useState([]);
+
   useEffect(() => {
     const getLessons = async () => {
-      let res;
-      if (allLessons.length === 0){
-        res = await api.post('/lessons/get-lessons', {namesOnly: true})
-        res = res.data.lessons
-      }  else {
-        res = allLessons;
-      }
-      const lessonsIds = lessons.map(lesson => lesson._id)
-      const newLessons = res.filter(lesson => !lessonsIds.includes(lesson._id))
-      setAllLessons(newLessons);
+      // const newLessons = res.filter(lesson => !lessonsIds.includes(lesson._id))
+      const res = await api.post('/lessons/get-lessons', {namesOnly: true})
+
+      setAllLessons(res.data.lessons);
     }
     getLessons().catch((err) => console.error(err))
 
-  }, [lessons]);
+  }, []);
+
+  useEffect(() => {
+    setLessonsIds(lessons.map(lesson => lesson._id))
+  }, [lessons])
 
   const setSelectedLessons = (lesson) => {
     setLessons([...lessons, lesson])
@@ -38,11 +38,13 @@ const LevelsLessonsList = ({lessons = [], setLessons}) => {
       <div className={'list-wrapper'}>
         <div className={'group-title'}>Уроки:</div>
         {
-          lessons.map(lesson => <LevelsLessonItem key={lesson._id} lesson={lesson}
+          lessons.map(lesson => <LevelsLessonItem key={lesson._id}
+                                                  lesson={lesson}
                                                   deleteLesson={() => deleteLesson(lesson._id)}/>)
         }
       </div>
-      <LessonsSelector lessons={allLessons} setSelectedLesson={setSelectedLessons}/>
+      <LessonsSelector lessons={allLessons.filter(lesson => !lessonsIds.includes(lesson._id))}
+                       setSelectedLesson={setSelectedLessons}/>
     </div>
   )
 }
