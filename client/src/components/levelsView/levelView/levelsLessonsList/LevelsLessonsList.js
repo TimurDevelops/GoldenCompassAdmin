@@ -7,12 +7,17 @@ import LessonsSelector from "../LessonsSelector/LessonsSelector";
 
 const LevelsLessonsList = ({lessons = [], setLessons}) => {
   const [allLessons, setAllLessons] = useState([]);
-
   useEffect(() => {
     const getLessons = async () => {
-      const res = await api.post('/lessons/get-lessons');
+      let res;
+      if (allLessons.length === 0){
+        res = await api.post('/lessons/get-lessons', {namesOnly: true})
+        res = res.data.lessons
+      }  else {
+        res = allLessons;
+      }
       const lessonsIds = lessons.map(lesson => lesson._id)
-      const newLessons = res.data.lessons.filter(lesson => !lessonsIds.includes(lesson._id))
+      const newLessons = res.filter(lesson => !lessonsIds.includes(lesson._id))
       setAllLessons(newLessons);
     }
     getLessons().catch((err) => console.error(err))

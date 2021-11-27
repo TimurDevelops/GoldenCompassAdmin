@@ -10,7 +10,8 @@ const LevelView = ({editLevel, levelToEdit: {_id: id, name: oldLeveTitle, lesson
   const [levelTitle, setLevelTitle] = useState(oldLeveTitle);
   const [lessons, setLessons] = useState(oldLessons);
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault()
     editLevel(
       {
         id,

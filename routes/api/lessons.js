@@ -51,7 +51,14 @@ router.post(
   '/get-lessons',
   async (req, res) => {
     try {
-      let lessons = await Lesson.find().populate('Slide').lean();
+      const {namesOnly} = req.body;
+      let lessons;
+
+      if (namesOnly) {
+        lessons = await Lesson.find().lean();
+      } else {
+        lessons = await Lesson.find().populate({path: 'slides', model: Slide}).lean();
+      }
 
       return res.json({lessons});
 
@@ -74,7 +81,7 @@ router.delete(
 
     try {
       let lesson = await Lesson.findOne({_id: id});
-      await Level.updateMany({lessons: lesson._id}, { $pull: {lessons: ObjectId(lesson._id)}});
+      await Level.updateMany({lessons: lesson._id}, {$pull: {lessons: ObjectId(lesson._id)}});
       lesson = await Lesson.deleteOne({_id: id});
 
       return res.json({lesson});

@@ -3,6 +3,7 @@ const router = express.Router();
 const {check, validationResult} = require('express-validator');
 
 const Level = require('../../models/Level');
+const Lesson = require('../../models/Lesson');
 const Teacher = require("../../models/Teacher");
 
 // @route    POST api/levels
@@ -49,7 +50,7 @@ router.post(
   '/get-levels',
   async (req, res) => {
     try {
-      let levels = await Level.find().populate('Lesson').lean();
+      let levels = await Level.find().populate({ path: 'lessons', model: Lesson }).lean();
 
       res.status(200).json({levels});
 
@@ -99,7 +100,6 @@ router.put(
 
     const {id, name, lessons} = req.body;
     try {
-      console.log(lessons)
       let level = await Level.findById(id)
 
       level.name = name;
@@ -107,7 +107,7 @@ router.put(
 
       await level.save();
 
-      let resLevel = await Level.findById(id).populate("Lesson").lean();
+      let resLevel = await Level.findById(id).populate({ path: 'lessons', model: Lesson }).lean();
 
       res.status(200).json({level: resLevel});
 
