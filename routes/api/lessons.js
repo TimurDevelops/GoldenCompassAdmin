@@ -51,7 +51,6 @@ router.post(
   '/get-lessons',
   async (req, res) => {
     try {
-      console.log("here")
       let lessons = await Lesson.find().populate('Slide').lean();
 
       return res.json({lessons});

@@ -3,7 +3,6 @@ const router = express.Router();
 const {check, validationResult} = require('express-validator');
 
 const Level = require('../../models/Level');
-const Lesson = require("../../models/Lesson");
 const Teacher = require("../../models/Teacher");
 
 // @route    POST api/levels
@@ -49,15 +48,8 @@ router.post(
 router.post(
   '/get-levels',
   async (req, res) => {
-    const ObjectId = require('mongoose').Types.ObjectId;
     try {
-      let levels = await Level.find().lean();
-
-      for (let i = 0; i < levels.length; i++) {
-        const lessons_ids = levels[i].lessons.map((id) => ObjectId(id));
-
-        levels[i].lessons = await Lesson.find({_id: {$in: lessons_ids}});
-      }
+      let levels = await Level.find().populate('Lesson').lean();
 
       res.status(200).json({levels});
 
@@ -104,11 +96,10 @@ router.put(
     if (!errors.isEmpty()) {
       return res.status(400).json({errors: errors.array()});
     }
-    const ObjectId = require('mongoose').Types.ObjectId;
 
     const {id, name, lessons} = req.body;
     try {
-
+      console.log(lessons)
       let level = await Level.findById(id)
 
       level.name = name;
@@ -116,10 +107,7 @@ router.put(
 
       await level.save();
 
-      let resLevel = await Level.findById(id).lean();
-
-      const lessons_ids = resLevel.lessons.map((id) => ObjectId(id));
-      resLevel.lessons = await Lesson.find({_id: {$in: lessons_ids}});
+      let resLevel = await Level.findById(id).populate("Lesson").lean();
 
       res.status(200).json({level: resLevel});
 
