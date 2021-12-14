@@ -43,6 +43,7 @@ $inline-item-cross-bg: #b9a8a8;
       left: 2px;
       margin-bottom: 5px;
     }
+
     .reset-btn {
       color: #b3bed7;
       cursor: pointer;
@@ -137,6 +138,22 @@ $inline-item-cross-bg: #b9a8a8;
   width: 100%;
 }
 
+.form-group.flex {
+  display: flex;
+  padding-top: 0;
+  margin-top: 0;
+
+  .form-label{
+    position: relative;
+    padding-top: 5px;
+  }
+  .form-field{
+    width: 20px;
+    margin-left: 15px;
+
+  }
+}
+
 .form-field {
   width: 100%;
   border: 1px solid $gray;
@@ -224,7 +241,6 @@ $form-secondary: #629a52;
 
 // GROUPS
 .inline-list {
-  padding-top: 2em;
 
   .list-wrapper {
     display: flex;

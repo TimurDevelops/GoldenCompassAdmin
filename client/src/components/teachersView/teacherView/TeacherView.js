@@ -11,17 +11,19 @@ const TeacherView = ({
                          name: oldName,
                          login: oldLogin,
                          students: oldStudents,
-                         levels: oldLevels
+                         levels: oldLevels,
+                         isAdmin: oldIsAdmin
                        }
                      }) => {
   const [name, setName] = useState(oldName);
   const [login, setLogin] = useState(oldLogin);
+  const [isAdmin, setIsAdmin] = useState(oldIsAdmin || false);
   const [students, setStudents] = useState(oldStudents);
   const [levels, setLevels] = useState(oldLevels);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    editTeacher({id, name, login, students, levels})
+    editTeacher({id, name, login, students, levels, isAdmin})
   }
 
   return (
@@ -40,6 +42,13 @@ const TeacherView = ({
                    value={login}
                    onChange={e => setLogin(e.target.value)} required/>
             <label htmlFor="login" className="form-label">Логин</label>
+          </div>
+
+          <div className="form-group field flex">
+            <label htmlFor="admin" className="form-label">Админ: </label>
+            <input type="checkbox" className="form-field" placeholder="Админ" name="admin" id='admin'
+                   checked={isAdmin}
+                   onChange={e => setIsAdmin(e.target.checked)}/>
           </div>
 
           <TeachersStudentsList students={students} setStudents={setStudents}/>

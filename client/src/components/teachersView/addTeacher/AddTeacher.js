@@ -3,12 +3,13 @@ import PropTypes from "prop-types";
 
 const AddTeacher = ({addTeacher}) => {
   const [login, setLogin] = useState();
+  const [isAdmin, setIsAdmin] = useState();
   const [password, setPassword] = useState();
   const [name, setName] = useState();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addTeacher({name, login, password});
+    addTeacher({name, login, password, isAdmin});
   }
 
   return (
@@ -16,6 +17,13 @@ const AddTeacher = ({addTeacher}) => {
       <div className={'add-teacher-form add-form'}>
         <form className='form' onSubmit={(e) => handleSubmit(e)}>
           <div className={'inputs-wrapper'}>
+
+            <div className="form-group field abacus">
+              <label htmlFor="isAdmin">Привелегии администратора: </label>
+              <input type="checkbox" placeholder="Абакус" name="isAdmin" id='isAdmin'
+                     onChange={e => setIsAdmin(e.target.checked)}/>
+            </div>
+
             <div className="form-group field">
               <input autoComplete='off' type="input" className="form-field" placeholder="ФИО" name="name" id='name'
                      onChange={e => setName(e.target.value)} required/>

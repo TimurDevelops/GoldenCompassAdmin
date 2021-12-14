@@ -7,6 +7,7 @@ const config = require('config');
 const { check, validationResult } = require('express-validator');
 
 const Admin = require('../../models/Admin');
+const Teacher = require('../../models/Teacher');
 
 // @route    GET api/auth
 // @desc     Get user by token
@@ -41,9 +42,14 @@ router.post(
       let user = await Admin.findOne({ login });
 
       if (!user) {
-        return res
-          .status(400)
-          .json({ errors: [{ msg: 'Неверный логин/пароль' }] });
+
+        user = await Teacher.findOne({ login });
+
+        if (!user || !user.isAdmin){
+          return res
+            .status(400)
+            .json({ errors: [{ msg: 'Неверный логин/пароль' }] });
+        }
       }
 
       const isMatch = await bcrypt.compare(password, user.password);

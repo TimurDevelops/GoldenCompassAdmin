@@ -8,7 +8,8 @@ const TeacherItem = ({teacher, deleteTeacher, openTeacher, resetPassword}) => {
     <div className={'teacher-wrapper item-wrapper'}>
       <h4 className={'teacher-title'}>
         ФИО: {teacher.name}<br/>
-        Логин: {teacher.login}
+        Логин: {teacher.login}<br/>
+        Админ: {teacher.isAdmin ? "Да" : "Нет"}
       </h4>
       <div className={'btn-wrapper'}>
         <div className={'delete-btn'} onClick={() => deleteTeacher()}>

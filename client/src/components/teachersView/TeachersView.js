@@ -42,7 +42,9 @@ const TeachersView = ({logout, setAlert}) => {
     try {
       const res = await api.post('/teachers', {...teacher});
       const newTeacher = res.data.user;
+      console.log(teachers, newTeacher)
       setTeachers([...teachers, newTeacher])
+      setAlert("Учитель создан", 'success')
     } catch (e) {
       e.response.data.errors.forEach(err => {
         setAlert(err.msg, 'danger')
@@ -59,6 +61,7 @@ const TeachersView = ({logout, setAlert}) => {
         },
       });
       setTeachers(teachers.filter(i => i._id !== teacherId))
+      setAlert("Учитель удален", 'success')
     } catch (e) {
       console.log(e)
       e.response.data.errors.forEach(err => {
@@ -67,13 +70,13 @@ const TeachersView = ({logout, setAlert}) => {
     }
   }
 
-  const editTeacher = async ({id, name, login, students, levels}) => {
+  const editTeacher = async ({id, name, login, students, levels, isAdmin}) => {
     const newStudents = students.map(student => student._id)
     const newLevels = levels.map(level => level._id)
 
     let createdTeacher;
     try {
-      let res = await api.put('/teachers', {id, name, login, students: newStudents, levels: newLevels});
+      let res = await api.put('/teachers', {id, name, login, isAdmin, students: newStudents, levels: newLevels});
       createdTeacher = res.data.teacher;
     } catch (e) {
       console.log(e)
@@ -87,6 +90,7 @@ const TeachersView = ({logout, setAlert}) => {
       if (teacher._id === id) return createdTeacher;
       else return teacher;
     }))
+    setAlert("Учитель изменен", 'success')
   }
 
   const resetPassword = async (teacherId, teacherName) => {

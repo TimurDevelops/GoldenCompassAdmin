@@ -25,7 +25,7 @@ router.post(
       return res.status(400).json({errors: errors.array()});
     }
 
-    const {name, login, password} = req.body;
+    const {name, login, password, isAdmin} = req.body;
 
     try {
       let user = await Teacher.findOne({login});
@@ -39,7 +39,8 @@ router.post(
       user = new Teacher({
         name,
         login,
-        password
+        password,
+        isAdmin
       });
 
       const salt = await bcrypt.genSalt(10);
@@ -56,7 +57,7 @@ router.post(
   }
 );
 
-// @route    POST api/levels
+// @route    DELETE api/levels
 // @desc     Delete teacher
 // @access   Public
 router.delete(
@@ -107,7 +108,7 @@ router.post(
   }
 );
 
-// @route    POST api/teacher
+// @route    PUT api/teacher
 // @desc     Edit teacher
 // @access   Public
 router.put(
@@ -121,7 +122,7 @@ router.put(
       return res.status(400).json({errors: errors.array()});
     }
 
-    const {id, name, login, students, levels} = req.body;
+    const {id, name, login, isAdmin, students, levels} = req.body;
 
     try {
 
@@ -129,6 +130,7 @@ router.put(
 
       teacher.name = name;
       teacher.login = login;
+      teacher.isAdmin = isAdmin;
       teacher.students = students;
       teacher.levels = levels;
 
