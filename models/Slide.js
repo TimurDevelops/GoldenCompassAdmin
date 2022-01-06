@@ -13,6 +13,10 @@ const SlideSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
+  hasChessboard: {
+    type: Boolean,
+    default: false
+  },
 })
 
 

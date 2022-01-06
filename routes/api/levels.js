@@ -11,14 +11,15 @@ const Teacher = require("../../models/Teacher");
 // @access   Public
 router.post(
   '/',
-  check('name', 'Введите Название  Уровня').notEmpty(),
+  check('name', 'Введите название уровня').notEmpty(),
+  check('category', 'Укажите категорию').notEmpty(),
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({errors: errors.array()});
     }
 
-    const {name} = req.body;
+    const {name, category} = req.body;
 
     try {
       let level = await Level.findOne({name});
@@ -30,7 +31,8 @@ router.post(
       }
 
       level = new Level({
-        name
+        name,
+        category
       });
 
       await level.save();
@@ -50,7 +52,7 @@ router.post(
   '/get-levels',
   async (req, res) => {
     try {
-      let levels = await Level.find().populate({ path: 'lessons', model: Lesson }).lean();
+      let levels = await Level.find().populate({path: 'lessons', model: Lesson}).lean();
 
       res.status(200).json({levels});
 
@@ -73,7 +75,7 @@ router.delete(
 
     try {
       let level = await Level.findOne({_id: levelId});
-      await Teacher.updateMany({levels: level._id}, { $pull: {levels: ObjectId(level._id)}});
+      await Teacher.updateMany({levels: level._id}, {$pull: {levels: ObjectId(level._id)}});
       level = await Level.deleteOne({_id: levelId});
 
       return res.json({level});
@@ -107,7 +109,7 @@ router.put(
 
       await level.save();
 
-      let resLevel = await Level.findById(id).populate({ path: 'lessons', model: Lesson }).lean();
+      let resLevel = await Level.findById(id).populate({path: 'lessons', model: Lesson}).lean();
 
       res.status(200).json({level: resLevel});
 

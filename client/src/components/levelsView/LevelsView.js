@@ -11,7 +11,7 @@ import Modal from "../ui/Modal";
 
 import api from "../../utils/api";
 
-const LevelsView = ({logout, setAlert}) => {
+const LevelsView = ({logout, setAlert, categories}) => {
   const [addLevelVisible, setAddLevelVisible] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [levelToEdit, setLevelToEdit] = useState({});
@@ -94,7 +94,7 @@ const LevelsView = ({logout, setAlert}) => {
 
           <button className={'btn'}
                   onClick={() => setAddLevelVisible(!addLevelVisible)}>{addLevelVisible ? 'Закрыть' : 'Добавить уровень'}</button>
-          {addLevelVisible && <AddLevel createLevel={createLevel}/>}
+          {addLevelVisible && <AddLevel createLevel={createLevel} categories={categories}/>}
 
           <LevelsList levels={levels} deleteLevel={deleteLevel} openLevel={openModal}/>
 
@@ -117,6 +117,7 @@ const LevelsView = ({logout, setAlert}) => {
 LevelsView.propTypes = {
   logout: PropTypes.func.isRequired,
   setAlert: PropTypes.func.isRequired,
+  categories: PropTypes.array.isRequired,
 };
 
 export default LevelsView;

@@ -5,6 +5,10 @@ const LessonSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  category: {
+    type: String,
+    required: true
+  },
   slides: [{ type : mongoose.Schema.Types.ObjectId, ref: 'Slides' }],
 })
 

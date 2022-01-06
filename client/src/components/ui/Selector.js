@@ -1,11 +1,16 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 
 import './Selector.scss';
 
-const Selector = ({items, onChange, label, valueField}) => {
+const Selector = ({items, onChange, label, valueField, defaultValue = null}) => {
   const [open, setOpen] = useState(false)
 
+  useEffect(() => {
+    if (defaultValue) {
+      onChange(defaultValue)
+    }
+  }, [])
 
   return (
     <div className={'selector-wrapper'}>
@@ -37,6 +42,7 @@ Selector.propTypes = {
   onChange: PropTypes.func.isRequired,
   label: PropTypes.string.isRequired,
   valueField: PropTypes.string.isRequired,
+  defaultValue: PropTypes.string
 };
 
 export default Selector;

@@ -11,7 +11,7 @@ import Modal from "../ui/Modal";
 
 import api from "../../utils/api";
 
-const LessonsView = ({logout, setAlert}) => {
+const LessonsView = ({logout, setAlert, categories}) => {
   const [addLessonVisible, setAddLessonVisible] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [lessonToEdit, setLessonToEdit] = useState({});
@@ -121,6 +121,7 @@ const LessonsView = ({logout, setAlert}) => {
 LessonsView.propTypes = {
   logout: PropTypes.func.isRequired,
   setAlert: PropTypes.func.isRequired,
+  categories: PropTypes.array.isRequired
 };
 
 export default LessonsView;

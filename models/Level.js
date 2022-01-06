@@ -5,6 +5,10 @@ const LevelSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  category: {
+    type: String,
+    required: true
+  },
   lessons: [{ type : mongoose.Schema.Types.ObjectId, ref: 'Lessons' }],
 })
 

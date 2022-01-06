@@ -1,12 +1,17 @@
 import React, {useState} from 'react';
 import PropTypes from "prop-types";
+import Selector from "../../ui/Selector";
 
-const AddLesson = ({createLesson}) => {
+const AddLesson = ({createLesson, categories}) => {
   const [lessonTitle, setLessonTitle] = useState();
+  const [category, setCategory] = useState();
 
+  const onCategoryChange = (categoryId) => {
+    setCategory(categories.find(i => i.id === categoryId))
+  }
   const handleSubmit = (e) => {
     e.preventDefault()
-    createLesson({lessonTitle});
+    createLesson({lessonTitle, category: category["label"]});
   }
 
   return (
@@ -18,6 +23,11 @@ const AddLesson = ({createLesson}) => {
                    onChange={e => setLessonTitle(e.target.value)} required/>
             <label htmlFor="login" className="form-label">Название Урока</label>
           </div>
+
+          <Selector items={categories} onChange={onCategoryChange}
+                    defaultValue={categories[0].id}
+                    label={category ? category["label"] : 'Выберите категорию...'}
+                    valueField={'id'}/>
 
           <div className='submit-btn-wrapper'>
             <button type="submit" className='btn' id='addLesson'>
@@ -31,7 +41,8 @@ const AddLesson = ({createLesson}) => {
 }
 
 AddLesson.propTypes = {
-  createLesson: PropTypes.func.isRequired
+  createLesson: PropTypes.func.isRequired,
+  categories: PropTypes.array.isRequired
 };
 
 export default AddLesson;

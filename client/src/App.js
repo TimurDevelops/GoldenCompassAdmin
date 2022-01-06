@@ -21,6 +21,26 @@ const App = () => {
   const [auth, setAuth] = useState({isAuthenticated: Boolean(user && user.token), isLoading: false});
   const [alerts, setAlerts] = useState([]);
 
+  const categories = [{
+    label: "Ментальная арифметика",
+    id: "abacus",
+  }, {
+    label: "Шахматы",
+    id: "chess",
+  }]
+
+  const formattedCategories = categories.map(category => {
+
+    return Object.assign(category, {
+      html: (
+        <div className={'student-item'}>
+          {category.label}
+        </div>
+      )
+    })
+  })
+
+
   const setAlert = (msg, alertType, timeout = 5000) => {
     const id = uuidv4();
     setAlerts([...alerts, {msg, alertType, id}])
@@ -64,6 +84,7 @@ const App = () => {
 
           <PrivateRoute exact path="/lessons-view"
                         setAlert={setAlert}
+                        categories={formattedCategories}
                         component={LessonsView}
                         auth={auth}
                         user={user}
@@ -71,6 +92,7 @@ const App = () => {
 
           <PrivateRoute exact path="/levels-view"
                         setAlert={setAlert}
+                        categories={formattedCategories}
                         component={LevelsView}
                         auth={auth}
                         user={user}
