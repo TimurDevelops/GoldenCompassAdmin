@@ -9,7 +9,7 @@ import SlideView from "./slideView/SlideView";
 import './SlideEditor.scss'
 import {v4 as uuidv4} from "uuid";
 
-const SlidesEditor = ({slides, setSlides, setAlert}) => {
+const SlidesEditor = ({slides, category, setSlides, setAlert}) => {
   const [addingSlide, setAddingSlide] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [slideToEdit, setSlideToEdit] = useState({});
@@ -53,7 +53,7 @@ const SlidesEditor = ({slides, setSlides, setAlert}) => {
       <div className={'add-slide-btn'}
               onClick={() => setAddingSlide(!addingSlide)}>{addingSlide ? 'Закрыть' : 'Добавить слайд'}</div>
 
-      {addingSlide && <AddSlide createSlide={(slide) => createSlide(slide)}/>}
+      {addingSlide && <AddSlide createSlide={(slide) => createSlide(slide)} category={category}/>}
 
       {slides.length ?
         <SlideList
@@ -83,6 +83,7 @@ const SlidesEditor = ({slides, setSlides, setAlert}) => {
 
 SlidesEditor.propTypes = {
   slides: PropTypes.array.isRequired,
+  category: PropTypes.string.isRequired,
   setSlides: PropTypes.func.isRequired,
 };
 

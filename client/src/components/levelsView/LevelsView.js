@@ -67,11 +67,11 @@ const LevelsView = ({logout, setAlert, categories}) => {
     }
   }
 
-  const editLevel = async ({id, name, lessons}) => {
+  const editLevel = async ({id, name, lessons, category}) => {
     const newLessons = lessons.map(lesson => lesson._id)
     let createdLevel;
     try {
-      const res = await api.put('/levels', {id, name, lessons: newLessons});
+      const res = await api.put('/levels', {id, name, lessons: newLessons, category});
       createdLevel = res.data.level;
     } catch (e) {
       e.response.data.errors.forEach(err => {
@@ -104,7 +104,7 @@ const LevelsView = ({logout, setAlert, categories}) => {
             closeModal={closeModal}
             content={
               modalOpen &&
-              <LevelView levelToEdit={levelToEdit} editLevel={editLevel} setAlert={setAlert}/>
+              <LevelView levelToEdit={levelToEdit} categories={categories} editLevel={editLevel} setAlert={setAlert}/>
             }
           />
 

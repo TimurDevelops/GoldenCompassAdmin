@@ -6,7 +6,7 @@ import {serverUrl} from '../../../../../config.json';
 
 import './AddSlide.scss';
 
-const AddSlide = ({createSlide}) => {
+const AddSlide = ({createSlide, category}) => {
   const [tip, setTip] = useState();
   const [file, setFile] = useState();
   const [newHasAbacus, setNewHasAbacus] = useState(false);
@@ -17,7 +17,7 @@ const AddSlide = ({createSlide}) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (newHasAbacus){
+    if (newHasAbacus) {
       createSlide({tip, file: `${serverUrl}/slides/abacusBg.jpeg`, hasAbacus: newHasAbacus})
     } else {
       createSlide({tip, file, hasAbacus: newHasAbacus})
@@ -28,12 +28,22 @@ const AddSlide = ({createSlide}) => {
     <div className={'add-slide-wrapper'}>
 
       <div className={'inputs-wrapper'}>
-        <div className="form-group field abacus">
-          <label htmlFor="hasAbacus">Абакус: </label>
-          <input type="checkbox" placeholder="Абакус" name="hasAbacus" id='hasAbacus'
-                 checked={newHasAbacus}
-                 onChange={e => setNewHasAbacus(e.target.checked)}/>
-        </div>
+        {
+          category === "abacus" && <div className="form-group field abacus">
+            <label htmlFor="hasAbacus">Абакус: </label>
+            <input type="checkbox" placeholder="Абакус" name="hasAbacus" id='hasAbacus'
+                   checked={newHasAbacus}
+                   onChange={e => setNewHasAbacus(e.target.checked)}/>
+          </div>
+        }
+        {
+          category === "chess" && <div className="form-group field abacus">
+            <label htmlFor="hasAbacus">Доска: </label>
+            <input type="checkbox" placeholder="Доска" name="hasAbacus" id='hasAbacus'
+                   checked={newHasAbacus}
+                   onChange={e => setNewHasAbacus(e.target.checked)}/>
+          </div>
+        }
 
         <div className="form-group field">
           <input autoComplete='off' type="input" className="form-field" placeholder="Подсказка для учителя" name="tip"
@@ -56,6 +66,7 @@ const AddSlide = ({createSlide}) => {
 
 AddSlide.propTypes = {
   createSlide: PropTypes.func.isRequired,
+  category: PropTypes.string.isRequired,
 };
 
 export default AddSlide;

@@ -98,7 +98,7 @@ const LessonsView = ({logout, setAlert, categories}) => {
           <button className={'btn'}
                   onClick={() => setAddLessonVisible(!addLessonVisible)}>{addLessonVisible ? 'Закрыть' : 'Добавить урок'}</button>
 
-          {addLessonVisible && <AddLesson createLesson={createLesson}/>}
+          {addLessonVisible && <AddLesson createLesson={createLesson} categories={categories}/>}
 
           <LessonsList lessons={lessons} deleteLesson={deleteLesson} openLesson={openModal}/>
 
@@ -107,7 +107,7 @@ const LessonsView = ({logout, setAlert, categories}) => {
             open={modalOpen}
             closeModal={closeModal}
             content={
-              modalOpen && <LessonView lessonToEdit={lessonToEdit} editLesson={editLesson} setAlert={setAlert}/>
+              modalOpen && <LessonView lessonToEdit={lessonToEdit} categories={categories} editLesson={editLesson} setAlert={setAlert}/>
             }
           />
 

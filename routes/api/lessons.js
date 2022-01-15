@@ -51,13 +51,25 @@ router.post(
   '/get-lessons',
   async (req, res) => {
     try {
-      const {namesOnly} = req.body;
+
+      const {namesOnly, category} = req.body;
       let lessons;
 
       if (namesOnly) {
-        lessons = await Lesson.find().lean();
+        const levels = await Level.find().lean()
+        const assignedLessons = [].concat.apply([], levels.map(i => i.lessons))
+        if (category){
+          lessons = await Lesson.find({category: category, _id: {$nin: assignedLessons}}).lean();
+        } else {
+          lessons = await Lesson.find({_id: {$nin: assignedLessons}}).lean();
+        }
+
       } else {
-        lessons = await Lesson.find().populate({path: 'slides', model: Slide}).lean();
+        if (category){
+          lessons = await Lesson.find({category: category}).populate({path: 'slides', model: Slide}).lean();
+        } else {
+          lessons = await Lesson.find().populate({path: 'slides', model: Slide}).lean();
+        }
       }
 
       return res.json({lessons});
@@ -139,6 +151,7 @@ router.put(
   '/',
   check('id', 'Введите ID урока').notEmpty(),
   check('title', 'Введите название урока').notEmpty(),
+  check('category', 'Укажите категорию').notEmpty(),
   async (req, res) => {
     const ObjectId = require('mongoose').Types.ObjectId;
     const errors = validationResult(req);
@@ -146,7 +159,7 @@ router.put(
       return res.status(400).json({errors: errors.array()});
     }
 
-    const {id, title, slides} = req.body;
+    const {id, title, slides, category} = req.body;
     let slidesIds = []
     try {
       if (!existsSync('./slides')) {
@@ -170,6 +183,7 @@ router.put(
 
       lesson.name = title;
       lesson.slides = slidesIds;
+      lesson.category = category;
 
       await lesson.save();
 

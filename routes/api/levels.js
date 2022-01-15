@@ -52,6 +52,7 @@ router.post(
   '/get-levels',
   async (req, res) => {
     try {
+
       let levels = await Level.find().populate({path: 'lessons', model: Lesson}).lean();
 
       res.status(200).json({levels});
@@ -94,18 +95,20 @@ router.put(
   '/',
   check('id', 'Введите ID уровня').notEmpty(),
   check('name', 'Введите название уровня').notEmpty(),
+  check('category', 'Укажите категорию').notEmpty(),
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({errors: errors.array()});
     }
 
-    const {id, name, lessons} = req.body;
+    const {id, name, lessons, category} = req.body;
     try {
       let level = await Level.findById(id)
 
       level.name = name;
       level.lessons = lessons;
+      level.category = category;
 
       await level.save();
 

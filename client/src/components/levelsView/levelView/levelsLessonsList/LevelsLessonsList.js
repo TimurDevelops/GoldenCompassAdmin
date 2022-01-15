@@ -5,20 +5,31 @@ import LevelsLessonItem from "./levelsLessonItem/LevelsLessonItem";
 import LessonsSelector from "../LessonsSelector/LessonsSelector";
 
 
-const LevelsLessonsList = ({lessons = [], setLessons}) => {
+const LevelsLessonsList = ({lessons = [], setLessons, category}) => {
   const [allLessons, setAllLessons] = useState([]);
   const [lessonsIds, setLessonsIds] = useState([]);
 
   useEffect(() => {
     const getLessons = async () => {
       // const newLessons = res.filter(lesson => !lessonsIds.includes(lesson._id))
-      const res = await api.post('/lessons/get-lessons', {namesOnly: true})
+      const res = await api.post('/lessons/get-lessons', {namesOnly: true, category})
 
       setAllLessons(res.data.lessons);
     }
     getLessons().catch((err) => console.error(err))
 
-  }, []);
+  }, [category]);
+
+  useEffect(() => {
+    const getLessons = async () => {
+      // const newLessons = res.filter(lesson => !lessonsIds.includes(lesson._id))
+      const res = await api.post('/lessons/get-lessons', {namesOnly: true, category})
+
+      setAllLessons(res.data.lessons);
+    }
+    getLessons().catch((err) => console.error(err))
+
+  }, [lessonsIds]);
 
   useEffect(() => {
     setLessonsIds(lessons.map(lesson => lesson._id))
@@ -51,6 +62,7 @@ const LevelsLessonsList = ({lessons = [], setLessons}) => {
 
 LevelsLessonsList.propTypes = {
   lessons: PropTypes.array.isRequired,
+  categories: PropTypes.array.isRequired,
 };
 
 export default LevelsLessonsList;
