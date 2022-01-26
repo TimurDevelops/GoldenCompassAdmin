@@ -9,7 +9,6 @@ const Header = ({logout}) => {
   return (
     <header className='header'>
       <div className={'menu'}>
-
         <MenuItem link={'/teachers-view'} label={'Учителя'}/>
         <MenuItem link={'/students-view'} label={'Ученики'}/>
         <MenuItem link={'/categories-view'} label={'Категории'}/>
