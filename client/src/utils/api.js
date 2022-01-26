@@ -19,6 +19,7 @@ const api = axios.create({
 api.interceptors.response.use(
   res => res,
   err => {
+    console.log(err)
     if (Number(err.response.status) === 401) {
       const {unsetUser} = useUser();
       unsetUser();

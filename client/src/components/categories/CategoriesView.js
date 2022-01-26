@@ -2,12 +2,13 @@ import React, {useEffect, useState} from 'react';
 import PropTypes from "prop-types";
 
 import Header from "../ui/Header";
+import Modal from "../ui/Modal";
 
 import AddCategory from "./addCategory/AddCategory";
+import CategoriesList from "./categoriesList/CategoriesList";
+import CategoryView from "./categoryView/CategoryView";
 
 import api from "../../utils/api";
-import LessonsList from "../lessonsView/lessonsList/LessonsList";
-import CategoriesList from "./categoriesList/CategoriesList";
 
 const CategoriesView = ({logout, setAlert}) => {
   const [addCategoryVisible, setAddCategoryVisible] = useState(false);
@@ -52,7 +53,7 @@ const CategoriesView = ({logout, setAlert}) => {
 
   const deleteCategory = async (categoryId) => {
     try {
-      await api.delete('/category', {
+      await api.delete('/categories', {
         headers: {},
         data: {categoryId},
       });
@@ -65,6 +66,23 @@ const CategoriesView = ({logout, setAlert}) => {
     setCategories(categories.filter(category => category._id !== categoryId))
   }
 
+  const editCategory = async (newCategory) => {
+    let createdCategory;
+    try {
+      const res = await api.put('/categories', newCategory);
+      createdCategory = res.data.category;
+
+    } catch (e) {
+      e.response.data.errors.forEach(err => {
+        setAlert(err.msg, 'danger')
+      })
+    }
+    closeModal()
+    setCategories(categories.map((category) => {
+      if (category._id === newCategory.id) return createdCategory;
+      else return category;
+    }))
+  }
 
   return (
     <div>
@@ -78,6 +96,15 @@ const CategoriesView = ({logout, setAlert}) => {
           {addCategoryVisible && <AddCategory createCategory={createCategory} />}
 
           <CategoriesList categories={categories} deleteCategory={deleteCategory} openCategory={openModal}/>
+
+          <Modal
+            title={`Редактирование урока: \n ${categoryToEdit.name}`}
+            open={modalOpen}
+            closeModal={closeModal}
+            content={
+              modalOpen && <CategoryView categoryToEdit={categoryToEdit} editCategory={editCategory} setAlert={setAlert}/>
+            }
+          />
 
         </div>
       </div>

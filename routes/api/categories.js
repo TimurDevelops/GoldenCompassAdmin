@@ -5,6 +5,7 @@ const {check, validationResult} = require("express-validator");
 const Category = require('../../models/Categories');
 const Lesson = require("../../models/Lesson");
 const Level = require("../../models/Level");
+const Teacher = require("../../models/Teacher");
 
 // @route    POST api/categories
 // @desc     Add category
@@ -85,5 +86,37 @@ router.delete(
   }
 );
 
+// @route    POST api/category
+// @desc     Edit category
+// @access   Public
+router.put(
+  '/',
+  check('id', 'Введите ID категории').notEmpty(),
+  check('name', 'Введите название категории').notEmpty(),
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({errors: errors.array()});
+    }
+
+    const {id, name, teachers} = req.body;
+    try {
+      let category = await Category.findById(id)
+
+      category.name = name;
+      category.teachers = teachers;
+
+      await category.save();
+
+      let resCategory = await Category.findById(id).populate({path: 'teachers', model: Teacher}).lean();
+
+      res.status(200).json({category: resCategory});
+
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server error');
+    }
+  }
+);
 
 module.exports = router;
