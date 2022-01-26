@@ -11,11 +11,12 @@ import Modal from "../ui/Modal";
 
 import api from "../../utils/api";
 
-const LessonsView = ({logout, setAlert, categories}) => {
+const LessonsView = ({logout, setAlert}) => {
   const [addLessonVisible, setAddLessonVisible] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [lessonToEdit, setLessonToEdit] = useState({});
   const [lessons, setLessons] = useState([]);
+  const [categories, setCategories] = useState([]);
 
   const closeModal = () => {
     setModalOpen(false);
@@ -36,6 +37,15 @@ const LessonsView = ({logout, setAlert, categories}) => {
       setLessons(res.data.lessons);
     }
     getLessons().catch((err) => console.error(err))
+
+  }, []);
+
+  useEffect(() => {
+    const getCategories = async () => {
+      const res = await api.post('/categories/get-categories');
+      setCategories(res.data.categories);
+    }
+    getCategories().catch((err) => console.error(err))
 
   }, []);
 
@@ -113,7 +123,6 @@ const LessonsView = ({logout, setAlert, categories}) => {
 
         </div>
       </div>
-
     </div>
   )
 }
@@ -121,7 +130,6 @@ const LessonsView = ({logout, setAlert, categories}) => {
 LessonsView.propTypes = {
   logout: PropTypes.func.isRequired,
   setAlert: PropTypes.func.isRequired,
-  categories: PropTypes.array.isRequired
 };
 
 export default LessonsView;

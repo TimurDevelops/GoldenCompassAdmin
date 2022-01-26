@@ -44,14 +44,13 @@ router.post(
   }
 );
 
-// @route    POST api/lessonsView
-// @desc     Add lesson
+// @route    POST api/lessons
+// @desc     Get lesson
 // @access   Public
 router.post(
   '/get-lessons',
   async (req, res) => {
     try {
-
       const {namesOnly, category} = req.body;
       let lessons;
 
