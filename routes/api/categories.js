@@ -3,9 +3,11 @@ const router = express.Router();
 
 const {check, validationResult} = require("express-validator");
 const Category = require('../../models/Categories');
+const Lesson = require("../../models/Lesson");
+const Level = require("../../models/Level");
 
-// @route    POST api/lessonsView
-// @desc     Add lessons
+// @route    POST api/categories
+// @desc     Add category
 // @access   Public
 router.post(
   '/',
@@ -42,7 +44,7 @@ router.post(
 );
 
 // @route    POST api/categories
-// @desc     Add lesson
+// @desc     Get category
 // @access   Public
 router.post(
   '/get-categories',
@@ -58,3 +60,30 @@ router.post(
     }
   }
 );
+
+// @route    POST api/categories
+// @desc     Delete category
+// @access   Public
+router.delete(
+  '/',
+  check('id', 'Введите id Удаляемой Категории').notEmpty(),
+  async (req, res) => {
+    const {categoryId: id} = req.body;
+    const ObjectId = require('mongoose').Types.ObjectId;
+
+    try {
+      await Level.updateMany({category: id}, {$set: {category: ObjectId(id)}});
+      await Lesson.updateMany({category: id}, {$set: {category: ObjectId(id)}});
+      const category = await Category.deleteOne({_id: id});
+
+      return res.json({category});
+
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server error');
+    }
+  }
+);
+
+
+module.exports = router;

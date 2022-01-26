@@ -34,6 +34,7 @@ app.use('/api/files', require('./routes/api/files'));
 
 app.use('/api/teachers', require('./routes/api/teachers'));
 app.use('/api/students', require('./routes/api/students'));
+app.use('/api/categories', require('./routes/api/categories'));
 app.use('/api/lessons', require('./routes/api/lessons'));
 app.use('/api/levels', require('./routes/api/levels'));
 

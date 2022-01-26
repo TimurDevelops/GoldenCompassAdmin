@@ -6,10 +6,27 @@ import Header from "../ui/Header";
 import AddCategory from "./addCategory/AddCategory";
 
 import api from "../../utils/api";
+import LessonsList from "../lessonsView/lessonsList/LessonsList";
+import CategoriesList from "./categoriesList/CategoriesList";
 
 const CategoriesView = ({logout, setAlert}) => {
   const [addCategoryVisible, setAddCategoryVisible] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [categoryToEdit, setCategoryToEdit] = useState({});
   const [categories, setCategories] = useState([]);
+
+  const closeModal = () => {
+    setModalOpen(false);
+  }
+
+  const openModal = (id) => {
+    setModalOpen(true);
+    const category = categories.filter(i => i._id === id)[0];
+
+    if (!category) return setAlert('Ошибка при открытии категории', 'danger')
+
+    setCategoryToEdit(category)
+  }
 
   const createCategory = async ({categoryTitle}) => {
     try {
@@ -23,6 +40,23 @@ const CategoriesView = ({logout, setAlert}) => {
       })
     }
   }
+
+  const deleteCategory = async (categoryId) => {
+    try {
+      await api.delete('/category', {
+        headers: {},
+        data: {categoryId},
+      });
+    } catch (e) {
+      console.log(e)
+      e.response.data.errors.forEach(err => {
+        setAlert(err.msg, 'danger')
+      })
+    }
+    setCategories(categories.filter(category => category._id !== categoryId))
+  }
+
+
   return (
     <div>
       <Header logout={logout}/>
@@ -33,6 +67,8 @@ const CategoriesView = ({logout, setAlert}) => {
           </button>
 
           {addCategoryVisible && <AddCategory createCategory={createCategory} />}
+
+          <CategoriesList categories={categories} deleteCategory={deleteCategory} openCategory={openModal}/>
 
         </div>
       </div>
