@@ -28,6 +28,15 @@ const CategoriesView = ({logout, setAlert}) => {
     setCategoryToEdit(category)
   }
 
+  useEffect(() => {
+    const getCategories = async () => {
+      const res = await api.post('/categories/get-categories');
+      setCategories(res.data.categories);
+    }
+    getCategories().catch((err) => console.error(err))
+
+  }, []);
+
   const createCategory = async ({categoryTitle}) => {
     try {
       const res = await api.post('/categories', {name: categoryTitle});
