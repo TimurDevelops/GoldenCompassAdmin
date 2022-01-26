@@ -11,11 +11,12 @@ import Modal from "../ui/Modal";
 
 import api from "../../utils/api";
 
-const LevelsView = ({logout, setAlert, categories}) => {
+const LevelsView = ({logout, setAlert}) => {
   const [addLevelVisible, setAddLevelVisible] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [levelToEdit, setLevelToEdit] = useState({});
   const [levels, setLevels] = useState([]);
+  const [categories, setCategories] = useState([]);
 
   const closeModal = () => {
     setModalOpen(false);
@@ -36,6 +37,15 @@ const LevelsView = ({logout, setAlert, categories}) => {
       setLevels(res.data.levels);
     }
     getLevels().catch((err) => console.error(err))
+
+  }, []);
+
+  useEffect(() => {
+    const getCategories = async () => {
+      const res = await api.post('/categories/get-categories');
+      setCategories(res.data.categories);
+    }
+    getCategories().catch((err) => console.error(err))
 
   }, []);
 
@@ -117,7 +127,6 @@ const LevelsView = ({logout, setAlert, categories}) => {
 LevelsView.propTypes = {
   logout: PropTypes.func.isRequired,
   setAlert: PropTypes.func.isRequired,
-  categories: PropTypes.array.isRequired,
 };
 
 export default LevelsView;

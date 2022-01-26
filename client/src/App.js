@@ -15,6 +15,7 @@ import PrivateRoute from "./components/ui/PrivateRoute";
 import {v4 as uuidv4} from 'uuid';
 
 import './Common.scss';
+import CategoriesView from "./components/categories/CategoriesView";
 
 const App = () => {
   const {user, setUser, unsetUser} = useUser()
@@ -84,7 +85,6 @@ const App = () => {
 
           <PrivateRoute exact path="/lessons-view"
                         setAlert={setAlert}
-                        categories={formattedCategories}
                         component={LessonsView}
                         auth={auth}
                         user={user}
@@ -92,8 +92,14 @@ const App = () => {
 
           <PrivateRoute exact path="/levels-view"
                         setAlert={setAlert}
-                        categories={formattedCategories}
                         component={LevelsView}
+                        auth={auth}
+                        user={user}
+                        logout={logout}/>
+
+          <PrivateRoute exact path="/categories-view"
+                        setAlert={setAlert}
+                        component={CategoriesView}
                         auth={auth}
                         user={user}
                         logout={logout}/>

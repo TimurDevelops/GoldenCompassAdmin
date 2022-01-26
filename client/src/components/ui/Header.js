@@ -12,6 +12,7 @@ const Header = ({logout}) => {
 
         <MenuItem link={'/teachers-view'} label={'Учителя'}/>
         <MenuItem link={'/students-view'} label={'Ученики'}/>
+        <MenuItem link={'/categories-view'} label={'Категории'}/>
         <MenuItem link={'/lessons-view'} label={'Уроки'}/>
         <MenuItem link={'/levels-view'} label={'Уровни'}/>
       </div>
