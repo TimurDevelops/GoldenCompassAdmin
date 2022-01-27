@@ -10,8 +10,7 @@ import Selector from "../../ui/Selector";
 
 const LessonView = ({lessonToEdit: {_id: id, slides, name: lessonTitle, category}, categories, setAlert, editLesson}) => {
   const [newLessonTitle, setNewLessonTitle] = useState(lessonTitle);
-  const [newCategory, setNewCategory] = useState();
-
+  const [newCategory, setNewCategory] = useState(category);
   const [newSlides, setNewSlides] = useState(slides);
 
   const onCategoryChange = (value) => {
@@ -31,7 +30,7 @@ const LessonView = ({lessonToEdit: {_id: id, slides, name: lessonTitle, category
     setNewSlides([])
   }
 
-  const label = categories.find(i => i.id === category)["label"] || 'Выберите категорию...'
+  const label = categories.find(i => i._id === category).name || 'Выберите категорию...'
 
   return (
     <div className={'edit-lesson-form add-form'}>

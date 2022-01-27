@@ -7,11 +7,12 @@ const AddLesson = ({createLesson, categories}) => {
   const [category, setCategory] = useState();
 
   const onCategoryChange = (categoryId) => {
-    setCategory(categories.find(i => i.id === categoryId))
+    setCategory(categories.find(i => i._id === categoryId))
   }
+
   const handleSubmit = (e) => {
     e.preventDefault()
-    createLesson({lessonTitle, category: category["label"]});
+    createLesson({lessonTitle, category: category._id});
   }
 
   return (
@@ -24,10 +25,10 @@ const AddLesson = ({createLesson, categories}) => {
             <label htmlFor="login" className="form-label">Название Урока</label>
           </div>
 
-          <Selector items={categories} onChange={onCategoryChange}
-                    defaultValue={categories[0].id}
-                    label={category ? category["label"] : 'Выберите категорию...'}
-                    valueField={'id'}/>
+          <Selector items={categories}
+                    onChange={onCategoryChange}
+                    label={category ? category["name"] : 'Выберите категорию...'}
+                    valueField={'_id'}/>
 
           <div className='submit-btn-wrapper'>
             <button type="submit" className='btn' id='addLesson'>

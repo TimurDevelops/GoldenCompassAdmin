@@ -21,13 +21,12 @@ const Selector = ({items, onChange, label, valueField, defaultValue = null}) => 
 
         {open && <div className={'selector-bg'} onClick={() => setOpen(false)}/>}
 
-
         {open && <div className={'items'}>
           {
             items.map(i => <div key={i[valueField]} className={'s-item-wrapper'} onClick={() => {
               setOpen(false);
               onChange(i[valueField]);
-            }}>{i.html}</div>)
+            }}>{i.name}</div>)
           }
         </div>
         }

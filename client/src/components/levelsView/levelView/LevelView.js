@@ -11,8 +11,12 @@ const LevelView = ({editLevel, levelToEdit: {_id: id, name: oldLeveTitle, lesson
   const [levelTitle, setLevelTitle] = useState(oldLeveTitle);
   const [category, setCategory] = useState();
   const [lessons, setLessons] = useState(oldLessons);
+  const categoryLabel = categories.find(i => i._id === oldCategory)["name"] || 'Выберите категорию...'
+  const [label, setLabel] = useState(categoryLabel);
 
   const onCategoryChange = (value) => {
+    const categoryLabel = categories.find(i => i._id === value)["name"] || 'Выберите категорию...'
+    setLabel(categoryLabel)
     setCategory(value)
   }
 
@@ -28,7 +32,6 @@ const LevelView = ({editLevel, levelToEdit: {_id: id, name: oldLeveTitle, lesson
     )
   }
 
-  const categoryLabel = categories.find(i => i.id === oldCategory)["label"] || 'Выберите категорию...'
 
   return (
     <div className={'edit-level-form add-form'}>
@@ -39,10 +42,10 @@ const LevelView = ({editLevel, levelToEdit: {_id: id, name: oldLeveTitle, lesson
             setNewLevelTitle={setLevelTitle}
           />
 
-          <Selector items={categories} onChange={onCategoryChange}
-                    defaultValue={oldCategory}
-                    label={categoryLabel}
-                    valueField={'id'}/>
+          <Selector items={categories}
+                    onChange={onCategoryChange}
+                    label={label}
+                    valueField={'_id'}/>
 
           <LevelsLessonsList lessons={lessons} categories={categories} setLessons={setLessons}/>
 
