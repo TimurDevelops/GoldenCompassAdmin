@@ -51,7 +51,7 @@ router.post(
   '/get-categories',
   async (req, res) => {
     try {
-      let categories = await Category.find().lean();
+      let categories = await Category.find().populate({path: 'teachers', model: Teacher}).lean();
 
       return res.json({categories});
 
