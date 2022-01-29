@@ -5,20 +5,10 @@ import LevelTitleEditor from "./levelTitleEditor/LevelTitleEditor";
 import LevelsLessonsList from "./levelsLessonsList/LevelsLessonsList";
 
 import './LevelView.scss';
-import Selector from "../../ui/Selector";
 
-const LevelView = ({editLevel, levelToEdit: {_id: id, name: oldLeveTitle, lessons: oldLessons, category: oldCategory}, categories}) => {
+const LevelView = ({editLevel, levelToEdit: {_id: id, name: oldLeveTitle, lessons: oldLessons}, category}) => {
   const [levelTitle, setLevelTitle] = useState(oldLeveTitle);
-  const [category, setCategory] = useState();
   const [lessons, setLessons] = useState(oldLessons);
-  const categoryLabel = categories.find(i => i._id === oldCategory)["name"] || 'Выберите категорию...'
-  const [label, setLabel] = useState(categoryLabel);
-
-  const onCategoryChange = (value) => {
-    const categoryLabel = categories.find(i => i._id === value)["name"] || 'Выберите категорию...'
-    setLabel(categoryLabel)
-    setCategory(value)
-  }
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -27,7 +17,7 @@ const LevelView = ({editLevel, levelToEdit: {_id: id, name: oldLeveTitle, lesson
         id,
         name: levelTitle,
         lessons: lessons,
-        category: category
+        category
       }
     )
   }
@@ -42,12 +32,7 @@ const LevelView = ({editLevel, levelToEdit: {_id: id, name: oldLeveTitle, lesson
             setNewLevelTitle={setLevelTitle}
           />
 
-          <Selector items={categories}
-                    onChange={onCategoryChange}
-                    label={label}
-                    valueField={'_id'}/>
-
-          <LevelsLessonsList lessons={lessons} categories={categories} setLessons={setLessons}/>
+          <LevelsLessonsList lessons={lessons} category={category} setLessons={setLessons}/>
 
         </div>
 
@@ -65,7 +50,7 @@ LevelView.propTypes = {
   levelToEdit: PropTypes.object.isRequired,
   setAlert: PropTypes.func.isRequired,
   editLevel: PropTypes.func.isRequired,
-  categories: PropTypes.array.isRequired,
+  category: PropTypes.object.isRequired,
 };
 
 export default LevelView;

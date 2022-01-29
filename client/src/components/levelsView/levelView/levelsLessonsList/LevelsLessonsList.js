@@ -62,7 +62,7 @@ const LevelsLessonsList = ({lessons = [], setLessons, category}) => {
 
 LevelsLessonsList.propTypes = {
   lessons: PropTypes.array.isRequired,
-  categories: PropTypes.array.isRequired,
+  category: PropTypes.object.isRequired,
 };
 
 export default LevelsLessonsList;

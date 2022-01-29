@@ -39,6 +39,7 @@ const LevelsView = ({logout, setAlert}) => {
   }
 
   useEffect(() => {
+    console.log(levels)
     setVisibleLevels(levels.filter(i => i.category === category._id))
   }, [levels, category]);
 
@@ -63,6 +64,7 @@ const LevelsView = ({logout, setAlert}) => {
   const createLevel = async ({levelTitle, category}) => {
     try {
       const res = await api.post('/levels', {name: levelTitle, category});
+      console.log(res)
       const newLevel = res.data.level;
       setLevels([...levels, newLevel])
     } catch (e) {
@@ -93,6 +95,7 @@ const LevelsView = ({logout, setAlert}) => {
     let createdLevel;
     try {
       const res = await api.put('/levels', {id, name, lessons: newLessons, category});
+      console.log(res)
       createdLevel = res.data.level;
     } catch (e) {
       e.response.data.errors.forEach(err => {
@@ -100,6 +103,7 @@ const LevelsView = ({logout, setAlert}) => {
       })
     }
     closeModal()
+    console.log(createdLevel)
     setLevels(levels.map((level) => {
       if (level._id === id) return createdLevel;
       else return level;
@@ -130,7 +134,7 @@ const LevelsView = ({logout, setAlert}) => {
             closeModal={closeModal}
             content={
               modalOpen &&
-              <LevelView levelToEdit={levelToEdit} categories={categories} editLevel={editLevel} setAlert={setAlert}/>
+              <LevelView levelToEdit={levelToEdit} category={category} editLevel={editLevel} setAlert={setAlert}/>
             }
           />
 
