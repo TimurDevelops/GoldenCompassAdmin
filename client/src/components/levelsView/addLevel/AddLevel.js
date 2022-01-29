@@ -1,14 +1,8 @@
 import React, {useState} from 'react';
 import PropTypes from "prop-types";
-import Selector from "../../ui/Selector";
 
-const AddLevel = ({createLevel, categories}) => {
+const AddLevel = ({createLevel, category}) => {
   const [levelTitle, setLevelTitle] = useState();
-  const [category, setCategory] = useState();
-
-  const onCategoryChange = (categoryId) => {
-    setCategory(categories.find(i => i._id === categoryId))
-  }
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -26,11 +20,6 @@ const AddLevel = ({createLevel, categories}) => {
             <label htmlFor="levelName" className="form-label">Название уровня</label>
           </div>
 
-          <Selector items={categories}
-                    onChange={onCategoryChange}
-                    label={category ? category["name"] : 'Выберите категорию...'}
-                    valueField={'_id'}/>
-
           <div className='submit-btn-wrapper'>
             <button type="submit" className='btn' id='addLevel'>
               <span>Создать</span>
@@ -44,7 +33,7 @@ const AddLevel = ({createLevel, categories}) => {
 
 AddLevel.propTypes = {
   createLevel: PropTypes.func.isRequired,
-  categories: PropTypes.array.isRequired,
+  category: PropTypes.object.isRequired,
 };
 
 export default AddLevel;

@@ -10,13 +10,16 @@ import LessonView from "./lessonView/LessonView";
 import Modal from "../ui/Modal";
 
 import api from "../../utils/api";
+import Selector from "../ui/Selector";
 
 const LessonsView = ({logout, setAlert}) => {
   const [addLessonVisible, setAddLessonVisible] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [lessonToEdit, setLessonToEdit] = useState({});
   const [lessons, setLessons] = useState([]);
+  const [visibleLessons, setVisibleLessons] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [category, setCategory] = useState({});
 
   const closeModal = () => {
     setModalOpen(false);
@@ -30,6 +33,14 @@ const LessonsView = ({logout, setAlert}) => {
 
     setLessonToEdit(lesson)
   }
+
+  const onCategoryChange = (categoryId) => {
+    setCategory(categories.find(i => i._id === categoryId))
+  }
+
+  useEffect(() => {
+    setVisibleLessons(lessons.filter(i => i.category === category._id))
+  }, [lessons, category]);
 
   useEffect(() => {
     const getLessons = async () => {
@@ -49,9 +60,9 @@ const LessonsView = ({logout, setAlert}) => {
 
   }, []);
 
-  const createLesson = async ({lessonTitle}) => {
+  const createLesson = async ({lessonTitle, category}) => {
     try {
-      const res = await api.post('/lessons', {name: lessonTitle});
+      const res = await api.post('/lessons', {name: lessonTitle, category});
       const newLesson = res.data.lesson;
       setLessons([...lessons, newLesson]);
     } catch (e) {
@@ -105,12 +116,17 @@ const LessonsView = ({logout, setAlert}) => {
       <div className={'view-content'}>
         <div className={'view-content-inner'}>
 
+          <Selector items={categories}
+                    onChange={onCategoryChange}
+                    label={category ? category["name"] : null}
+                    valueField={'_id'}/>
+
           <button className={'btn'}
                   onClick={() => setAddLessonVisible(!addLessonVisible)}>{addLessonVisible ? 'Закрыть' : 'Добавить урок'}</button>
 
-          {addLessonVisible && <AddLesson createLesson={createLesson} categories={categories}/>}
+          {addLessonVisible && <AddLesson createLesson={createLesson} category={category}/>}
 
-          <LessonsList lessons={lessons} deleteLesson={deleteLesson} openLesson={openModal}/>
+          <LessonsList lessons={visibleLessons} deleteLesson={deleteLesson} openLesson={openModal}/>
 
           <Modal
             title={`Редактирование урока: \n ${lessonToEdit.name}`}

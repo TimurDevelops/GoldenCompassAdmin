@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 import './Selector.scss';
 
-const Selector = ({items, onChange, label, valueField, defaultValue = null}) => {
+const Selector = ({items, onChange, label='Выберите категорию...', valueField, defaultValue = null}) => {
   const [open, setOpen] = useState(false)
 
   useEffect(() => {
@@ -39,7 +39,7 @@ const Selector = ({items, onChange, label, valueField, defaultValue = null}) => 
 Selector.propTypes = {
   items: PropTypes.array.isRequired,
   onChange: PropTypes.func.isRequired,
-  label: PropTypes.string.isRequired,
+  label: PropTypes.string,
   valueField: PropTypes.string.isRequired,
   defaultValue: PropTypes.string
 };

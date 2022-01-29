@@ -10,13 +10,20 @@ import LevelView from "./levelView/LevelView";
 import Modal from "../ui/Modal";
 
 import api from "../../utils/api";
+import Selector from "../ui/Selector";
 
 const LevelsView = ({logout, setAlert}) => {
   const [addLevelVisible, setAddLevelVisible] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [levelToEdit, setLevelToEdit] = useState({});
   const [levels, setLevels] = useState([]);
+  const [visibleLevels, setVisibleLevels] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [category, setCategory] = useState({});
+
+  const onCategoryChange = (categoryId) => {
+    setCategory(categories.find(i => i._id === categoryId))
+  }
 
   const closeModal = () => {
     setModalOpen(false);
@@ -30,6 +37,10 @@ const LevelsView = ({logout, setAlert}) => {
 
     setLevelToEdit(level)
   }
+
+  useEffect(() => {
+    setVisibleLevels(levels.filter(i => i.category === category._id))
+  }, [levels, category]);
 
   useEffect(() => {
     const getLevels = async () => {
@@ -49,9 +60,9 @@ const LevelsView = ({logout, setAlert}) => {
 
   }, []);
 
-  const createLevel = async ({levelTitle}) => {
+  const createLevel = async ({levelTitle, category}) => {
     try {
-      const res = await api.post('/levels', {name: levelTitle});
+      const res = await api.post('/levels', {name: levelTitle, category});
       const newLevel = res.data.level;
       setLevels([...levels, newLevel])
     } catch (e) {
@@ -102,11 +113,16 @@ const LevelsView = ({logout, setAlert}) => {
       <div className={'view-content'}>
         <div className={'view-content-inner'}>
 
+          <Selector items={categories}
+                    onChange={onCategoryChange}
+                    label={category ? category["name"] : null}
+                    valueField={'_id'}/>
+
           <button className={'btn'}
                   onClick={() => setAddLevelVisible(!addLevelVisible)}>{addLevelVisible ? 'Закрыть' : 'Добавить уровень'}</button>
-          {addLevelVisible && <AddLevel createLevel={createLevel} categories={categories}/>}
+          {addLevelVisible && <AddLevel createLevel={createLevel} category={category}/>}
 
-          <LevelsList levels={levels} deleteLevel={deleteLevel} openLevel={openModal}/>
+          <LevelsList levels={visibleLevels} deleteLevel={deleteLevel} openLevel={openModal}/>
 
           <Modal
             title={`Редактирование уровня: \n ${levelToEdit.name}`}

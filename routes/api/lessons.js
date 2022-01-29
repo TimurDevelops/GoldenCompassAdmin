@@ -13,13 +13,14 @@ const Slide = require('../../models/Slide');
 router.post(
   '/',
   check('name', 'Введите Название Урока').notEmpty(),
+  check('category', 'Укажите категорию').notEmpty(),
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({errors: errors.array()});
     }
 
-    const {name} = req.body;
+    const {name, category} = req.body;
 
     try {
       let lesson = await Lesson.findOne({name});
@@ -31,7 +32,8 @@ router.post(
       }
 
       lesson = new Lesson({
-        name
+        name,
+        category
       });
 
       await lesson.save();
