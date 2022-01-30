@@ -42,7 +42,6 @@ const TeachersView = ({logout, setAlert}) => {
     try {
       const res = await api.post('/teachers', {...teacher});
       const newTeacher = res.data.user;
-      console.log(teachers, newTeacher)
       setTeachers([...teachers, newTeacher])
       setAlert("Учитель создан", 'success')
     } catch (e) {

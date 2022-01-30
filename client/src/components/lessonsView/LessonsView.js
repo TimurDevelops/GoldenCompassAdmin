@@ -63,7 +63,6 @@ const LessonsView = ({logout, setAlert}) => {
   const createLesson = async ({lessonTitle, category}) => {
     try {
       const res = await api.post('/lessons', {name: lessonTitle, category});
-      console.log(res)
       const newLesson = res.data.lesson;
       setLessons([...lessons, newLesson]);
     } catch (e) {

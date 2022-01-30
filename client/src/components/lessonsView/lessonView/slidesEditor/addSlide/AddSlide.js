@@ -10,6 +10,7 @@ const AddSlide = ({createSlide, category}) => {
   const [tip, setTip] = useState();
   const [file, setFile] = useState();
   const [newHasAbacus, setNewHasAbacus] = useState(false);
+  const [newHasChessboard, setNewHasChessboard] = useState(false);
 
   const filePicked = (files) => {
     setFile(files[0])
@@ -17,10 +18,10 @@ const AddSlide = ({createSlide, category}) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (newHasAbacus) {
-      createSlide({tip, file: `${serverUrl}/slides/abacusBg.jpeg`, hasAbacus: newHasAbacus})
+    if (newHasAbacus || newHasChessboard) {
+      createSlide({tip, file: `${serverUrl}/slides/abacusBg.jpeg`, hasAbacus: newHasAbacus, hasChessboard: newHasChessboard})
     } else {
-      createSlide({tip, file, hasAbacus: newHasAbacus})
+      createSlide({tip, file, hasAbacus: newHasAbacus, hasChessboard: newHasChessboard})
     }
   }
 
@@ -29,7 +30,7 @@ const AddSlide = ({createSlide, category}) => {
 
       <div className={'inputs-wrapper'}>
         {
-          category === "abacus" && <div className="form-group field abacus">
+          category.name === "Ментальная арифметика" && <div className="form-group field abacus">
             <label htmlFor="hasAbacus">Абакус: </label>
             <input type="checkbox" placeholder="Абакус" name="hasAbacus" id='hasAbacus'
                    checked={newHasAbacus}
@@ -37,11 +38,11 @@ const AddSlide = ({createSlide, category}) => {
           </div>
         }
         {
-          category === "chess" && <div className="form-group field abacus">
+          category.name === "Шахматы" && <div className="form-group field abacus">
             <label htmlFor="hasAbacus">Доска: </label>
-            <input type="checkbox" placeholder="Доска" name="hasAbacus" id='hasAbacus'
-                   checked={newHasAbacus}
-                   onChange={e => setNewHasAbacus(e.target.checked)}/>
+            <input type="checkbox" placeholder="Доска" name="setNewHasChessboard" id='hasChessboard'
+                   checked={newHasChessboard}
+                   onChange={e => setNewHasChessboard(e.target.checked)}/>
           </div>
         }
 
@@ -66,7 +67,7 @@ const AddSlide = ({createSlide, category}) => {
 
 AddSlide.propTypes = {
   createSlide: PropTypes.func.isRequired,
-  category: PropTypes.string.isRequired,
+  category: PropTypes.object.isRequired,
 };
 
 export default AddSlide;

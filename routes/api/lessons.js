@@ -124,22 +124,24 @@ const checkImage = (filePath) => {
   }
 }
 
-const createSlide = async ({img, tip, hasAbacus}) => {
+const createSlide = async ({img, tip, hasAbacus, hasChessboard}) => {
   const slide = new Slide({
     img: hasAbacus ? img : checkImage(img),
     tip: tip,
     hasAbacus: hasAbacus,
+    hasChessboard: hasChessboard,
   });
   await slide.save()
   return slide;
 }
 
-const editSlide = async ({_id: id, img, tip, hasAbacus}) => {
+const editSlide = async ({_id: id, img, tip, hasAbacus, hasChessboard}) => {
   let slide = await Slide.findById(id);
 
   slide.img = checkImage(img)
   slide.tip = tip
   slide.hasAbacus = hasAbacus
+  slide.hasChessboard = hasChessboard
 
   slide.save();
 

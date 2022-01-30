@@ -10,11 +10,11 @@ import Selector from "../../ui/Selector";
 
 const LessonView = ({lessonToEdit: {_id: id, slides, name: lessonTitle, category}, categories, setAlert, editLesson}) => {
   const [newLessonTitle, setNewLessonTitle] = useState(lessonTitle);
-  const [newCategory, setNewCategory] = useState(category);
+  const [newCategory, setNewCategory] = useState({});
   const [newSlides, setNewSlides] = useState(slides);
 
   const onCategoryChange = (value) => {
-      setNewCategory(value)
+      setNewCategory(categories.find(i => i._id === value))
   }
 
   const handleSubmit = (e) => {
@@ -24,13 +24,11 @@ const LessonView = ({lessonToEdit: {_id: id, slides, name: lessonTitle, category
         id,
         title: newLessonTitle,
         slides: newSlides,
-        category: newCategory
+        category: newCategory._id
       }
     )
     setNewSlides([])
   }
-
-  const label = categories.find(i => i._id === category).name || 'Выберите категорию...'
 
   return (
     <div className={'edit-lesson-form add-form'}>
@@ -42,10 +40,11 @@ const LessonView = ({lessonToEdit: {_id: id, slides, name: lessonTitle, category
             setNewLessonTitle={setNewLessonTitle}
           />
 
-          <Selector items={categories} onChange={onCategoryChange}
+          <Selector items={categories}
+                    onChange={onCategoryChange}
+                    label={newCategory.name}
                     defaultValue={category}
-                    label={label}
-                    valueField={'id'}/>
+                    valueField={'_id'}/>
 
           <SlidesEditor slides={newSlides} setSlides={setNewSlides} setAlert={setAlert} category={newCategory}/>
 

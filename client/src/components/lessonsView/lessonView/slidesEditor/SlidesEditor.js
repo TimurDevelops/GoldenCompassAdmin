@@ -27,8 +27,8 @@ const SlidesEditor = ({slides, category, setSlides, setAlert}) => {
     setSlideToEdit(slide)
   }
 
-  const createSlide = async ({tip, file, hasAbacus}) => {
-    setSlides([...slides, {tip, img: file, hasAbacus, _id: uuidv4()}]);
+  const createSlide = async ({tip, file, hasAbacus, hasChessboard}) => {
+    setSlides([...slides, {tip, img: file, hasAbacus, hasChessboard, _id: uuidv4()}]);
   }
 
   const deleteSlide = async (id) => {
@@ -83,7 +83,7 @@ const SlidesEditor = ({slides, category, setSlides, setAlert}) => {
 
 SlidesEditor.propTypes = {
   slides: PropTypes.array.isRequired,
-  category: PropTypes.string.isRequired,
+  category: PropTypes.object.isRequired,
   setSlides: PropTypes.func.isRequired,
 };
 
