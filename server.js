@@ -4,12 +4,19 @@ const fs = require("fs");
 
 const connectDB = require("./config/db");
 
-const {env} = require('./config.json');
+let config;
+try {
+  config = require('./config.json');
+} catch (e) {
+  config = process.env;
+}
+
+const {env} = config;
 const https = require("https");
 const http = require("http");
 const credentials = {};
 
-if (env === 'prod'){
+if (env === 'prod') {
   const privateKey = fs.readFileSync('./sslcert/golden-compass-app.key', 'utf8');
   const certificate = fs.readFileSync('./sslcert/golden-compass-app_com_chain.crt', 'utf8');
   credentials.key = privateKey;
