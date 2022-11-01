@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/goldencompassadmin/static/css/main.8e9a729b.chunk.css",
+    "main.js": "/goldencompassadmin/static/js/main.23584642.chunk.js",
+    "main.js.map": "/goldencompassadmin/static/js/main.23584642.chunk.js.map",
+    "runtime-main.js": "/goldencompassadmin/static/js/runtime-main.c8847ec5.js",
+    "runtime-main.js.map": "/goldencompassadmin/static/js/runtime-main.c8847ec5.js.map",
+    "static/js/2.cea2ea55.chunk.js": "/goldencompassadmin/static/js/2.cea2ea55.chunk.js",
+    "static/js/2.cea2ea55.chunk.js.map": "/goldencompassadmin/static/js/2.cea2ea55.chunk.js.map",
+    "index.html": "/goldencompassadmin/index.html",
+    "static/css/main.8e9a729b.chunk.css.map": "/goldencompassadmin/static/css/main.8e9a729b.chunk.css.map",
+    "static/js/2.cea2ea55.chunk.js.LICENSE.txt": "/goldencompassadmin/static/js/2.cea2ea55.chunk.js.LICENSE.txt",
+    "static/media/Login.scss": "/goldencompassadmin/static/media/compass.3038bfae.jpeg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.c8847ec5.js",
+    "static/js/2.cea2ea55.chunk.js",
+    "static/css/main.8e9a729b.chunk.css",
+    "static/js/main.23584642.chunk.js"
+  ]
+}
